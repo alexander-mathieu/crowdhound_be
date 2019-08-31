@@ -1,0 +1,52 @@
+# Ruby CircleCI 2.0 configuration file
+
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.4.1-node-browsers
+        environment:
+          BUNDLER_VERSION: 2.0.2
+          PGHOST: localhost
+          PGUSER: crowdhound_be
+          RAILS_ENV: test
+      - image: circleci/postgres:11.3
+        environment:
+          POSTGRES_USER: crowdhound_be
+          POSTGRES_DB: crowdhound_be_test
+          POSTGRES_PASSWORD: ''
+
+    working_directory: ~/crowdhound_be
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Gemfile.lock" }}
+            # Fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run:
+          name: install dependencies
+          command: |
+            bundle install --jobs=4 --retry=3 --path vendor/bundle
+
+      - save_cache:
+          paths:
+            - ./vendor/bundle
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+
+      # Wait for DB
+      # - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      # Database setup
+      - run: bundle exec rake db:create
+      # - run: bundle exec rake db:migrate
+
+      # Run tests
+      - run:
+          name: run tests
+          command: |
+            bundle exec rspec
