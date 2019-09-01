@@ -44,7 +44,7 @@ jobs:
       # - run: dockerize -wait tcp://localhost:5432 -timeout 1m
 
       # Database setup
-      - run: bundle exec rake db:create
+      - run: bundle exec rake db:{drop,create}
       # - run: bundle exec rake db:migrate
 
       # Run tests
@@ -52,3 +52,32 @@ jobs:
           name: run tests
           command: |
             bundle exec rspec
+
+  deploy:
+    machine:
+        enabled: true
+
+    working_directory: ~/crowdhound_be
+
+    environment:
+      HEROKU_APP: "staging-crowdhound-be"
+
+    steps:
+      - checkout
+
+      - run:
+          name: Deploy Master to Heroku staging
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/staging-crowdhound-be.git master
+
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
