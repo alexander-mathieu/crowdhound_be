@@ -1,7 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'factory_bot_rails'
+include FactoryBot::Syntax::Methods
+
+##### Empty database
+Dog.destroy_all
+User.destroy_all
+
+##### Create users
+user1, user2, user3, user4, user5 = create_list(:user, 5)
+
+##### Create dogs
+dog11, dog12 = create_list(:dog, 2, user: user1)
+dog21, dog22, dog23 = create_list(:dog, 3, user: user2)
+dog31 = create(:dog, user: user3)
+dog41 = create(:dog, user: user4)
+# user5 has no dogs

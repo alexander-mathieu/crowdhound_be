@@ -10,4 +10,4 @@ Welcome to _CrowdHound_!
 `$ cd crowdhound_be`
 `$ bundle`
 `$ bundle exec figaro install` (Add API keys to config/application.yml)
-`$ rails db:{create,migrate}`
+`$ rails db:{create,migrate,seed}`
