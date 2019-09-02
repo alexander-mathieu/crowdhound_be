@@ -1,4 +1,4 @@
-require 'factory_bot_rails'
+require 'factory_bot'
 include FactoryBot::Syntax::Methods
 
 ##### Empty database

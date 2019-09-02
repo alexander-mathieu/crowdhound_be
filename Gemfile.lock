@@ -185,6 +185,7 @@ PLATFORMS
 DEPENDENCIES
   bootsnap (>= 1.1.0)
   byebug
+  factory_bot
   factory_bot_rails
   faker
   faraday
