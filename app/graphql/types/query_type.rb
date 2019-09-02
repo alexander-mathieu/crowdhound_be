@@ -1,13 +1,37 @@
 module Types
   class QueryType < Types::BaseObject
-    # Add root-level fields here.
-    # They will be entry points for queries on your schema.
+    # User Queries
+    field :users, [Types::UserType], null: false,
+      description: "Return all users"
 
-    # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World!"
+    def users
+      User.all
+    end
+
+    field :user, Types::UserType, null: false,
+      description: "Find a user by id" do
+      argument :id, ID, required: true
+    end
+
+    def user(id:)
+      User.find(id)
+    end
+
+    # Dog Queries
+    field :dogs, [Types::DogType], null: false,
+      description: "Return all dogs"
+
+    def dogs
+      Dog.all
+    end
+
+    field :dog, Types::DogType, null: false,
+      description: "Find a dog by id" do
+      argument :id, ID, required: true
+    end
+
+    def dog(id:)
+      Dog.find(id)
     end
   end
 end

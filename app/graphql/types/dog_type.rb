@@ -8,6 +8,6 @@ module Types
     field :short_desc, String, null: true
     field :long_desc, String, null: true
     field :activity_level, Int, null: true
-    field :user, [Types::UserType], null: true
+    field :user, Types::UserType, null: true
   end
 end
