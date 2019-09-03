@@ -92,3 +92,14 @@ def compare_gql_and_db_dogs(graphql_dog, db_dog)
     'longDesc'   => db_dog.long_desc
   )
 end
+
+def compare_gql_and_db_users(graphql_user, db_user)
+    expect(graphql_user).to include(
+    'id'          => db_user.id.to_s,
+    'firstName'   => db_user.first_name,
+    'lastName'    => db_user.last_name,
+    'email'       => db_user.email,
+    'shortDesc'   => db_user.short_desc,
+    'longDesc'    => db_user.long_desc
+  )
+end
