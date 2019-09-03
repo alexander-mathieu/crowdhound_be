@@ -9,45 +9,26 @@ RSpec.describe "dog query", type: :request do
     json = JSON.parse(response.body)
     data = json['data']['dog']
 
-    expect(data).to include(
-      'id'         => dog.id.to_s,
-      'name'       => dog.name,
-      'breed'      => dog.breed,
-      'weight'     => dog.weight,
-      'birthdate'  => dog.birthdate.to_s,
-      'shortDesc'  => dog.short_desc,
-      'longDesc'   => dog.long_desc
-    )
-
+    compare_gql_and_db_dogs(data, dog)
+    
     actual_user = data['user']
-    expect(actual_user).to include(
-      'id'          => user.id.to_s,
-      'firstName'   => user.first_name,
-      'lastName'    => user.last_name,
-      'email'       => user.email,
-      'shortDesc'   => user.short_desc,
-      'longDesc'    => user.long_desc
-    )
+    compare_gql_and_db_users(actual_user, user)
+  end
+
+  it 'raises exception if no dog with that id' do
+    dog = create(:dog)
+
+    expect { post '/graphql', params: { query: query(id: dog.id + 1) } }
+    .to raise_error(ActiveRecord::RecordNotFound, "Couldn't find Dog with 'id'=#{dog.id + 1}")
   end
 
   def query(id:)
     <<~GQL
       query {
         dog(id: #{id}) {
-          id
-          name
-          breed
-          weight
-          birthdate
-          shortDesc
-          longDesc
+          #{dog_type_attributes}
           user {
-            id
-            firstName
-            lastName
-            email
-            shortDesc
-            longDesc
+            #{user_type_attributes}
           }
         }
       }
