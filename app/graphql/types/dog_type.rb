@@ -9,5 +9,6 @@ module Types
     field :long_desc, String, null: true
     field :activity_level, Int, null: true
     field :user, Types::UserType, null: true
+    field :photos, [Types::PhotoType], null: true
   end
 end
