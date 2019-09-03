@@ -19,6 +19,13 @@ RSpec.describe "user query", type: :request do
     compare_gql_and_db_dogs(first_gql_dog, first_db_dog)
   end
 
+  it 'raises exception if no user with that id' do
+    user = create(:user)
+
+    expect { post '/graphql', params: { query: query(id: user.id + 1) } }
+    .to raise_error(ActiveRecord::RecordNotFound, "Couldn't find User with 'id'=#{user.id + 1}")
+  end
+
   def query(id:)
     <<~GQL
       query {

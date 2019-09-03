@@ -80,7 +80,8 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-# helper methods for testing GraphQL responses
+#### helper methods for testing GraphQL responses
+## DogType
 def dog_type_attributes
   "
   id
@@ -105,6 +106,7 @@ def compare_gql_and_db_dogs(graphql_dog, db_dog)
   )
 end
 
+## UserType
 def user_type_attributes
   "
   id
