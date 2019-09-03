@@ -105,6 +105,17 @@ def compare_gql_and_db_dogs(graphql_dog, db_dog)
   )
 end
 
+def user_type_attributes
+  "
+  id
+  firstName
+  lastName
+  email
+  shortDesc
+  longDesc
+  "
+end
+
 def compare_gql_and_db_users(graphql_user, db_user)
     expect(graphql_user).to include(
     'id'          => db_user.id.to_s,

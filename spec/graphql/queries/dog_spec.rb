@@ -21,12 +21,7 @@ RSpec.describe "dog query", type: :request do
         dog(id: #{id}) {
           #{dog_type_attributes}
           user {
-            id
-            firstName
-            lastName
-            email
-            shortDesc
-            longDesc
+            #{user_type_attributes}
           }
         }
       }
