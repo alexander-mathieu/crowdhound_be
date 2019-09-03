@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_02_173903) do
+ActiveRecord::Schema.define(version: 2019_09_03_171701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,11 @@ ActiveRecord::Schema.define(version: 2019_09_02_173903) do
     t.integer "activity_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["activity_level"], name: "index_dogs_on_activity_level"
+    t.index ["birthdate"], name: "index_dogs_on_birthdate"
+    t.index ["breed"], name: "index_dogs_on_breed"
     t.index ["user_id"], name: "index_dogs_on_user_id"
+    t.index ["weight"], name: "index_dogs_on_weight"
   end
 
   create_table "users", force: :cascade do |t|
