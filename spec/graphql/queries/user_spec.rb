@@ -9,48 +9,30 @@ RSpec.describe "user query", type: :request do
     json = JSON.parse(response.body)
     data = json['data']['user']
 
-    expect(data).to include(
-      'id'          => user.id.to_s,
-      'firstName'   => user.first_name,
-      'lastName'    => user.last_name,
-      'email'       => user.email,
-      'shortDesc'   => user.short_desc,
-      'longDesc'    => user.long_desc
-    )
+    compare_gql_and_db_users(data, user)
 
     actual_dogs = data['dogs']
     expect(actual_dogs.count).to eq(2)
 
-    first_dog = actual_dogs.first
-    expect(first_dog).to include(
-      'id'         => user.dogs.first.id.to_s,
-      'name'       => user.dogs.first.name,
-      'breed'      => user.dogs.first.breed,
-      'weight'     => user.dogs.first.weight,
-      'birthdate'  => user.dogs.first.birthdate.to_s,
-      'shortDesc'  => user.dogs.first.short_desc,
-      'longDesc'   => user.dogs.first.long_desc
-    )
+    first_gql_dog = actual_dogs.first
+    first_db_dog = user.dogs.first
+    compare_gql_and_db_dogs(first_gql_dog, first_db_dog)
+  end
+
+  it 'raises exception if no user with that id' do
+    user = create(:user)
+
+    expect { post '/graphql', params: { query: query(id: user.id + 1) } }
+    .to raise_error(ActiveRecord::RecordNotFound, "Couldn't find User with 'id'=#{user.id + 1}")
   end
 
   def query(id:)
     <<~GQL
       query {
         user(id: #{id}) {
-          id
-          firstName
-          lastName
-          email
-          shortDesc
-          longDesc
+          #{user_type_attributes}
           dogs {
-            id
-            name
-            breed
-            weight
-            birthdate
-            shortDesc
-            longDesc
+            #{dog_type_attributes}
           }
         }
       }

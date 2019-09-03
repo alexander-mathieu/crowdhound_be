@@ -79,3 +79,52 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+#### helper methods for testing GraphQL responses
+## DogType
+def dog_type_attributes
+  "
+  id
+  name
+  breed
+  weight
+  birthdate
+  shortDesc
+  longDesc
+  "
+end
+
+def compare_gql_and_db_dogs(graphql_dog, db_dog)
+  expect(graphql_dog).to include(
+    'id'         => db_dog.id.to_s,
+    'name'       => db_dog.name,
+    'breed'      => db_dog.breed,
+    'weight'     => db_dog.weight,
+    'birthdate'  => db_dog.birthdate.to_s,
+    'shortDesc'  => db_dog.short_desc,
+    'longDesc'   => db_dog.long_desc
+  )
+end
+
+## UserType
+def user_type_attributes
+  "
+  id
+  firstName
+  lastName
+  email
+  shortDesc
+  longDesc
+  "
+end
+
+def compare_gql_and_db_users(graphql_user, db_user)
+    expect(graphql_user).to include(
+    'id'          => db_user.id.to_s,
+    'firstName'   => db_user.first_name,
+    'lastName'    => db_user.last_name,
+    'email'       => db_user.email,
+    'shortDesc'   => db_user.short_desc,
+    'longDesc'    => db_user.long_desc
+  )
+end
