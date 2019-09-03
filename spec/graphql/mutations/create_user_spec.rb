@@ -40,10 +40,21 @@ RSpec.describe "createUser mutation", type: :request do
     expect(User.count).to eq(1)
   end
 
-  # it 'raises exception if no user with that id' do
-  #   user = create(:user)
+  it 'returns error if no firstName, lastName, and/or email is entered' do
+    query = "
+    mutation {
+      createUser() {
+        #{user_type_attributes}
+      }
+    }
+    "
 
-  #   expect { post '/graphql', params: { query: query(id: user.id + 1) } }
-  #   .to raise_error(ActiveRecord::RecordNotFound, "Couldn't find User with 'id'=#{user.id + 1}")
-  # end
+    post '/graphql', params: { query: query }
+    json = JSON.parse(response.body, symbolize_names: true)
+
+    error_message = json[:errors].first[:message]
+    expect(error_message).to eq("Field 'createUser' is missing required arguments: firstName, lastName, email")
+
+    expect(User.count).to eq(0)
+  end
 end
