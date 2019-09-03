@@ -23,20 +23,9 @@ RSpec.describe "dogs query", type: :request do
     <<~GQL
       query {
         dogs {
-          id
-          name
-          breed
-          weight
-          birthdate
-          shortDesc
-          longDesc
+          #{dog_type_attributes}
           user {
-            id
-            firstName
-            lastName
-            email
-            shortDesc
-            longDesc
+            #{user_type_attributes}
           }
         }
       }
