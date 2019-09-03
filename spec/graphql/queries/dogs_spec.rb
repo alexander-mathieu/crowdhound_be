@@ -13,26 +13,10 @@ RSpec.describe "dogs query", type: :request do
     data = json['data']['dogs']
 
     expect(data.count).to eq(3)
-
-    expect(data.first).to include(
-      'id'         => dog11.id.to_s,
-      'name'       => dog11.name,
-      'breed'      => dog11.breed,
-      'weight'     => dog11.weight,
-      'birthdate'  => dog11.birthdate.to_s,
-      'shortDesc'  => dog11.short_desc,
-      'longDesc'   => dog11.long_desc
-    )
+    compare_gql_and_db_dogs(data.first, dog11)
 
     actual_user = data.first['user']
-    expect(actual_user).to include(
-      'id'          => user1.id.to_s,
-      'firstName'   => user1.first_name,
-      'lastName'    => user1.last_name,
-      'email'       => user1.email,
-      'shortDesc'   => user1.short_desc,
-      'longDesc'    => user1.long_desc
-    )
+    compare_gql_and_db_users(actual_user, user1)
   end
 
   def query
