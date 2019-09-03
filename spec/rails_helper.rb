@@ -128,3 +128,22 @@ def compare_gql_and_db_users(graphql_user, db_user)
     'longDesc'    => db_user.long_desc
   )
 end
+
+## PhotoType
+def photo_type_attributes
+  "
+  id
+  photoableId
+  photoableType
+  sourceUrl
+  "
+end
+
+def compare_gql_and_db_photos(graphql_photo, db_photo)
+    expect(graphql_photo).to include(
+    'id'              => db_photo.id.to_s,
+    'photoableId'     => db_photo.photoable.id,
+    'photoableType'   => db_photo.photoable.class.to_s,
+    'sourceUrl'       => db_photo.source_url
+  )
+end
