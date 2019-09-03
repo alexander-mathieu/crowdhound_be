@@ -11,30 +11,15 @@ RSpec.describe "users query", type: :request do
 
     expect(data.count).to eq(3)
 
-    first_user = users.first
-
-    expect(data.first).to include(
-      'id'          => first_user.id.to_s,
-      'firstName'   => first_user.first_name,
-      'lastName'    => first_user.last_name,
-      'email'       => first_user.email,
-      'shortDesc'   => first_user.short_desc,
-      'longDesc'    => first_user.long_desc
-    )
+    first_db_user = users.first
+    compare_gql_and_db_users(data.first, first_db_user)
 
     actual_dogs = data.first['dogs']
     expect(actual_dogs.count).to eq(2)
 
-    first_actual_dog = actual_dogs.first
-    expect(first_actual_dog).to include(
-      'id'         => dogs.first.id.to_s,
-      'name'       => dogs.first.name,
-      'breed'      => dogs.first.breed,
-      'weight'     => dogs.first.weight,
-      'birthdate'  => dogs.first.birthdate.to_s,
-      'shortDesc'  => dogs.first.short_desc,
-      'longDesc'   => dogs.first.long_desc
-    )
+    first_gql_dog = actual_dogs.first
+    first_db_dog = dogs.first
+    compare_gql_and_db_dogs(first_gql_dog, first_db_dog)
   end
 
   def query
