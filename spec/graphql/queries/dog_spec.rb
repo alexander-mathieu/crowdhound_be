@@ -9,15 +9,7 @@ RSpec.describe "dog query", type: :request do
     json = JSON.parse(response.body)
     data = json['data']['dog']
 
-    expect(data).to include(
-      'id'         => dog.id.to_s,
-      'name'       => dog.name,
-      'breed'      => dog.breed,
-      'weight'     => dog.weight,
-      'birthdate'  => dog.birthdate.to_s,
-      'shortDesc'  => dog.short_desc,
-      'longDesc'   => dog.long_desc
-    )
+    compare_gql_and_db_dogs(data, dog)
 
     actual_user = data['user']
     expect(actual_user).to include(
