@@ -81,6 +81,18 @@ Shoulda::Matchers.configure do |config|
 end
 
 # helper methods for testing GraphQL responses
+def dog_type_attributes
+  "
+  id
+  name
+  breed
+  weight
+  birthdate
+  shortDesc
+  longDesc
+  "
+end
+
 def compare_gql_and_db_dogs(graphql_dog, db_dog)
   expect(graphql_dog).to include(
     'id'         => db_dog.id.to_s,
