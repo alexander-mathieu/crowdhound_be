@@ -1,7 +1,7 @@
 module Mutations
-  class CreateUser < GraphQL::Schema::RelayClassicMutation
+  class CreateUser < BaseMutation
     # define return fields
-    field :user, Types::UserType, null: false
+    type Types::UserType
 
     # define arguments
     argument :first_name, String, required: true
