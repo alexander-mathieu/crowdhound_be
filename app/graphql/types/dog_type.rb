@@ -1,7 +1,7 @@
 module Types
   class DogType < Types::BaseObject
     field :id, ID, null: false
-    field :age, Float, null: false
+    field :age, Float, null: true
     field :name, String, null: true
     field :breed, String, null: true
     field :birthdate, String, null: true
