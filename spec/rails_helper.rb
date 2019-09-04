@@ -167,7 +167,7 @@ def location_type_attributes
 end
 
 def compare_gql_and_db_locations(graphql_location, db_location)
-    expect(graphql_location).to include(
+  expect(graphql_location).to include(
     id:            db_location.id.to_s,
     streetAddress: db_location.street_address,
     city:          db_location.city,
