@@ -109,37 +109,46 @@ RSpec.describe 'dogs query', type: :request do
     expect(data[3][:age]).to be_between(4, 10).inclusive
   end
 
-  it 'raises an exception when an incorrect range is passed to activityLevelRange' do
+  it 'has an error when an incorrect range is passed to activityLevelRange' do
     query = query('activityLevelRange: [2]')
 
     post '/graphql', params: { query: query }
 
     json = JSON.parse(response.body, symbolize_names: true)
-    error_message = json[:errors][0][:message]
 
+    error_message = json[:errors][0][:message]
     expect(error_message).to eq('Please provide an array with two integers for activityLevelRange.')
+
+    data = json[:data]
+    expect(data).to be_nil
   end
 
-  it 'raises an exception when an incorrect range is passed to weightRange' do
+  it 'has an error when an incorrect range is passed to weightRange' do
     query = query('weightRange: [40]')
 
     post '/graphql', params: { query: query }
 
     json = JSON.parse(response.body, symbolize_names: true)
+    
     error_message = json[:errors][0][:message]
-
     expect(error_message).to eq('Please provide an array with two integers for weightRange.')
+
+    data = json[:data]
+    expect(data).to be_nil
   end
 
-  it 'raises an exception when an incorrect range is passed to ageRange' do
+  it 'has an error when an incorrect range is passed to ageRange' do
     query = query('ageRange: [2]')
 
     post '/graphql', params: { query: query }
 
     json = JSON.parse(response.body, symbolize_names: true)
-    error_message = json[:errors][0][:message]
 
+    error_message = json[:errors][0][:message]
     expect(error_message).to eq('Please provide an array with two integers or floating point numbers for ageRange.')
+
+    data = json[:data]
+    expect(data).to be_nil
   end
 
   def query(argument)

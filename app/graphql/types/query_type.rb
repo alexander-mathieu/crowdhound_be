@@ -14,7 +14,11 @@ module Types
     end
 
     def user(id:)
-      User.find(id)
+      begin
+        User.find(id)
+      rescue ActiveRecord::RecordNotFound => e
+        raise GraphQL::ExecutionError, e.message
+      end
     end
 
     # Dog Queries
@@ -59,7 +63,11 @@ module Types
     end
 
     def dog(id:)
-      Dog.find(id)
+      begin
+        Dog.find(id)
+      rescue ActiveRecord::RecordNotFound => e
+        raise GraphQL::ExecutionError, e.message
+      end
     end
   end
 end
