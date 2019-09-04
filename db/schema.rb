@@ -26,7 +26,11 @@ ActiveRecord::Schema.define(version: 2019_09_03_205958) do
     t.integer "activity_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["activity_level"], name: "index_dogs_on_activity_level"
+    t.index ["birthdate"], name: "index_dogs_on_birthdate"
+    t.index ["breed"], name: "index_dogs_on_breed"
     t.index ["user_id"], name: "index_dogs_on_user_id"
+    t.index ["weight"], name: "index_dogs_on_weight"
   end
 
   create_table "photos", force: :cascade do |t|

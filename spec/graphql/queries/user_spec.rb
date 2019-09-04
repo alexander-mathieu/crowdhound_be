@@ -8,19 +8,20 @@ RSpec.describe "user query", type: :request do
     photo = create(:photo, photoable: user)
 
     post '/graphql', params: { query: query(id: user.id) }
-    json = JSON.parse(response.body)
-    data = json['data']['user']
+
+    json = JSON.parse(response.body, symbolize_names: true)
+    data = json[:data][:user]
 
     compare_gql_and_db_users(data, user)
 
-    actual_dogs = data['dogs']
+    actual_dogs = data[:dogs]
     expect(actual_dogs.count).to eq(2)
 
     first_gql_dog = actual_dogs.first
     first_db_dog = user.dogs.first
     compare_gql_and_db_dogs(first_gql_dog, first_db_dog)
 
-    first_gql_photo = data['photos'].first
+    first_gql_photo = data[:photos].first
     compare_gql_and_db_photos(first_gql_photo, photo)
   end
 

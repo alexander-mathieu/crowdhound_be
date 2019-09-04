@@ -1,21 +1,22 @@
 require 'rails_helper'
 
-RSpec.describe "dog query", type: :request do
+RSpec.describe 'dog query', type: :request do
   it 'returns a dog by id' do
     user = create(:user)
     dog = create(:dog, user: user)
     photo = create(:photo, photoable: dog)
 
     post '/graphql', params: { query: query(id: dog.id) }
-    json = JSON.parse(response.body)
-    data = json['data']['dog']
+
+    json = JSON.parse(response.body, symbolize_names: true)
+    data = json[:data][:dog]
 
     compare_gql_and_db_dogs(data, dog)
-    
-    gql_user = data['user']
+
+    gql_user = data[:user]
     compare_gql_and_db_users(gql_user, user)
-    
-    first_gql_photo = data['photos'].first
+
+    first_gql_photo = data[:photos].first
     compare_gql_and_db_photos(first_gql_photo, photo)
   end
 

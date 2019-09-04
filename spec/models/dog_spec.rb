@@ -17,4 +17,16 @@ RSpec.describe Dog, type: :model do
     it { should validate_numericality_of(:activity_level).is_greater_than_or_equal_to(0) }
     it { should validate_numericality_of(:activity_level).is_less_than_or_equal_to(2) }
   end
+
+  describe 'instance methods' do
+    before :each do
+      allow(Time).to receive(:now).and_return('Fri, 15 Apr 2018'.to_time)
+
+      @dog = create(:dog, birthdate: 'Fri, 15 Apr 2011')
+    end
+
+    it '#age' do
+      expect(@dog.age).to eq(7.000828216869614)
+    end
+  end
 end

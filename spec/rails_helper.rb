@@ -83,67 +83,72 @@ end
 #### helper methods for testing GraphQL responses
 ## DogType
 def dog_type_attributes
-  "
+  '
   id
   name
+  age
   breed
   weight
   birthdate
+  activityLevel
   shortDesc
   longDesc
-  "
+  '
 end
 
 def compare_gql_and_db_dogs(graphql_dog, db_dog)
   expect(graphql_dog).to include(
-    'id'         => db_dog.id.to_s,
-    'name'       => db_dog.name,
-    'breed'      => db_dog.breed,
-    'weight'     => db_dog.weight,
-    'birthdate'  => db_dog.birthdate.to_s,
-    'shortDesc'  => db_dog.short_desc,
-    'longDesc'   => db_dog.long_desc
+    id:            db_dog.id.to_s,
+    name:          db_dog.name,
+    breed:         db_dog.breed,
+    weight:        db_dog.weight,
+    birthdate:     db_dog.birthdate.to_s,
+    activityLevel: db_dog.activity_level,
+    shortDesc:     db_dog.short_desc,
+    longDesc:      db_dog.long_desc
   )
+
+  expect(graphql_dog[:age]).to be_within(0.1).of(db_dog.age)
 end
 
 ## UserType
 def user_type_attributes
-  "
+  '
   id
   firstName
   lastName
   email
   shortDesc
   longDesc
-  "
+  '
 end
 
 def compare_gql_and_db_users(graphql_user, db_user)
     expect(graphql_user).to include(
-    'id'          => db_user.id.to_s,
-    'firstName'   => db_user.first_name,
-    'lastName'    => db_user.last_name,
-    'email'       => db_user.email,
-    'shortDesc'   => db_user.short_desc,
-    'longDesc'    => db_user.long_desc
+    id:        db_user.id.to_s,
+    firstName: db_user.first_name,
+    lastName:  db_user.last_name,
+    email:     db_user.email,
+    shortDesc: db_user.short_desc,
+    longDesc:  db_user.long_desc
   )
 end
 
 ## PhotoType
 def photo_type_attributes
-  "
+  '
   id
   photoableId
   photoableType
   sourceUrl
-  "
+  '
 end
 
 def compare_gql_and_db_photos(graphql_photo, db_photo)
     expect(graphql_photo).to include(
-    'id'              => db_photo.id.to_s,
-    'photoableId'     => db_photo.photoable.id,
-    'photoableType'   => db_photo.photoable.class.to_s,
-    'sourceUrl'       => db_photo.source_url
+    id:            db_photo.id.to_s,
+    photoableId:   db_photo.photoable.id,
+    photoableType: db_photo.photoable.class.to_s,
+    sourceUrl:     db_photo.source_url
   )
 end
