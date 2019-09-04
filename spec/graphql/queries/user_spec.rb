@@ -25,11 +25,17 @@ RSpec.describe "user query", type: :request do
     compare_gql_and_db_photos(first_gql_photo, photo)
   end
 
-  it 'raises exception if no user with that id' do
+  it 'has an error if no user with that id' do
     user = create(:user)
 
-    expect { post '/graphql', params: { query: query(id: user.id + 1) } }
-    .to raise_error(ActiveRecord::RecordNotFound, "Couldn't find User with 'id'=#{user.id + 1}")
+    post '/graphql', params: { query: query(id: user.id + 1) }
+    json = JSON.parse(response.body, symbolize_names: true)
+
+    error_message = json[:errors][0][:message]
+    expect(error_message).to eq("Couldn't find User with 'id'=#{user.id + 1}")
+    
+    data = json[:data]
+    expect(data).to be_nil
   end
 
   def query(id:)
