@@ -1,7 +1,9 @@
 require 'factory_bot_rails'
+require 'faker'
 include FactoryBot::Syntax::Methods
 
 ##### Empty database
+Photo.destroy_all
 Dog.destroy_all
 User.destroy_all
 
@@ -14,3 +16,10 @@ dog21, dog22, dog23 = create_list(:dog, 3, user: user2)
 dog31 = create(:dog, user: user3)
 dog41 = create(:dog, user: user4)
 # user5 has no dogs
+
+#### Create photos
+create_list(:photo, 3, photoable: user1)
+create_list(:photo, 2, photoable: user2)
+
+create_list(:photo, 4, photoable: dog11)
+create_list(:photo, 2, photoable: dog22)
