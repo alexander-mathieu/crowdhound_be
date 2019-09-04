@@ -26,6 +26,7 @@ Object types are templates for resources in the database.  Each object type has 
 * longDesc - String
 * dogs - [ DogType ]
 * photos - [ PhotoType ]
+* location - [ LocationType ]
 
 #### DogType Attributes
 
@@ -45,6 +46,16 @@ Object types are templates for resources in the database.  Each object type has 
 
 * id
 * sourceUrl
+
+#### LocationType Attributes
+
+* id - ID
+* streetAddress - String
+* city - String
+* state - String
+* zipCode - String
+* lat - Float
+* long - Float
 
 ### Queries
 
@@ -71,6 +82,14 @@ Example request body:
       activityLevel
       shortDesc
       longDesc
+    }
+    location {
+            streetAddress
+            city
+            state
+            zipCode
+            lat
+            long
     }
   }
 }
@@ -110,6 +129,14 @@ Example of expected output:
             "longDesc": "Facilis illum eum. Ut et enim. Placeat nemo ut. Soluta molestias eligendi. Quidem et et. Culpa hic doloribus. Quo labore et. Nobis ab enim."
           }
         ]
+        "location": {
+                    "streetAddress": "90909 Anderson Dam",
+                    "city": "North Roosevelt",
+                    "state": "CO",
+                    "zipCode": "86670-4112",
+                    "lat": -30.1632856122983,
+                    "long": -2.99275875881602
+        }
       }
     ]
   }
