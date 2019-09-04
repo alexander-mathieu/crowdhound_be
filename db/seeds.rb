@@ -4,6 +4,7 @@ include FactoryBot::Syntax::Methods
 
 ##### Empty database
 Photo.destroy_all
+Location.destroy_all
 Dog.destroy_all
 User.destroy_all
 
@@ -23,3 +24,10 @@ create_list(:photo, 2, photoable: user2)
 
 create_list(:photo, 4, photoable: dog11)
 create_list(:photo, 2, photoable: dog22)
+
+#### Create locations
+create(:location, user: user1)
+create(:location, user: user2)
+create(:location, user: user3)
+create(:location, user: user5)
+# user4 has no location
