@@ -108,7 +108,7 @@ def compare_gql_and_db_dogs(graphql_dog, db_dog)
     longDesc:      db_dog.long_desc
   )
 
-  expect(graphql_dog[:age]).to be_within(0.1).of(db_dog.age)
+  expect(graphql_dog[:age]).to be_within(0.001).of(db_dog.age)
 end
 
 ## UserType
@@ -151,4 +151,30 @@ def compare_gql_and_db_photos(graphql_photo, db_photo)
     photoableType: db_photo.photoable.class.to_s,
     sourceUrl:     db_photo.source_url
   )
+end
+
+## LocationType
+def location_type_attributes
+  '
+  id
+  streetAddress
+  city
+  state
+  zipCode
+  lat
+  long
+  '
+end
+
+def compare_gql_and_db_locations(graphql_location, db_location)
+  expect(graphql_location).to include(
+    id:            db_location.id.to_s,
+    streetAddress: db_location.street_address,
+    city:          db_location.city,
+    state:         db_location.state,
+    zipCode:       db_location.zip_code,
+  )
+
+  expect(graphql_location[:lat]).to be_within(0.001).of(db_location.lat)
+  expect(graphql_location[:long]).to be_within(0.001).of(db_location.long)
 end

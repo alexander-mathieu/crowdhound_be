@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Dog, type: :model do
   describe 'relationships' do
     it { should belong_to :user }
+    it { should have_one(:location).through(:user) }
     it { should have_many :photos }
   end
 

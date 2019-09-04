@@ -1,5 +1,6 @@
 class Dog < ApplicationRecord
   belongs_to :user
+  has_one :location, through: :user
   has_many :photos, as: :photoable
 
   validates_presence_of :name, :breed, :birthdate, :weight, :activity_level
