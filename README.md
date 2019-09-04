@@ -26,6 +26,7 @@ Object types are templates for resources in the database.  Each object type has 
 * longDesc - String
 * dogs - [ DogType ]
 * photos - [ PhotoType ]
+* location - [ LocationType ]
 
 #### DogType Attributes
 
@@ -45,6 +46,16 @@ Object types are templates for resources in the database.  Each object type has 
 
 * id
 * sourceUrl
+
+#### LocationType Attributes
+
+* id - ID
+* streetAddress - String
+* city - String
+* state - String
+* zipCode - String
+* lat - Float
+* long - Float
 
 ### Queries
 
@@ -71,6 +82,14 @@ Example request body:
       activityLevel
       shortDesc
       longDesc
+    }
+    location {
+      streetAddress
+      city
+      state
+      zipCode
+      lat
+      long
     }
   }
 }
@@ -110,6 +129,14 @@ Example of expected output:
             "longDesc": "Facilis illum eum. Ut et enim. Placeat nemo ut. Soluta molestias eligendi. Quidem et et. Culpa hic doloribus. Quo labore et. Nobis ab enim."
           }
         ]
+        "location": {
+          "streetAddress": "90909 Anderson Dam",
+          "city": "North Roosevelt",
+          "state": "CO",
+          "zipCode": "86670-4112",
+          "lat": -30.1632856122983,
+          "long": -2.99275875881602
+        }
       }
     ]
   }
@@ -133,7 +160,7 @@ Returns a collection of dogs, with the option to filter by comma separated argum
  * _i.e. weightRange: [20, 40]_
 
 Filters may be used in any combination. For fields where only a single value is desired, enter the same value twice.
-* _i.e._ ageRange: [2, 2]_
+* _i.e. ageRange: [2, 2]_
 
 #### dog(id: <ID>)
 

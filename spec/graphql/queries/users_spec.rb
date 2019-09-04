@@ -1,10 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe "users query", type: :request do
+RSpec.describe 'users query', type: :request do
   it 'returns all users' do
     users = create_list(:user, 3)
     dogs = create_list(:dog, 2, user: users.first)
     photo = create(:photo, photoable: users.first)
+    location = create(:location, user: users.first)
 
     post '/graphql', params: { query: query }
 
@@ -27,6 +28,9 @@ RSpec.describe "users query", type: :request do
     gql_photos = first_gql_user[:photos]
     expect(gql_photos.count).to eq(1)
     compare_gql_and_db_photos(gql_photos.first, photo)
+
+    gql_location = first_gql_user[:location]
+    compare_gql_and_db_locations(gql_location, location)
   end
 
   def query
@@ -39,6 +43,9 @@ RSpec.describe "users query", type: :request do
           }
           photos {
             #{photo_type_attributes}
+          }
+          location {
+            #{location_type_attributes}
           }
         }
       }

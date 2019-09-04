@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_one :location
   has_many :dogs
   has_many :photos, as: :photoable
 

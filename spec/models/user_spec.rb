@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'relationships' do
+    it { should have_one :location }
     it { should have_many :dogs }
     it { should have_many :photos }
   end
