@@ -34,4 +34,16 @@ RSpec.describe GoogleGeocodingApiService do
       expect(api_response).to eq(expected)
     end
   end
+
+  it '#geocode throws error if bad API key' do
+    VCR.use_cassette('google_geocoding_api/geocode_bad_api_key', record: :new_episodes) do
+      location_string = '1331 17th St, Denver, CO 80202'
+      service = GoogleGeocodingApiService.new(location_string: location_string)
+
+      stub_const('ENV', {'GOOGLE_MAPS_API_KEY' => 'blah'})
+
+      expect { service.geocode }
+      .to raise_error(RuntimeError, 'GoogleGeocodingApiService error: The provided API key is invalid.')
+    end
+  end
 end
