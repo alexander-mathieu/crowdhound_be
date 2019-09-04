@@ -6,12 +6,12 @@ RSpec.describe "dog query", type: :request do
     dog = create(:dog, user: user)
 
     post '/graphql', params: { query: query(id: dog.id) }
-    json = JSON.parse(response.body)
-    data = json['data']['dog']
+    json = JSON.parse(response.body, symbolize_names: true)
+    data = json[:data][:dog]
 
     compare_gql_and_db_dogs(data, dog)
-    
-    actual_user = data['user']
+
+    actual_user = data[:user]
     compare_gql_and_db_users(actual_user, user)
   end
 
