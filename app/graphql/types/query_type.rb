@@ -28,21 +28,26 @@ module Types
 
     def dogs(**filters)
       if filters[:age_range]
-        raise 'Please provide an array with two integers or floating point numbers.' unless filters[:age_range].count == 2
-        filters[:birthdate] = (Time.zone.now - (filters[:age_range].max * 1.year.seconds) - 1.years.seconds)..(Time.zone.now - (filters[:age_range].min * 1.year.seconds))
-        filters.except!(:age_range)
+        raise GraphQL::ExecutionError, 'Please provide an array with two integers or floating point numbers for ageRange.' unless filters[:age_range].count == 2
+
+        one_year = 1.year.seconds
+        beginning_date = Time.zone.now - (filters[:age_range].max * one_year) - one_year
+        end_date = Time.zone.now - (filters[:age_range].min * one_year)
+
+        filters[:birthdate] = beginning_date..end_date
+        filters.delete(:age_range)
       end
 
       if filters[:activity_level_range]
-        raise 'Please provide an array with two integers.' unless filters[:activity_level_range].count == 2
+        raise GraphQL::ExecutionError, 'Please provide an array with two integers for activityLevelRange.' unless filters[:activity_level_range].count == 2
         filters[:activity_level] = filters[:activity_level_range].min..filters[:activity_level_range].max
-        filters.except!(:activity_level_range)
+        filters.delete(:activity_level_range)
       end
 
       if filters[:weight_range]
-        raise 'Please provide an array with two integers.' unless filters[:weight_range].count == 2
+        raise GraphQL::ExecutionError, 'Please provide an array with two integers for weightRange.' unless filters[:weight_range].count == 2
         filters[:weight] = filters[:weight_range].min..filters[:weight_range].max
-        filters.except!(:weight_range)
+        filters.delete(:weight_range)
       end
 
       Dog.where(filters)
