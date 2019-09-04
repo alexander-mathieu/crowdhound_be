@@ -10,12 +10,22 @@ RSpec.describe 'dogs query', type: :request do
 
     @u2 = create(:user)
     @d4 = create(:dog, user: @u2, breed: 'Rat Terrier', activity_level: 0, birthdate: '2015-03-18', weight: 20)
-    @d5 = create(:dog, user: @u2, breed: 'Malinois', activity_level: 1, birthdate: '2010-07-01', weight: 60)
+    @d5 = create(:dog, user: @u2, breed: 'Malinois', activity_level: 1, birthdate: '2010-07-01', weight: 75)
     @d6 = create(:dog, user: @u2, breed: 'Tibetan Terrier', activity_level: 2, birthdate: '2003-10-04', weight: 100)
   end
 
   it 'returns all dogs' do
-    query = "query { dogs { #{dog_type_attributes} user { #{user_type_attributes} } photos { #{photo_type_attributes} }}}"
+    query = "query {
+               dogs {
+                 #{dog_type_attributes}
+                 user {
+                   #{user_type_attributes}
+                 }
+                 photos {
+                   #{photo_type_attributes}
+                 }
+               }
+             }"
 
     post '/graphql', params: { query: query }
 
@@ -36,7 +46,7 @@ RSpec.describe 'dogs query', type: :request do
   end
 
   it 'returns all dogs filtered by activity level' do
-    query = "query { dogs(activityLevelRange: [0, 1]) { #{dog_type_attributes} user { #{user_type_attributes} }}}"
+    query = query('activityLevelRange: [0, 1]')
 
     post '/graphql', params: { query: query }
 
@@ -52,7 +62,7 @@ RSpec.describe 'dogs query', type: :request do
   end
 
   it 'returns all dogs filtered by weight' do
-    query = "query { dogs(weightRange: [60, 100]) { #{dog_type_attributes} user { #{user_type_attributes} }}}"
+    query = query('weightRange: [60, 100]')
 
     post '/graphql', params: { query: query }
 
@@ -68,7 +78,7 @@ RSpec.describe 'dogs query', type: :request do
   end
 
   it 'returns all dogs filtered by breed' do
-    query = "query { dogs(breed: [\"Rat Terrier\", \"Tibetan Terrier\"]) { #{dog_type_attributes} user { #{user_type_attributes} }}}"
+    query = query("breed: [\"Rat Terrier\", \"Tibetan Terrier\"]")
 
     post '/graphql', params: { query: query }
 
@@ -84,7 +94,7 @@ RSpec.describe 'dogs query', type: :request do
   end
 
   it 'returns all dogs filtered by age' do
-    query = "query { dogs(ageRange: [4, 10]) { #{dog_type_attributes} user { #{user_type_attributes} }}}"
+    query = query('ageRange: [4, 10]')
 
     post '/graphql', params: { query: query }
 
@@ -99,20 +109,50 @@ RSpec.describe 'dogs query', type: :request do
     expect(data[3][:age]).to be_between(4, 10).inclusive
   end
 
-  it 'raises an exception when an incorrect range is passed to a filter' do
-    activity_level_query = "query { dogs(activityLevelRange: [1]) { #{dog_type_attributes} user { #{user_type_attributes} }}}"
+  it 'raises an exception when an incorrect range is passed to activityLevelRange' do
+    query = query('activityLevelRange: [2]')
 
-    expect { post '/graphql', params: { query: activity_level_query } }
-    .to raise_error(RuntimeError, 'Please provide an array with two integers.')
+    post '/graphql', params: { query: query }
 
-    weight_query = "query { dogs(weightRange: [100]) { #{dog_type_attributes} user { #{user_type_attributes} }}}"
+    json = JSON.parse(response.body, symbolize_names: true)
+    error_message = json[:errors][0][:message]
 
-    expect { post '/graphql', params: { query: weight_query } }
-    .to raise_error(RuntimeError, 'Please provide an array with two integers.')
+    expect(error_message).to eq('Please provide an array with two integers for activityLevelRange.')
+  end
 
-    age_query = "query { dogs(ageRange: [10]) { #{dog_type_attributes} user { #{user_type_attributes} }}}"
+  it 'raises an exception when an incorrect range is passed to weightRange' do
+    query = query('weightRange: [40]')
 
-    expect { post '/graphql', params: { query: age_query } }
-    .to raise_error(RuntimeError, 'Please provide an array with two integers or floating point numbers.')
+    post '/graphql', params: { query: query }
+
+    json = JSON.parse(response.body, symbolize_names: true)
+    error_message = json[:errors][0][:message]
+
+    expect(error_message).to eq('Please provide an array with two integers for weightRange.')
+  end
+
+  it 'raises an exception when an incorrect range is passed to ageRange' do
+    query = query('ageRange: [2]')
+
+    post '/graphql', params: { query: query }
+
+    json = JSON.parse(response.body, symbolize_names: true)
+    error_message = json[:errors][0][:message]
+
+    expect(error_message).to eq('Please provide an array with two integers or floating point numbers for ageRange.')
+  end
+
+  def query(argument)
+    "query {
+      dogs(#{argument}) {
+        #{dog_type_attributes}
+        user {
+          #{user_type_attributes}
+        }
+        photos {
+          #{photo_type_attributes}
+        }
+      }
+    }"
   end
 end
