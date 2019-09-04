@@ -6,6 +6,7 @@ RSpec.describe 'dogs query', type: :request do
     @d1 = create(:dog, user: @u1, breed: 'Rat Terrier', activity_level: 0, birthdate: '2015-03-18', weight: 20)
     @d2 = create(:dog, user: @u1, breed: 'Malinois', activity_level: 1, birthdate: '2010-07-01' , weight: 60)
     @d3 = create(:dog, user: @u1, breed: 'Tibetan Terrier', activity_level: 2, birthdate: '2002-10-04', weight: 100)
+    @p1 = create(:photo, photoable: @d1)
 
     @u2 = create(:user)
     @d4 = create(:dog, user: @u2, breed: 'Rat Terrier', activity_level: 0, birthdate: '2015-03-18', weight: 20)
@@ -14,7 +15,7 @@ RSpec.describe 'dogs query', type: :request do
   end
 
   it 'returns all dogs' do
-    query = "query { dogs { #{dog_type_attributes} user { #{user_type_attributes} }}}"
+    query = "query { dogs { #{dog_type_attributes} user { #{user_type_attributes} } photos { #{photo_type_attributes} }}}"
 
     post '/graphql', params: { query: query }
 
@@ -22,10 +23,16 @@ RSpec.describe 'dogs query', type: :request do
     data = json[:data][:dogs]
 
     expect(data.count).to eq(6)
-    compare_gql_and_db_dogs(data.first, @d1)
 
-    actual_user = data.first[:user]
-    compare_gql_and_db_users(actual_user, @u1)
+    first_gql_dog = data.first
+    compare_gql_and_db_dogs(first_gql_dog, @d1)
+
+    gql_user_of_first_dog = first_gql_dog[:user]
+    compare_gql_and_db_users(gql_user_of_first_dog, @u1)
+
+    gql_photos = first_gql_dog[:photos]
+    expect(gql_photos.count).to eq(1)
+    compare_gql_and_db_photos(gql_photos.first, @p1)
   end
 
   it 'returns all dogs filtered by activity level' do

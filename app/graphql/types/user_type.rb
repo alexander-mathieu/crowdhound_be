@@ -7,5 +7,6 @@ module Types
     field :short_desc, String, null: true
     field :long_desc, String, null: true
     field :dogs, [Types::DogType], null: true
+    field :photos, [Types::PhotoType], null: true
   end
 end

@@ -45,6 +45,22 @@ GEM
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     arel (9.0.0)
+    aws-eventstream (1.0.3)
+    aws-partitions (1.207.0)
+    aws-sdk-core (3.65.1)
+      aws-eventstream (~> 1.0, >= 1.0.2)
+      aws-partitions (~> 1.0)
+      aws-sigv4 (~> 1.1)
+      jmespath (~> 1.0)
+    aws-sdk-kms (1.24.0)
+      aws-sdk-core (~> 3, >= 3.61.1)
+      aws-sigv4 (~> 1.1)
+    aws-sdk-s3 (1.48.0)
+      aws-sdk-core (~> 3, >= 3.61.1)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.1)
+    aws-sigv4 (1.1.0)
+      aws-eventstream (~> 1.0, >= 1.0.2)
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     builder (3.2.3)
@@ -78,6 +94,7 @@ GEM
     hashdiff (1.0.0)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
+    jmespath (1.4.0)
     json (2.2.0)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -187,9 +204,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-sdk-s3
   bootsnap (>= 1.1.0)
   byebug
-  factory_bot
   factory_bot_rails
   faker
   faraday
