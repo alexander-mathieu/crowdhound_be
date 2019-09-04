@@ -19,4 +19,19 @@ RSpec.describe GoogleGeocodingApiService do
       expect(location[:lng]).to be_within(0.001).of(-104.996928)
     end
   end
+
+  it '#geocode has no results if bad location_string' do
+    VCR.use_cassette('google_geocoding_api/geocode_no_results', record: :new_episodes) do
+      location_string = 'skjaljkfdaljda'
+      service = GoogleGeocodingApiService.new(location_string: location_string)
+
+      api_response = service.geocode
+      expected = {
+        results: [],
+        status: "ZERO_RESULTS"
+      }
+
+      expect(api_response).to eq(expected)
+    end
+  end
 end
