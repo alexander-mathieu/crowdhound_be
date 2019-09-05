@@ -5,7 +5,16 @@ RSpec.describe 'users query', type: :request do
     users = create_list(:user, 3)
     dogs = create_list(:dog, 2, user: users.first)
     photo = create(:photo, photoable: users.first)
-    location = create(:location, user: users.first)
+
+    VCR.use_cassette('user_query_location_create') do
+      @location = Location.create!(
+        user: users.first,
+        street_address: '1331 17th Street',
+        city: 'Denver',
+        state: 'CO',
+        zip_code: '80202'
+      )
+    end
 
     post '/graphql', params: { query: query }
 
@@ -30,7 +39,7 @@ RSpec.describe 'users query', type: :request do
     compare_gql_and_db_photos(gql_photos.first, photo)
 
     gql_location = first_gql_user[:location]
-    compare_gql_and_db_locations(gql_location, location)
+    compare_gql_and_db_locations(gql_location, @location)
   end
 
   def query
