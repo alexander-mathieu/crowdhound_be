@@ -1,6 +1,4 @@
 class Dog < ApplicationRecord
-  include Distanceable
-  
   belongs_to :user
   has_one :location, through: :user
   has_many :photos, as: :photoable

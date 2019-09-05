@@ -29,32 +29,5 @@ RSpec.describe Dog, type: :model do
     it '#age' do
       expect(@dog.age).to eq(7.000828216869614)
     end
-    
-    it '#distance_to calculates the distance to a user in miles' do
-      user_instance = create(:user)
-      location = instance_double("Location", lat: 39.75113810000001, long: -104.996928)
-      dog_instance = create(:dog, user: user_instance)
-      allow(dog_instance).to receive(:location) { location }
-      
-      other_user = create(:user)
-      other_location = instance_double("Location", lat: 39.7532, long: -105.0002)
-      allow(other_user).to receive(:location) { other_location }
-  
-      expect(dog_instance.distance_to(other_user)).to be_within(0.05).of(0.22)
-    end
-  
-    it '#distance_to calculates the distance to a dog in miles' do
-      user_instance = create(:user)
-      location = instance_double("Location", lat: 39.75113810000001, long: -104.996928)
-      dog_instance = create(:dog, user: user_instance)
-      allow(dog_instance).to receive(:location) { location }
-  
-      other_user = create(:user)
-      other_location = instance_double("Location", lat: 39.7532, long: -105.0002)
-      other_dog = create(:dog, user: other_user)
-      allow(other_dog).to receive(:location) { other_location }
-  
-      expect(dog_instance.distance_to(other_dog)).to be_within(0.05).of(0.22)
-    end
   end
 end
