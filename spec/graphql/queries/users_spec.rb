@@ -6,7 +6,7 @@ RSpec.describe 'users query', type: :request do
     dogs = create_list(:dog, 2, user: users.first)
     photo = create(:photo, photoable: users.first)
 
-    VCR.use_cassette('user_query_location_create') do
+    VCR.use_cassette('users_query_location_create') do
       @location = Location.create!(
         user: users.first,
         street_address: '1331 17th Street',
