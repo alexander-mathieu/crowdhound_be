@@ -16,24 +16,26 @@ RSpec.describe User, type: :model do
 
   describe 'instance methods' do
     it '#distance_to calculates the distance to a user in miles' do
-      current_user = create(:user)
-      create(:location, user: current_user, lat: 39.75113810000001, long: -104.996928)
+      user_instance = create(:user)
+      location = instance_double("Location", lat: 39.75113810000001, long: -104.996928)
+      allow(user_instance).to receive(:location) { location }
 
       other_user = create(:user)
-      create(:location, user: other_user, lat: 39.7532, long: -105.0002)
+      other_location = instance_double("Location", lat: 39.7532, long: -105.0002)
+      allow(other_user).to receive(:location) { other_location }
 
-      expect(current_user.distance_to(other_user)).to be_within(0.05).of(0.22) # 0.22 miles = 0.36 km
+      expect(user_instance.distance_to(other_user)).to be_within(0.05).of(0.22)
     end
 
     it '#distance_to calculates the distance to a dog in miles' do
-      current_user = create(:user)
-      create(:location, user: current_user, lat: 39.75113810000001, long: -104.996928)
+      user_instance = create(:user)
+      create(:location, user: user_instance, lat: 39.75113810000001, long: -104.996928)
 
       other_user = create(:user)
       create(:location, user: other_user, lat: 39.7532, long: -105.0002)
       dog = create(:dog, user: other_user)
 
-      expect(current_user.distance_to(dog)).to be_within(0.05).of(0.22) # 0.22 miles = 0.36 km
+      expect(user_instance.distance_to(dog)).to be_within(0.05).of(0.22)
     end
   end
 end
