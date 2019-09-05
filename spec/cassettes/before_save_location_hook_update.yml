@@ -1,0 +1,116 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=15330%20East%20120th%20Place,%20Commerce%20City,%20CO%2080022&key=<GOOGLE_MAPS_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 05 Sep 2019 19:26:58 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=24
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,43,39"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "15330",
+                       "short_name" : "15330",
+                       "types" : [ "street_number" ]
+                    },
+                    {
+                       "long_name" : "East 120th Place",
+                       "short_name" : "E 120th Pl",
+                       "types" : [ "route" ]
+                    },
+                    {
+                       "long_name" : "Commerce City",
+                       "short_name" : "Commerce City",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Adams County",
+                       "short_name" : "Adams County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "Colorado",
+                       "short_name" : "CO",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    },
+                    {
+                       "long_name" : "80022",
+                       "short_name" : "80022",
+                       "types" : [ "postal_code" ]
+                    }
+                 ],
+                 "formatted_address" : "15330 E 120th Pl, Commerce City, CO 80022, USA",
+                 "geometry" : {
+                    "location" : {
+                       "lat" : 39.9157166,
+                       "lng" : -104.7692923
+                    },
+                    "location_type" : "RANGE_INTERPOLATED",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 39.9170655802915,
+                          "lng" : -104.7679433197085
+                       },
+                       "southwest" : {
+                          "lat" : 39.9143676197085,
+                          "lng" : -104.7706412802915
+                       }
+                    }
+                 },
+                 "place_id" : "Ei4xNTMzMCBFIDEyMHRoIFBsLCBDb21tZXJjZSBDaXR5LCBDTyA4MDAyMiwgVVNBIhsSGQoUChIJAY8qVrpubIcRh0YLdtHJU24Q4nc",
+                 "types" : [ "street_address" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Thu, 05 Sep 2019 19:26:57 GMT
+recorded_with: VCR 5.0.0
