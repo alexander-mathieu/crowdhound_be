@@ -1,0 +1,125 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=1331%2017th%20Street,%20Denver,%20CO%2080202&key=<GOOGLE_MAPS_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Thu, 05 Sep 2019 19:26:46 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=29
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,43,39"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "1331",
+                       "short_name" : "1331",
+                       "types" : [ "street_number" ]
+                    },
+                    {
+                       "long_name" : "17th Street",
+                       "short_name" : "17th St",
+                       "types" : [ "route" ]
+                    },
+                    {
+                       "long_name" : "Central",
+                       "short_name" : "Central",
+                       "types" : [ "neighborhood", "political" ]
+                    },
+                    {
+                       "long_name" : "Denver",
+                       "short_name" : "Denver",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Denver County",
+                       "short_name" : "Denver County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "Colorado",
+                       "short_name" : "CO",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    },
+                    {
+                       "long_name" : "80202",
+                       "short_name" : "80202",
+                       "types" : [ "postal_code" ]
+                    }
+                 ],
+                 "formatted_address" : "1331 17th St, Denver, CO 80202, USA",
+                 "geometry" : {
+                    "location" : {
+                       "lat" : 39.75113810000001,
+                       "lng" : -104.996928
+                    },
+                    "location_type" : "ROOFTOP",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 39.75248708029151,
+                          "lng" : -104.9955790197085
+                       },
+                       "southwest" : {
+                          "lat" : 39.74978911970851,
+                          "lng" : -104.9982769802915
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJo13jHFF5bIcRtibnkeRc7Oc",
+                 "plus_code" : {
+                    "compound_code" : "Q223+F6 Denver, Colorado, United States",
+                    "global_code" : "85FQQ223+F6"
+                 },
+                 "types" : [ "street_address" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Thu, 05 Sep 2019 19:26:45 GMT
+recorded_with: VCR 5.0.0
