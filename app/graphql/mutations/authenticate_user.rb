@@ -5,7 +5,7 @@ module Mutations
     argument :auth, Types::AuthenticationInput, required: true
     argument :api_key, String, required: true
 
-    field :user, Types::UserType, null: true
+    field :current_user, Types::CurrentUserType, null: true
 
     def resolve(auth:, api_key:)
       return unless api_key == ENV['EXPRESS_API_KEY']
@@ -20,7 +20,7 @@ module Mutations
         google_token: auth[:token]
       )
 
-      { user: user}
+      { current_user: user}
     end
   end
 end
