@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'dogs query', type: :request do
   before :each do
+    mock_time = Time.parse('2019-07-07 11:45:00 -0600')
+    allow(Time).to receive(:now).and_return(mock_time)
+
     @u1 = create(:user)
     @d1 = create(:dog, user: @u1, breed: 'Rat Terrier', activity_level: 0, birthdate: '2015-03-18', weight: 20)
     @d2 = create(:dog, user: @u1, breed: 'Malinois', activity_level: 1, birthdate: '2010-07-01' , weight: 60)

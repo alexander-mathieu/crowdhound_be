@@ -21,9 +21,9 @@ RSpec.describe Dog, type: :model do
 
   describe 'instance methods' do
     before :each do
-      allow(Time).to receive(:now).and_return('Fri, 15 Apr 2018'.to_time)
+      allow(Time).to receive(:now).and_return('15 Apr 2018'.to_time)
 
-      @dog = create(:dog, birthdate: 'Fri, 15 Apr 2011')
+      @dog = create(:dog, birthdate: '15 Apr 2011')
     end
 
     it '#age' do

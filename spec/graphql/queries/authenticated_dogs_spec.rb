@@ -3,6 +3,9 @@ require 'rails_helper'
 RSpec.describe 'authenticated dogs query', type: :request do
   before :each do
     VCR.use_cassette('authenticated_dogs_query_spec/before_each') do
+      mock_time = Time.parse('2019-07-07 11:45:00 -0600')
+      allow(Time).to receive(:now).and_return(mock_time)
+
       @current_user = create(:user)
       Location.create!(
         user: @current_user,
@@ -38,7 +41,7 @@ RSpec.describe 'authenticated dogs query', type: :request do
       @d6 = create(:dog, user: @u2, breed: 'Tibetan Terrier', activity_level: 2, birthdate: '2003-10-04', weight: 100)
       
       @u3 = create(:user) # no location -- dogs won't appear
-      @d7 = create(:dog, user: @u3, breed: 'Tibetan Terrier', activity_level: 2, birthdate: '2003-10-04', weight: 100)
+      @d7 = create(:dog, user: @u3, breed: 'Tibetan Terrier', activity_level: 0, birthdate: '2015-03-18', weight: 100)
     end
   end
 
