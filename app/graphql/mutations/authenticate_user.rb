@@ -9,7 +9,9 @@ module Mutations
     field :new, Boolean, null: true
 
     def resolve(auth:, api_key:)
-      return unless api_key == ENV['EXPRESS_API_KEY']
+      unless api_key == ENV['EXPRESS_API_KEY']
+        raise GraphQL::ExecutionError, 'Invalid API key'
+      end
 
       user = User.find_or_initialize_by(
         email: auth[:email]
