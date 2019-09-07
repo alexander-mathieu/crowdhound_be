@@ -26,13 +26,7 @@ module Types
     end
 
     def current_user
-      user = context[:current_user]
-
-      unless user
-        raise GraphQL::ExecutionError, 'No user found with that token'
-      end
-
-      user
+      context[:current_user]
     end
 
     # Dog Queries
