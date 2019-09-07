@@ -15,7 +15,6 @@ class GraphqlController < ApplicationController
 
   private
 
-  # Get current user from token stored in session
   def current_user
     google_token = params[:google_token]
 
