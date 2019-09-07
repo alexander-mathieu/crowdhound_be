@@ -39,5 +39,15 @@ RSpec.describe User, type: :model do
 
       expect(user_instance.distance_to(dog_instance)).to be_within(0.05).of(0.22)
     end
+
+    it "#distance_to returns nil if the target user or dog doesn't have a location" do
+      user_instance = create(:user)
+      location = instance_double("Location", lat: 39.75113810000001, long: -104.996928)
+      allow(user_instance).to receive(:location) { location }
+
+      other_user = create(:user)
+
+      expect(user_instance.distance_to(other_user)).to be_nil
+    end
   end
 end

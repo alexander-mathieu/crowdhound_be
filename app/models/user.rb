@@ -7,6 +7,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false }
 
   def distance_to(user_or_dog)
+    return if !user_or_dog.location
+    
     # Formulas based on http://jonisalonen.com/2014/computing-distance-between-coordinates-can-be-simple-and-fast/
 
     x = self.location.lat - user_or_dog.location.lat
