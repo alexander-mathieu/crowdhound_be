@@ -62,7 +62,13 @@ module Types
         filters.delete(:weight_range)
       end
 
-      Dog.where(filters)
+      dogs = if current_user && current_user.location
+               Dog.sorted_by_distance
+             else
+               Dog.all
+             end
+
+      dogs.where(filters)
     end
 
     field :dog, Types::DogType, null: false,
