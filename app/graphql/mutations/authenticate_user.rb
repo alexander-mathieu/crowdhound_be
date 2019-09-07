@@ -21,7 +21,7 @@ module Mutations
 
       user.first_name = auth[:first_name]
       user.last_name = auth[:last_name]
-      user.google_token = auth[:token]
+      user.google_token = auth[:google_token]
 
       user.save
 

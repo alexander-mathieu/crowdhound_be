@@ -85,7 +85,7 @@ RSpec.describe 'authenticate user mutation', type: :request do
           firstName: \"#{user.first_name}\"
           lastName: \"#{user.last_name}\"
           email: \"#{user.email}\"
-          token: \"#{user.google_token}\"
+          googleToken: \"#{user.google_token}\"
         }
       ) {
         currentUser {
