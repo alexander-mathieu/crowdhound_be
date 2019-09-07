@@ -71,7 +71,7 @@ Object types are templates for resources in the database.  Each object type has 
 * firstName - String (required)
 * lastName - String (required)
 * email - String (required)
-* token - String (required)
+* googleToken - String (required)
 
 ### Queries
 
@@ -85,8 +85,6 @@ Example request body:
   users {
     id
     firstName
-    lastName
-    email
     shortDesc
     longDesc
     dogs {
@@ -98,14 +96,6 @@ Example request body:
       activityLevel
       shortDesc
       longDesc
-    }
-    location {
-      streetAddress
-      city
-      state
-      zipCode
-      lat
-      long
     }
   }
 }
@@ -119,8 +109,6 @@ Example of expected output:
       {
         "id": "11",
         "firstName": "Katheleen",
-        "lastName": "Brekke",
-        "email": "concetta.goodwin@mclaughlin.biz",
         "shortDesc": "Yr kogi street yuccie meditation offal venmo dreamcatcher blog roof heirloom sustainable paleo umami synth.",
         "longDesc": "Wolf kombucha pop-up cornhole venmo vinegar. Literally letterpress flexitarian listicle swag williamsburg. Disrupt asymmetrical cray waistcoat tacos ennui bitters. Letterpress try-hard small batch 8-bit diy flannel chia vegan. Drinking fashion axe chicharrones shoreditch cray literally poutine pbr&b. Twee pbr&b single-origin coffee waistcoat helvetica art party hashtag try-hard. Church-key poutine locavore trust fund. Occupy hoodie jean shorts godard. Polaroid ethical before they sold out aesthetic microdosing. Blog green juice leggings retro forage helvetica franzen craft beer.",
         "dogs": [
@@ -145,14 +133,6 @@ Example of expected output:
             "longDesc": "Facilis illum eum. Ut et enim. Placeat nemo ut. Soluta molestias eligendi. Quidem et et. Culpa hic doloribus. Quo labore et. Nobis ab enim."
           }
         ]
-        "location": {
-          "streetAddress": "90909 Anderson Dam",
-          "city": "North Roosevelt",
-          "state": "CO",
-          "zipCode": "86670-4112",
-          "lat": -30.1632856122983,
-          "long": -2.99275875881602
-        }
       }
     ]
   }
@@ -165,7 +145,7 @@ Returns a single user having the specified ID. *ID argument is required.*
 
 #### currentUser
 
-Returns an authenticated user, based on the specified googleToken. Has additional information not available in the basic user query, such as lastName, email and location.
+Returns an authenticated user, based on the specified googleToken. Returns null if no user has the specified googleToken. Has additional information not available in the basic user query, such as lastName, email and location.
 
 #### dogs(<filters>)
 
@@ -193,14 +173,14 @@ Mutations are requests to modify resources in the database.
 #### authenticateUser
 
 Finds or creates a user in the database. Returns a CurrentUserType object, as well as a boolean attribute `new`, based on whether or not the user was found or created. Required arguments include:
-* apiKey - String
+* apiKey - String (used to ensure that requests only come from the Express app -- not random HTTP requests)
 * auth - AuthenticationInputType
 
 Example request:
 ```
 mutation {
   authenticateUser(
-    apiKey: "Express API key",
+    apiKey: <EXPRESS API KEY>,
     auth: {
       firstName: "Bob",
       lastName: "Smith III",
