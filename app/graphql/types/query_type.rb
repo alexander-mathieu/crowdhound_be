@@ -63,7 +63,7 @@ module Types
       end
 
       dogs = if current_user && current_user.location
-               Dog.sorted_by_distance
+               Dog.sorted_by_distance(current_user)
              else
                Dog.all
              end
