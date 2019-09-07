@@ -5,7 +5,7 @@ class Dog < ApplicationRecord
   
   validates_presence_of :name, :breed, :birthdate, :weight, :activity_level
   validates :activity_level, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 2 }
-  
+
   def age
     (Time.zone.now - birthdate.to_time) / 1.year.seconds
   end
@@ -22,7 +22,7 @@ class Dog < ApplicationRecord
     select("dogs.*, #{degree_length_in_mi} * |/ (#{x} ^ 2 + #{y} ^ 2) AS distance")
     .joins(user: :location)
     .where.not(users: { id: user_instance.id })
-    .order('distance')
+    .order('distance', :id)
     .limit(limit)
   end
 end

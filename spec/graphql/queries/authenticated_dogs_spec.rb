@@ -21,8 +21,8 @@ RSpec.describe 'authenticated dogs query', type: :request do
         zip_code: '80022'
       )
       @d1 = create(:dog, user: @u1, breed: 'Rat Terrier', activity_level: 0, birthdate: '2015-03-18', weight: 20)
-      # @d2 = create(:dog, user: @u1, breed: 'Malinois', activity_level: 1, birthdate: '2010-07-01' , weight: 60)
-      # @d3 = create(:dog, user: @u1, breed: 'Tibetan Terrier', activity_level: 2, birthdate: '2002-10-04', weight: 100)
+      @d2 = create(:dog, user: @u1, breed: 'Malinois', activity_level: 1, birthdate: '2010-07-01' , weight: 60)
+      @d3 = create(:dog, user: @u1, breed: 'Tibetan Terrier', activity_level: 2, birthdate: '2002-10-04', weight: 100)
       @p1 = create(:photo, photoable: @d1)
 
       @u2 = create(:user) # 0.89 miles away
@@ -34,8 +34,8 @@ RSpec.describe 'authenticated dogs query', type: :request do
         zip_code: '80203'
       )
       @d4 = create(:dog, user: @u2, breed: 'Rat Terrier', activity_level: 0, birthdate: '2015-03-18', weight: 20)
-      # @d5 = create(:dog, user: @u2, breed: 'Malinois', activity_level: 1, birthdate: '2010-07-01', weight: 75)
-      # @d6 = create(:dog, user: @u2, breed: 'Tibetan Terrier', activity_level: 2, birthdate: '2003-10-04', weight: 100)
+      @d5 = create(:dog, user: @u2, breed: 'Malinois', activity_level: 1, birthdate: '2010-07-01', weight: 75)
+      @d6 = create(:dog, user: @u2, breed: 'Tibetan Terrier', activity_level: 2, birthdate: '2003-10-04', weight: 100)
       
       @u3 = create(:user) # no location
       @d7 = create(:dog, user: @u3)
@@ -61,7 +61,7 @@ RSpec.describe 'authenticated dogs query', type: :request do
     json = JSON.parse(response.body, symbolize_names: true)
     data = json[:data][:dogs]
 
-    expect(data.count).to eq(2)
+    expect(data.count).to eq(6)
 
     first_gql_dog = data.first
     compare_gql_and_db_dogs(first_gql_dog, @d4)
