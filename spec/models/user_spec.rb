@@ -49,5 +49,15 @@ RSpec.describe User, type: :model do
 
       expect(user_instance.distance_to(other_user)).to be_nil
     end
+
+    it "#distance_to returns nil if the user itself doesn't have a location" do
+      user_instance = create(:user)
+
+      other_user = create(:user)
+      other_location = instance_double("Location", lat: 39.7532, long: -105.0002)
+      allow(other_user).to receive(:location) { other_location }
+
+      expect(user_instance.distance_to(other_user)).to be_nil
+    end
   end
 end
