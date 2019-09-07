@@ -15,7 +15,11 @@ class Location < ApplicationRecord
 
   def request_new_latlong
     response = google_geocoding_api_service.geocode
-    response[:results].first[:geometry][:location]
+    if response[:results].first
+      response[:results].first[:geometry][:location]
+    else
+      raise 'Invalid address entered'
+    end
   end
 
   def google_geocoding_api_service
