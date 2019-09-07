@@ -9,4 +9,20 @@ class Dog < ApplicationRecord
   def age
     (Time.zone.now - birthdate.to_time) / 1.year.seconds
   end
+
+  def self.sorted_by_distance(user_instance, limit = nil)
+    user_lat = user_instance.location.lat
+    user_long = user_instance.location.long
+    user_cos = Math.cos(user_lat * Math::PI / 180)
+
+    degree_length_in_mi = 110.25 / 1.60934
+    x = "(#{user_lat} - locations.lat)"
+    y = "((#{user_long} - locations.long) * #{user_cos})"
+
+    select("dogs.*, #{degree_length_in_mi} * |/ (#{x} ^ 2 + #{y} ^ 2) AS distance")
+    .joins(user: :location)
+    .where.not(users: { id: user_instance.id })
+    .order('distance')
+    .limit(limit)
+  end
 end
