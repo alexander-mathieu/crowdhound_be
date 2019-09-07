@@ -37,12 +37,12 @@ RSpec.describe 'authenticated dogs query', type: :request do
       @d5 = create(:dog, user: @u2, breed: 'Malinois', activity_level: 1, birthdate: '2010-07-01', weight: 75)
       @d6 = create(:dog, user: @u2, breed: 'Tibetan Terrier', activity_level: 2, birthdate: '2003-10-04', weight: 100)
       
-      @u3 = create(:user) # no location
-      @d7 = create(:dog, user: @u3)
+      @u3 = create(:user) # no location -- dogs won't appear
+      @d7 = create(:dog, user: @u3, breed: 'Tibetan Terrier', activity_level: 2, birthdate: '2003-10-04', weight: 100)
     end
   end
 
-  it 'returns all dogs, including their distance to the current user' do
+  it 'returns dogs (that have a location) with their distances to the current user' do
     query = "query {
                dogs {
                  #{dog_type_attributes}
@@ -56,7 +56,7 @@ RSpec.describe 'authenticated dogs query', type: :request do
                }
              }"
 
-    post '/graphql', params: { google_token: @current_user.google_token, query: query }
+    make_post_request(query)
 
     json = JSON.parse(response.body, symbolize_names: true)
     data = json[:data][:dogs]
@@ -74,10 +74,10 @@ RSpec.describe 'authenticated dogs query', type: :request do
     expect(gql_photos.count).to eq(0)
   end
 
-  xit 'returns all dogs filtered by activity level' do
+  it 'returns dogs (that have a location) filtered by activity level' do
     query = query('activityLevelRange: [0, 1]')
 
-    post '/graphql', params: { query: query }
+    make_post_request(query)
 
     json = JSON.parse(response.body, symbolize_names: true)
     data = json[:data][:dogs]
@@ -90,10 +90,10 @@ RSpec.describe 'authenticated dogs query', type: :request do
     expect(data[3][:activityLevel]).to eq(0).or eq(1)
   end
 
-  xit 'returns all dogs filtered by weight' do
+  it 'returns dogs (that have a location) filtered by weight' do
     query = query('weightRange: [60, 100]')
 
-    post '/graphql', params: { query: query }
+    make_post_request(query)
 
     json = JSON.parse(response.body, symbolize_names: true)
     data = json[:data][:dogs]
@@ -106,10 +106,10 @@ RSpec.describe 'authenticated dogs query', type: :request do
     expect(data[3][:weight]).to be_between(60, 100).inclusive
   end
 
-  xit 'returns all dogs filtered by breed' do
+  it 'returns dogs (that have a location) filtered by breed' do
     query = query("breed: [\"Rat Terrier\", \"Tibetan Terrier\"]")
 
-    post '/graphql', params: { query: query }
+    make_post_request(query)
 
     json = JSON.parse(response.body, symbolize_names: true)
     data = json[:data][:dogs]
@@ -122,10 +122,10 @@ RSpec.describe 'authenticated dogs query', type: :request do
     expect(data[3][:breed]).to eq('Rat Terrier').or eq('Tibetan Terrier')
   end
 
-  xit 'returns all dogs filtered by age' do
+  it 'returns dogs (that have a location) filtered by age' do
     query = query('ageRange: [4, 10]')
 
-    post '/graphql', params: { query: query }
+    make_post_request(query)
 
     json = JSON.parse(response.body, symbolize_names: true)
     data = json[:data][:dogs]
@@ -138,10 +138,10 @@ RSpec.describe 'authenticated dogs query', type: :request do
     expect(data[3][:age]).to be_between(4, 10).inclusive
   end
 
-  xit 'has an error when an incorrect range is passed to activityLevelRange' do
+  it 'has an error when an incorrect range is passed to activityLevelRange' do
     query = query('activityLevelRange: [2]')
 
-    post '/graphql', params: { query: query }
+    make_post_request(query)
 
     json = JSON.parse(response.body, symbolize_names: true)
 
@@ -152,10 +152,10 @@ RSpec.describe 'authenticated dogs query', type: :request do
     expect(data).to be_nil
   end
 
-  xit 'has an error when an incorrect range is passed to weightRange' do
+  it 'has an error when an incorrect range is passed to weightRange' do
     query = query('weightRange: [40]')
 
-    post '/graphql', params: { query: query }
+    make_post_request(query)
 
     json = JSON.parse(response.body, symbolize_names: true)
     
@@ -166,10 +166,10 @@ RSpec.describe 'authenticated dogs query', type: :request do
     expect(data).to be_nil
   end
 
-  xit 'has an error when an incorrect range is passed to ageRange' do
+  it 'has an error when an incorrect range is passed to ageRange' do
     query = query('ageRange: [2]')
 
-    post '/graphql', params: { query: query }
+    make_post_request(query)
 
     json = JSON.parse(response.body, symbolize_names: true)
 
@@ -192,5 +192,9 @@ RSpec.describe 'authenticated dogs query', type: :request do
         }
       }
     }"
+  end
+
+  def make_post_request(query)
+    post '/graphql', params: { google_token: @current_user.google_token, query: query }
   end
 end

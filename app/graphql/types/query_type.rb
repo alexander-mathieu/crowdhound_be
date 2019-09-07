@@ -5,7 +5,7 @@ module Types
       description: 'Return all users'
 
     def users
-      User.all
+      User.order(:id)
     end
 
     field :user, Types::UserType, null: false,
@@ -65,7 +65,7 @@ module Types
       dogs = if current_user && current_user.location
                Dog.sorted_by_distance(current_user)
              else
-               Dog.all
+               Dog.order(:id)
              end
 
       dogs.where(filters)
