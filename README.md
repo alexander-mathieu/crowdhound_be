@@ -18,7 +18,16 @@ Object types are templates for resources in the database.  Each object type has 
 
 #### UserType Attributes
 
-* id - ID (Int)
+* id - ID (Int, required)
+* firstName - String
+* shortDesc - String
+* longDesc - String
+* dogs - [ DogType ]
+* photos - [ PhotoType ]
+
+#### CurrentUserType Attributes
+
+* id - ID (Int, required)
 * firstName - String
 * lastName - String
 * email - String
@@ -30,7 +39,7 @@ Object types are templates for resources in the database.  Each object type has 
 
 #### DogType Attributes
 
-* id - ID (Int)
+* id - ID (Int, required)
 * age - Float
 * name - String
 * breed - String
@@ -49,13 +58,20 @@ Object types are templates for resources in the database.  Each object type has 
 
 #### LocationType Attributes
 
-* id - ID
+* id - ID (Int, required)
 * streetAddress - String
 * city - String
 * state - String
 * zipCode - String
 * lat - Float
 * long - Float
+
+#### AuthenticationInputType Attributes
+
+* firstName - String (required)
+* lastName - String (required)
+* email - String (required)
+* googleToken - String (required)
 
 ### Queries
 
@@ -69,8 +85,6 @@ Example request body:
   users {
     id
     firstName
-    lastName
-    email
     shortDesc
     longDesc
     dogs {
@@ -82,14 +96,6 @@ Example request body:
       activityLevel
       shortDesc
       longDesc
-    }
-    location {
-      streetAddress
-      city
-      state
-      zipCode
-      lat
-      long
     }
   }
 }
@@ -103,8 +109,6 @@ Example of expected output:
       {
         "id": "11",
         "firstName": "Katheleen",
-        "lastName": "Brekke",
-        "email": "concetta.goodwin@mclaughlin.biz",
         "shortDesc": "Yr kogi street yuccie meditation offal venmo dreamcatcher blog roof heirloom sustainable paleo umami synth.",
         "longDesc": "Wolf kombucha pop-up cornhole venmo vinegar. Literally letterpress flexitarian listicle swag williamsburg. Disrupt asymmetrical cray waistcoat tacos ennui bitters. Letterpress try-hard small batch 8-bit diy flannel chia vegan. Drinking fashion axe chicharrones shoreditch cray literally poutine pbr&b. Twee pbr&b single-origin coffee waistcoat helvetica art party hashtag try-hard. Church-key poutine locavore trust fund. Occupy hoodie jean shorts godard. Polaroid ethical before they sold out aesthetic microdosing. Blog green juice leggings retro forage helvetica franzen craft beer.",
         "dogs": [
@@ -129,14 +133,6 @@ Example of expected output:
             "longDesc": "Facilis illum eum. Ut et enim. Placeat nemo ut. Soluta molestias eligendi. Quidem et et. Culpa hic doloribus. Quo labore et. Nobis ab enim."
           }
         ]
-        "location": {
-          "streetAddress": "90909 Anderson Dam",
-          "city": "North Roosevelt",
-          "state": "CO",
-          "zipCode": "86670-4112",
-          "lat": -30.1632856122983,
-          "long": -2.99275875881602
-        }
       }
     ]
   }
@@ -146,6 +142,10 @@ Example of expected output:
 #### user(id: <ID>)
 
 Returns a single user having the specified ID. *ID argument is required.*
+
+#### currentUser
+
+Returns an authenticated user, based on the specified googleToken. Returns null if no user has the specified googleToken. Has additional information not available in the basic user query, such as lastName, email and location.
 
 #### dogs(<filters>)
 
@@ -170,32 +170,31 @@ Returns a single dog having the specified ID. *ID argument is required.*
 
 Mutations are requests to modify resources in the database.
 
-#### createUser
+#### authenticateUser
 
-Creates a user in the database. Required arguments include:
-* firstName - String
-* lastName - String
-* email - String (must be unique)
-
-Optional arguments:
-* shortDesc - String
-* longDesc - String
+Finds or creates a user in the database. Returns a CurrentUserType object, as well as a boolean attribute `new`, based on whether or not the user was found or created. Required arguments include:
+* apiKey - String (used to ensure that requests only come from the Express app -- not random HTTP requests)
+* auth - AuthenticationInputType
 
 Example request:
 ```
 mutation {
-  createUser(
-    firstName: "bob",
-    lastName: "smith",
-    email: "bob1111@smith.com"
-    shortDesc:"hi im bob"
+  authenticateUser(
+    apiKey: <EXPRESS API KEY>,
+    auth: {
+      firstName: "Bob",
+      lastName: "Smith III",
+      email: "bobsmithiii@bs.com"
+      token: "googletoken"
+    }
   ) {
-    id
-    firstName
-    lastName
-    email
-    shortDesc
-    longDesc
+    currentUser {
+      id
+      firstName
+      lastName
+      email
+    }
+    new
   }
 }
 ```
@@ -204,13 +203,14 @@ Example of expected response:
 ```
 {
   "data": {
-    "createUser": {
-      "id": "26",
-      "firstName": "bob",
-      "lastName": "smith",
-      "email": "bob1111@smith.com",
-      "shortDesc": "hi im bob",
-      "longDesc": null
+    "authenticateUser": {
+      "currentUser": {
+        "id": "26",
+        "firstName": "Bob",
+        "lastName": "Smith III",
+        "email": "bobsmithiii@bs.com"
+      },
+      "new": true
     }
   }
 }

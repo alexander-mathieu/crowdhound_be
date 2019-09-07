@@ -5,5 +5,6 @@ FactoryBot.define do
     email { Faker::Internet.unique.email }
     short_desc { Faker::Hipster.sentence(word_count: 12) }
     long_desc { Faker::Hipster.paragraph(sentence_count: 8) }
+    google_token { Faker::Alphanumeric.alphanumeric(number: 10) }
   end
 end

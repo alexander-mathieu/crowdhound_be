@@ -21,6 +21,14 @@ module Types
       end
     end
 
+    field :current_user, Types::CurrentUserType, null: true,
+      description: 'Get information for the current user (based on the googleToken in the params)' do
+    end
+
+    def current_user
+      context[:current_user]
+    end
+
     # Dog Queries
     field :dogs, [Types::DogType], null: false,
       description: 'Return all dogs, or all dogs filtered by attribute' do

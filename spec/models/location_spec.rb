@@ -13,7 +13,7 @@ RSpec.describe Location, type: :model do
     before :each do
       user = create(:user)
 
-      VCR.use_cassette('before_save_location_hook_create') do
+      VCR.use_cassette('location_model_spec/before_save_location_hook_create') do
         @location = Location.create!(
           user: user,
           street_address: '1331 17th Street',
@@ -30,7 +30,7 @@ RSpec.describe Location, type: :model do
     end
 
     it 'updates lat/long on model update' do
-      VCR.use_cassette('before_save_location_hook_update') do
+      VCR.use_cassette('location_model_spec/before_save_location_hook_update') do
         @location.update(
           street_address: '15330 East 120th Place',
           city: 'Commerce City',
