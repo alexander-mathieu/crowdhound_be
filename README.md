@@ -18,7 +18,16 @@ Object types are templates for resources in the database.  Each object type has 
 
 #### UserType Attributes
 
-* id - ID (Int)
+* id - ID (Int, required)
+* firstName - String
+* shortDesc - String
+* longDesc - String
+* dogs - [ DogType ]
+* photos - [ PhotoType ]
+
+#### CurrentUserType Attributes
+
+* id - ID (Int, required)
 * firstName - String
 * lastName - String
 * email - String
@@ -30,7 +39,7 @@ Object types are templates for resources in the database.  Each object type has 
 
 #### DogType Attributes
 
-* id - ID (Int)
+* id - ID (Int, required)
 * age - Float
 * name - String
 * breed - String
@@ -49,13 +58,20 @@ Object types are templates for resources in the database.  Each object type has 
 
 #### LocationType Attributes
 
-* id - ID
+* id - ID (Int, required)
 * streetAddress - String
 * city - String
 * state - String
 * zipCode - String
 * lat - Float
 * long - Float
+
+#### AuthenticationInputType Attributes
+
+* firstName - String (required)
+* lastName - String (required)
+* email - String (required)
+* token - String (required)
 
 ### Queries
 
@@ -147,6 +163,10 @@ Example of expected output:
 
 Returns a single user having the specified ID. *ID argument is required.*
 
+#### currentUser
+
+Returns an authenticated user, based on the specified googleToken. Has additional information not available in the basic user query, such as lastName, email and location.
+
 #### dogs(<filters>)
 
 Returns a collection of dogs, with the option to filter by comma separated arguments. Available arguments are:
@@ -170,32 +190,31 @@ Returns a single dog having the specified ID. *ID argument is required.*
 
 Mutations are requests to modify resources in the database.
 
-#### createUser
+#### authenticateUser
 
-Creates a user in the database. Required arguments include:
-* firstName - String
-* lastName - String
-* email - String (must be unique)
-
-Optional arguments:
-* shortDesc - String
-* longDesc - String
+Finds or creates a user in the database. Returns a CurrentUserType object, as well as a boolean attribute `new`, based on whether or not the user was found or created. Required arguments include:
+* apiKey - String
+* auth - AuthenticationInputType
 
 Example request:
 ```
 mutation {
-  createUser(
-    firstName: "bob",
-    lastName: "smith",
-    email: "bob1111@smith.com"
-    shortDesc:"hi im bob"
+  authenticateUser(
+    apiKey: "Express API key",
+    auth: {
+      firstName: "Bob",
+      lastName: "Smith III",
+      email: "bobsmithiii@bs.com"
+      token: "googletoken"
+    }
   ) {
-    id
-    firstName
-    lastName
-    email
-    shortDesc
-    longDesc
+    currentUser {
+      id
+      firstName
+      lastName
+      email
+    }
+    new
   }
 }
 ```
@@ -204,13 +223,13 @@ Example of expected response:
 ```
 {
   "data": {
-    "createUser": {
-      "id": "26",
-      "firstName": "bob",
-      "lastName": "smith",
-      "email": "bob1111@smith.com",
-      "shortDesc": "hi im bob",
-      "longDesc": null
+    "authenticateUser": {
+      "currentUser": {
+        "firstName": "Bob",
+        "lastName": "Smith III",
+        "email": "bobsmithiii@bs.com"
+      },
+      "new": true
     }
   }
 }
