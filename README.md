@@ -205,6 +205,7 @@ Example of expected response:
   "data": {
     "authenticateUser": {
       "currentUser": {
+        "id": "26",
         "firstName": "Bob",
         "lastName": "Smith III",
         "email": "bobsmithiii@bs.com"
