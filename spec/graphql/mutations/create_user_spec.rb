@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "createUser mutation", type: :request do
-  it 'returns a user upon successful creation' do
+  xit 'returns a user upon successful creation' do
     first_name = "Bob"
     last_name = "Smith"
     email = "bob@smith.com"
@@ -40,7 +40,7 @@ RSpec.describe "createUser mutation", type: :request do
     expect(User.count).to eq(1)
   end
 
-  it 'throws an error if the email is already taken' do
+  xit 'throws an error if the email is already taken' do
     first_name = "Bob"
     last_name = "Smith"
     email = "bob@smith.com"
@@ -69,7 +69,7 @@ RSpec.describe "createUser mutation", type: :request do
     expect(User.count).to eq(1)
   end
 
-  it 'returns an error if no firstName, lastName, and/or email is entered' do
+  xit 'returns an error if no firstName, lastName, and/or email is entered' do
     query = "
     mutation {
       createUser() {

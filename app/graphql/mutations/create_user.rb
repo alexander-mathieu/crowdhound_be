@@ -1,3 +1,4 @@
+#TODO: delete -- replaced with AuthenticateUser
 module Mutations
   class CreateUser < BaseMutation
     # define return fields
