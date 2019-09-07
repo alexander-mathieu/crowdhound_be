@@ -6,21 +6,24 @@ module Mutations
     argument :api_key, String, required: true
 
     field :current_user, Types::CurrentUserType, null: true
+    field :new, Boolean, null: true
 
     def resolve(auth:, api_key:)
       return unless api_key == ENV['EXPRESS_API_KEY']
 
-      user = User.find_or_create_by(
+      user = User.find_or_initialize_by(
         email: auth[:email]
       )
 
-      user.update(
-        first_name: auth[:first_name],
-        last_name:  auth[:last_name],
-        google_token: auth[:token]
-      )
+      user.new_record? ? new = true : new = false
 
-      { current_user: user}
+      user.first_name = auth[:first_name]
+      user.last_name = auth[:last_name]
+      user.google_token = auth[:token]
+
+      user.save
+
+      { current_user: user, new: new }
     end
   end
 end
