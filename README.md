@@ -79,6 +79,13 @@ Object types are templates for resources in the database.  Each object type has 
 * email - String (required)
 * googleToken - String (required)
 
+#### LocationInputType Attributes
+
+* streetAddress - String
+* city - String
+* state - String
+* zipCode - String (required)
+
 #### DogInputType Attributes
 
 * name - String (required)
@@ -258,6 +265,48 @@ Expected response:
   }
 }
 ```
+
+#### createLocation(location: <LocationInputType>)
+
+Adds a location for the user with the `google_token` specified in the query parameter. Requires a LocationInputType argument. A successful response returns a LocationType object.
+
+Example request:
+```
+mutation {
+  createLocation(
+    location: {
+      streetAddress: "1331 17th Street",
+      city: "Denver",
+      state: "CO",
+      zipCode: "80202"
+    }
+  ) {
+    location {
+      id
+      streetAddress
+      city
+      state
+      zipCode
+    }
+  }
+}
+```
+
+Example of expected response:
+```
+{
+  "data": {
+    "createLocation": {
+      "location": {
+        "id": "10",
+        "streetAddress": "1331 17th Street",
+        "city": "Denver",
+        "state": "CO",
+        "zipCode": "80202"
+      }
+    }
+  }
+}
 
 #### createDog(dog: <DogInputType>)
 
