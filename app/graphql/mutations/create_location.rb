@@ -1,16 +1,16 @@
 module Mutations
-  class AddLocation < BaseMutation
+  class CreateLocation < BaseMutation
     null true
 
     argument :location, Types::LocationInput, required: true
 
-    field :message, String, null: true
+    field :location, Types::LocationType, null: true
 
     def resolve(location:)
       boot_unauthenticated_user
 
       begin
-        Location.create(
+        location = Location.create(
           user: context[:current_user],
           street_address: location[:street_address],
           city: location[:city],
@@ -21,7 +21,7 @@ module Mutations
         raise GraphQL::ExecutionError, e.message
       end
 
-      { message: 'Location successfully added' }
+      { location: location }
     end
   end
 end
