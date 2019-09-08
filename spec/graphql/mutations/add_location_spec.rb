@@ -29,12 +29,17 @@ RSpec.describe 'add location mutation', type: :request do
       VCR.use_cassette('add_location_mutation_spec/invalid_location') do
         mutation = add_invalid_location_mutation
 
-        expect {
-          post '/graphql', params: {
-                             google_token: @existing_user.google_token,
-                             query: mutation
-                           }
-        }.to raise_error(RuntimeError, 'Invalid address entered')
+        post '/graphql', params: {
+                           google_token: @existing_user.google_token,
+                           query: mutation
+                         }
+        json = JSON.parse(response.body, symbolize_names: true)
+
+        data = json[:data][:addLocation]
+        error_message = json[:errors][0][:message]
+
+        expect(data).to be_nil
+        expect(error_message).to eq('Invalid address entered')
       end
     end
   end
