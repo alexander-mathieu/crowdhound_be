@@ -98,9 +98,14 @@ def dog_type_attributes
   '
 end
 
-def compare_gql_and_db_dogs(graphql_dog, db_dog)
+def compare_gql_and_db_dogs(graphql_dog, db_dog, include_id = true)
+  if include_id
+    expect(graphql_dog).to include(
+      id:          db_dog.id.to_s
+    )
+  end
+
   expect(graphql_dog).to include(
-    id:            db_dog.id.to_s,
     name:          db_dog.name,
     breed:         db_dog.breed,
     weight:        db_dog.weight,

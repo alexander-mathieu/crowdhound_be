@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'authenticate user mutation', type: :request do
+RSpec.describe 'authenticateUser mutation', type: :request do
   before :each do
     @existing_user = create(:user)
     @api_key = ENV['EXPRESS_API_KEY']
