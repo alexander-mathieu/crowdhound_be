@@ -164,13 +164,13 @@ Filters may be used in any combination. For fields where only a single value is 
 
 #### dog(id: <ID>)
 
-Returns a single dog having the specified ID. *ID argument is required.*
+Returns a single dog having the specified ID. *id: argument is required.*
 
 ### Mutations
 
 Mutations are requests to modify resources in the database.
 
-#### authenticateUser
+#### authenticateUser(auth: <AuthenticationInputType>, apiKey: <String>)
 
 Finds or creates a user in the database. Returns a CurrentUserType object, as well as a boolean attribute `new`, based on whether or not the user was found or created. Required arguments include:
 * apiKey - String (used to ensure that requests only come from the Express app -- not random HTTP requests)
@@ -211,6 +211,31 @@ Example of expected response:
         "email": "bobsmithiii@bs.com"
       },
       "new": true
+    }
+  }
+}
+```
+
+#### logOutUser
+
+Logs out a user based on the specified `google_token` query parameter. A successful request returns a `message` attribute.
+
+Example request:
+```
+mutation {
+  logOutUser
+  {
+    message
+  }
+}
+```
+
+Expected response:
+```
+{
+  "data": {
+    "logOutUser": {
+      "message": "User has been logged out"
     }
   }
 }
