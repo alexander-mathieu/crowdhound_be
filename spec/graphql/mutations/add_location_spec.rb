@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'add location mutation', type: :request do
+RSpec.describe 'addLocation mutation', type: :request do
   before :each do
     @existing_user = create(:user)
   end
