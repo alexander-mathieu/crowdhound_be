@@ -1,0 +1,136 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=494%20East%2019th%20Avenue,%20Denver,%20CO%2080203&key=<GOOGLE_MAPS_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Sun, 08 Sep 2019 01:19:57 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=305
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,43,39"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "494",
+                       "short_name" : "494",
+                       "types" : [ "street_number" ]
+                    },
+                    {
+                       "long_name" : "East 19th Avenue",
+                       "short_name" : "E 19th Ave",
+                       "types" : [ "route" ]
+                    },
+                    {
+                       "long_name" : "North Capitol Hill",
+                       "short_name" : "North Capitol Hill",
+                       "types" : [ "neighborhood", "political" ]
+                    },
+                    {
+                       "long_name" : "Denver",
+                       "short_name" : "Denver",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Denver County",
+                       "short_name" : "Denver County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "Colorado",
+                       "short_name" : "CO",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    },
+                    {
+                       "long_name" : "80203",
+                       "short_name" : "80203",
+                       "types" : [ "postal_code" ]
+                    },
+                    {
+                       "long_name" : "1354",
+                       "short_name" : "1354",
+                       "types" : [ "postal_code_suffix" ]
+                    }
+                 ],
+                 "formatted_address" : "494 E 19th Ave, Denver, CO 80203, USA",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 39.7460635,
+                          "lng" : -104.9812376
+                       },
+                       "southwest" : {
+                          "lat" : 39.7456122,
+                          "lng" : -104.9817678
+                       }
+                    },
+                    "location" : {
+                       "lat" : 39.745915,
+                       "lng" : -104.9813728
+                    },
+                    "location_type" : "ROOFTOP",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 39.74718683029149,
+                          "lng" : -104.9801537197085
+                       },
+                       "southwest" : {
+                          "lat" : 39.74448886970849,
+                          "lng" : -104.9828516802915
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJmY2-ECl5bIcRi0sAdzWUc68",
+                 "types" : [ "premise" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Sun, 08 Sep 2019 01:19:57 GMT
+recorded_with: VCR 5.0.0

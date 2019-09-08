@@ -47,7 +47,7 @@ RSpec.describe 'current_user query', type: :request do
     <<~GQL
       query {
         currentUser {
-          #{user_type_attributes}
+          #{current_user_type_attributes}
           dogs {
             #{dog_type_attributes}
           }
