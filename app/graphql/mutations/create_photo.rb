@@ -16,10 +16,12 @@ module Mutations
 
       if photoable_type == 'User'
         photoable = User.find(photoable_id)
-
+        # TODO: handle case of no user found with that ID
+        
         boot_unauthorized_user unless photoable.id == current_user.id
       elsif photoable_type == 'Dog'
         photoable = Dog.find(photoable_id)
+        # TODO: handle case of no dog found with that ID
 
         boot_unauthorized_user unless photoable.user.id == current_user.id
       end
