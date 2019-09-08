@@ -86,6 +86,16 @@ Object types are templates for resources in the database.  Each object type has 
 * state - String
 * zipCode - String (required)
 
+#### DogInputType Attributes
+
+* name - String (required)
+* breed - String (required)
+* birthdate - String (required)
+* weight - Int (in lb, required)
+* activityLevel - Int (0, 1, or 2, required)
+* shortDesc - String
+* longDesc - String
+
 ### Queries
 
 #### users
@@ -258,7 +268,7 @@ Expected response:
 
 #### createLocation(location: <LocationInputType>)
 
-Adds a location for the user with the `google_token` specified in the query parameter. Requires a LocationInputType argument. A successful response returns a `message` attribute.
+Adds a location for the user with the `google_token` specified in the query parameter. Requires a LocationInputType argument. A successful response returns a LocationType object.
 
 Example request:
 ```
@@ -282,7 +292,7 @@ mutation {
 }
 ```
 
-Expected response:
+Example of expected response:
 ```
 {
   "data": {
@@ -293,6 +303,45 @@ Expected response:
         "city": "Denver",
         "state": "CO",
         "zipCode": "80202"
+      }
+    }
+  }
+}
+
+#### createDog(dog: <DogInputType>)
+
+Creates a dog in the database for the current user (based on the `google_token` in the params). Requires a DogInputType argument. Returns a DogType object.
+
+Example request:
+```
+mutation {
+  createDog(
+    dog: {
+      name: "Lil Fluff",
+      activityLevel: 2,
+      breed: "Shih Tzu",
+      weight: 12,
+      birthdate: "2019-08-11"
+    }
+  ) {
+    dog {
+      id
+      name
+      age
+    }
+  }
+}
+```
+
+Example of expected response:
+```
+{
+  "data": {
+    "createDog": {
+      "dog": {
+        "id": "36",
+        "name": "Lil Fluff",
+        "age": 0.0781648985211246
       }
     }
   }

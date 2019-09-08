@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe 'log out user mutation', type: :request do
+RSpec.describe 'logOutUser mutation', type: :request do
   it 'logs out a user that is logged in' do
     user = create(:user)
 
-    mutation = log_out_user_mutation(user)
+    mutation = log_out_user_mutation
 
     post '/graphql', params: { google_token: user.google_token, query: mutation }
 
@@ -23,7 +23,7 @@ RSpec.describe 'log out user mutation', type: :request do
       google_token: 'notloggedin',
     )
 
-    mutation = log_out_user_mutation(user)
+    mutation = log_out_user_mutation
 
     post '/graphql', params: { google_token: user.google_token, query: mutation }
 
@@ -36,7 +36,7 @@ RSpec.describe 'log out user mutation', type: :request do
     expect(error_message).to eq('Unauthorized - a valid google_token query parameter is required')
   end
 
-  def log_out_user_mutation(user)
+  def log_out_user_mutation
     "mutation {
       logOutUser {
         message

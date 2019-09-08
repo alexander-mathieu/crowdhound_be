@@ -4,5 +4,6 @@ module Types
     field :log_out_user, mutation: Mutations::LogOutUser
 
     field :create_location, mutation: Mutations::CreateLocation
+    field :create_dog, mutation: Mutations::CreateDog
   end
 end
