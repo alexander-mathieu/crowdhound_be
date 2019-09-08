@@ -10,8 +10,7 @@ module Mutations
       boot_unauthenticated_user
 
       begin
-        location = Location.create(
-          user: context[:current_user],
+        location = context[:current_user].create_location(
           street_address: location[:street_address],
           city: location[:city],
           state: location[:state],
