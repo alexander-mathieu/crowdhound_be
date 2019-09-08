@@ -10,17 +10,19 @@ module Mutations
     def resolve(user: nil, location: nil)
       boot_unauthenticated_user
 
+      current_user = context[:current_user]
+
       if user
         user_info = user.to_hash
-        context[:current_user].update(user_info)
+        current_user.update(user_info)
       end
 
       if location
         location_info = location.to_hash
-        context[:current_user].location.update(location_info)
+        current_user.location.update(location_info)
       end
 
-      { current_user: context[:current_user] }
+      { current_user: current_user }
     end
   end
 end
