@@ -79,6 +79,16 @@ Object types are templates for resources in the database.  Each object type has 
 * email - String (required)
 * googleToken - String (required)
 
+#### DogInputType Attributes
+
+* name - String (required)
+* breed - String (required)
+* birthdate - String (required)
+* weight - Int (in lb, required)
+* activityLevel - Int (0, 1, or 2, required)
+* shortDesc - String
+* longDesc - String
+
 ### Queries
 
 #### users
@@ -244,6 +254,57 @@ Expected response:
   "data": {
     "logOutUser": {
       "message": "User has been logged out"
+    }
+  }
+}
+```
+
+#### createDog(dog: <DogInputType>)
+
+Creates a dog in the database for the current user (based on the `google_token` in the params). Returns a DogType object.
+
+Required arguments include:
+* name - String
+* activity level - Integer (0, 1, or 2)
+* weight - Integer (in pounds)
+* breed - String
+* birthdate - String
+
+Optional arguments include:
+* short description - String
+* long description - String
+
+Example request:
+```
+mutation {
+  createDog(
+    dog: {
+      name: "Lil Fluff",
+      activityLevel: 2,
+      breed: "Shih Tzu",
+      weight: 12,
+      birthdate: "2019-08-11"
+    }
+  ) {
+    dog {
+      id
+      name
+      age
+    }
+  }
+}
+```
+
+Example of expected response:
+```
+{
+  "data": {
+    "createDog": {
+      "dog": {
+        "id": "36",
+        "name": "Lil Fluff",
+        "age": 0.0781648985211246
+      }
     }
   }
 }
