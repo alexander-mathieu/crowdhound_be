@@ -79,6 +79,13 @@ Object types are templates for resources in the database.  Each object type has 
 * email - String (required)
 * googleToken - String (required)
 
+#### LocationInputType Attributes
+
+* streetAddress - String
+* city - String
+* state - String
+* zipCode - String (required)
+
 ### Queries
 
 #### users
@@ -244,6 +251,37 @@ Expected response:
   "data": {
     "logOutUser": {
       "message": "User has been logged out"
+    }
+  }
+}
+```
+
+#### addLocation(location: <LocationInputType>)
+
+Adds a location for the user with the `google_token` specified in the query parameter. A successful response returns a `message` attribute.
+
+Example request:
+```
+mutation {
+  addLocation(
+    location: {
+      streetAddress: "1331 17th Street",
+      city: "Denver",
+      state: "CO",
+      zipCode: "80202"
+    }
+  ) {
+    message
+  }
+}
+```
+
+Expected response:
+```
+{
+  "data": {
+    "addLocation": {
+      "message": "Location successfully added"
     }
   }
 }
