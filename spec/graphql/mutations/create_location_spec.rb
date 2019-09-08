@@ -21,6 +21,7 @@ RSpec.describe 'createLocation mutation', type: :request do
         db_location = Location.last
 
         compare_gql_and_db_locations(gql_location, db_location)
+        expect(@existing_user.location.street_address).to eq('1331 17th Street')
       end
     end
   end
@@ -41,23 +42,17 @@ RSpec.describe 'createLocation mutation', type: :request do
 
         expect(data).to be_nil
         expect(error_message).to eq('Invalid address entered')
+        expect(@existing_user.location).to be_nil
       end
     end
   end
 
   describe 'with an invalid Google token' do
     it 'does not create a new location' do
-      user = double(
-        first_name: 'Bob',
-        last_name: 'Smith II',
-        email: 'bobsmithii@bs.com',
-        google_token: 'thisisthesecondbesttoken',
-      )
-
       mutation = create_valid_location_mutation
 
       post '/graphql', params: {
-                         google_token: user.google_token,
+                         google_token: 'thisisthesecondbesttoken',
                          query: mutation
                        }
 
@@ -68,6 +63,7 @@ RSpec.describe 'createLocation mutation', type: :request do
 
       expect(data).to be_nil
       expect(error_message).to eq('Unauthorized - a valid google_token query parameter is required')
+      expect(Location.count).to eq(0)
     end
   end
 
