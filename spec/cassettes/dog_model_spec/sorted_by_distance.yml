@@ -21,7 +21,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 05 Sep 2019 22:15:58 GMT
+      - Sat, 07 Sep 2019 21:36:25 GMT
       Pragma:
       - no-cache
       Expires:
@@ -39,7 +39,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=33
+      - gfet4t7; dur=374
       Alt-Svc:
       - quic=":443"; ma=2592000; v="46,43,39"
       Transfer-Encoding:
@@ -121,7 +121,7 @@ http_interactions:
            "status" : "OK"
         }
     http_version: 
-  recorded_at: Thu, 05 Sep 2019 22:15:57 GMT
+  recorded_at: Sat, 07 Sep 2019 21:36:23 GMT
 - request:
     method: get
     uri: https://maps.googleapis.com/maps/api/geocode/json?address=494%20East%2019th%20Avenue,%20Denver,%20CO%2080203&key=<GOOGLE_MAPS_API_KEY>
@@ -143,7 +143,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 05 Sep 2019 22:15:58 GMT
+      - Sat, 07 Sep 2019 21:36:25 GMT
       Pragma:
       - no-cache
       Expires:
@@ -161,7 +161,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=29
+      - gfet4t7; dur=419
       Alt-Svc:
       - quic=":443"; ma=2592000; v="46,43,39"
       Transfer-Encoding:
@@ -254,7 +254,7 @@ http_interactions:
            "status" : "OK"
         }
     http_version: 
-  recorded_at: Thu, 05 Sep 2019 22:15:57 GMT
+  recorded_at: Sat, 07 Sep 2019 21:36:23 GMT
 - request:
     method: get
     uri: https://maps.googleapis.com/maps/api/geocode/json?address=15330%20East%20120th%20Place,%20Commerce%20City,%20CO%2080022&key=<GOOGLE_MAPS_API_KEY>
@@ -276,7 +276,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 05 Sep 2019 22:15:58 GMT
+      - Sat, 07 Sep 2019 21:36:25 GMT
       Pragma:
       - no-cache
       Expires:
@@ -294,7 +294,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=11
+      - gfet4t7; dur=289
       Alt-Svc:
       - quic=":443"; ma=2592000; v="46,43,39"
       Transfer-Encoding:
@@ -367,7 +367,7 @@ http_interactions:
            "status" : "OK"
         }
     http_version: 
-  recorded_at: Thu, 05 Sep 2019 22:15:57 GMT
+  recorded_at: Sat, 07 Sep 2019 21:36:24 GMT
 - request:
     method: get
     uri: https://maps.googleapis.com/maps/api/geocode/json?address=2001%20Colorado%20Boulevard,%20Denver,%20CO%2080205&key=<GOOGLE_MAPS_API_KEY>
@@ -389,7 +389,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Thu, 05 Sep 2019 22:15:58 GMT
+      - Sat, 07 Sep 2019 21:36:26 GMT
       Pragma:
       - no-cache
       Expires:
@@ -407,7 +407,7 @@ http_interactions:
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=29
+      - gfet4t7; dur=438
       Alt-Svc:
       - quic=":443"; ma=2592000; v="46,43,39"
       Transfer-Encoding:
@@ -494,5 +494,5 @@ http_interactions:
            "status" : "OK"
         }
     http_version: 
-  recorded_at: Thu, 05 Sep 2019 22:15:57 GMT
+  recorded_at: Sat, 07 Sep 2019 21:36:24 GMT
 recorded_with: VCR 5.0.0

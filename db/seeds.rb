@@ -26,8 +26,32 @@ create_list(:photo, 4, photoable: dog11)
 create_list(:photo, 2, photoable: dog22)
 
 #### Create locations
-create(:location, user: user1)
-create(:location, user: user2)
-create(:location, user: user3)
-create(:location, user: user5)
+Location.create!(
+  user: user1,
+  street_address: '1331 17th Street',
+  city: 'Denver',
+  state: 'CO',
+  zip_code: '80202'
+)
+Location.create!(
+  user: user2,
+  street_address: '494 East 19th Avenue',
+  city: 'Denver',
+  state: 'CO',
+  zip_code: '80203'
+)
+Location.create!(
+  user: user3,
+  street_address: '15330 East 120th Place',
+  city: 'Commerce City',
+  state: 'CO',
+  zip_code: '80022'
+)
 # user4 has no location
+Location.create!(
+  user: user5,
+  street_address: '2001 Colorado Boulevard',
+  city: 'Denver',
+  state: 'CO',
+  zip_code: '80205'
+)

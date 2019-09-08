@@ -5,7 +5,7 @@ module Types
       description: 'Return all users'
 
     def users
-      User.all
+      User.order(:id)
     end
 
     field :user, Types::UserType, null: false,
@@ -62,7 +62,13 @@ module Types
         filters.delete(:weight_range)
       end
 
-      Dog.where(filters)
+      dogs = if current_user && current_user.location
+               Dog.sorted_by_distance(current_user)
+             else
+               Dog.order(:id)
+             end
+
+      dogs.where(filters)
     end
 
     field :dog, Types::DogType, null: false,

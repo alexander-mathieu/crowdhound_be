@@ -95,6 +95,7 @@ def dog_type_attributes
   activityLevel
   shortDesc
   longDesc
+  distance
   '
 end
 
@@ -120,6 +121,7 @@ def user_type_attributes
   firstName
   shortDesc
   longDesc
+  distance
   '
 end
 
@@ -134,13 +136,9 @@ end
 
 ## CurrentUserType
 def current_user_type_attributes
-  '
-  id
-  firstName
+  user_type_attributes + '
   lastName
   email
-  shortDesc
-  longDesc
   '
 end
 

@@ -12,6 +12,10 @@ https://crowdhound-be.herokuapp.com/
 
 _CrowdHound_ utilizes [GraphQL](https://graphql.org/). All queries are made to a single endpoint, `POST /graphql`. This endpoint will always return 200 (OK), even if there is an error. If there is an error, it will be present in an `errors` attribute of the response, and the `data` attribute will be `null`.
 
+### Authentication
+
+To make queries or mutations as a logged-in user, include that user's Google token as a `google_token` query param.
+
 ### Object Types
 
 Object types are templates for resources in the database.  Each object type has a list of attributes that are available to return along with the object.
@@ -22,6 +26,7 @@ Object types are templates for resources in the database.  Each object type has 
 * firstName - String
 * shortDesc - String
 * longDesc - String
+* distance - Float (in miles, null if the current user or queried user does not have a location defined)
 * dogs - [ DogType ]
 * photos - [ PhotoType ]
 
@@ -48,6 +53,7 @@ Object types are templates for resources in the database.  Each object type has 
 * shortDesc - String
 * longDesc - String
 * activityLevel - Int
+* distance - Float (in miles, null if the current user or queried dog's user does not have a location defined)
 * user - UserType
 * photos - [ PhotoType ]
 
@@ -149,7 +155,9 @@ Returns an authenticated user, based on the specified googleToken. Returns null 
 
 #### dogs(<filters>)
 
-Returns a collection of dogs, with the option to filter by comma separated arguments. Available arguments are:
+Returns a collection of dogs, with the option to filter by comma separated arguments. If the request is authenticated, the dogs are sorted by distance to the authenticated user.
+
+Available arguments are:
 * activityLevelRange: <Array with two integer values, denoting the minimum and maximum acceptable activity level>
   * _i.e. activityLevelRange: [0, 2]_
 * ageRange: <Array with two integer or float values, denoting the minimum and maximum acceptable age in years>
