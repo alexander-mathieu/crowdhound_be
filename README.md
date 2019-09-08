@@ -20,16 +20,6 @@ To make queries or mutations as a logged-in user, include that user's Google tok
 
 Object types are templates for resources in the database.  Each object type has a list of attributes that are available to return along with the object.
 
-#### UserType Attributes
-
-* id - ID (Int, required)
-* firstName - String
-* shortDesc - String
-* longDesc - String
-* distance - Float (in miles, null if the current user or queried user does not have a location defined)
-* dogs - [ DogType ]
-* photos - [ PhotoType ]
-
 #### CurrentUserType Attributes
 
 * id - ID (Int, required)
@@ -57,11 +47,6 @@ Object types are templates for resources in the database.  Each object type has 
 * user - UserType
 * photos - [ PhotoType ]
 
-#### PhotoType Attributes
-
-* id
-* sourceUrl
-
 #### LocationType Attributes
 
 * id - ID (Int, required)
@@ -72,19 +57,27 @@ Object types are templates for resources in the database.  Each object type has 
 * lat - Float
 * long - Float
 
+#### PhotoType Attributes
+
+* id
+* sourceUrl
+
+#### UserType Attributes
+
+* id - ID (Int, required)
+* firstName - String
+* shortDesc - String
+* longDesc - String
+* distance - Float (in miles, null if the current user or queried user does not have a location defined)
+* dogs - [ DogType ]
+* photos - [ PhotoType ]
+
 #### AuthenticationInputType Attributes
 
 * firstName - String (required)
 * lastName - String (required)
 * email - String (required)
 * googleToken - String (required)
-
-#### LocationInputType Attributes
-
-* streetAddress - String
-* city - String
-* state - String
-* zipCode - String (required)
 
 #### DogInputType Attributes
 
@@ -93,6 +86,20 @@ Object types are templates for resources in the database.  Each object type has 
 * birthdate - String (required)
 * weight - Int (in lb, required)
 * activityLevel - Int (0, 1, or 2, required)
+* shortDesc - String
+* longDesc - String
+
+#### LocationInputType Attributes
+
+* streetAddress - String
+* city - String
+* state - String
+* zipCode - String (required)
+
+#### UserInputType Attributes
+
+* firstName - String
+* lastName - String
 * shortDesc - String
 * longDesc - String
 
@@ -307,6 +314,7 @@ Example of expected response:
     }
   }
 }
+```
 
 #### createDog(dog: <DogInputType>)
 
@@ -342,6 +350,69 @@ Example of expected response:
         "id": "36",
         "name": "Lil Fluff",
         "age": 0.0781648985211246
+      }
+    }
+  }
+}
+```
+
+#### updateUser(user: <UserInputType>, location: <LocationInputType>)
+
+Updates a user in the database (based on the `google_token` in the params). Accepts both UserInputType and LocationInputType arguments. Returns a CurrentUserType object.
+
+Example request:
+```
+mutation {
+  updateUser(
+    user: {
+      firstName: "Henry",
+      lastName: "Ford",
+      shortDesc: "I like cars!",
+      longDesc: "Yup!"
+    },
+    location: {
+      streetAddress: "1331 17th Street",
+      city: "Denver",
+      state: "CO",
+      zipCode: "80202"
+    }
+  ) {
+    currentUser {
+      id
+      firstName
+      lastName
+      shortDesc
+      longDesc
+      location {
+        id
+        streetAddress
+        city
+        state
+        zipCode
+      }
+    }
+  }
+}
+```
+
+Example of expected response:
+```
+{
+  "data": {
+    "updateUser": {
+      "currentUser": {
+        "id": "11",
+        "firstName": "Henry",
+        "lastName": "Ford",
+        "shortDesc": "I like cars!",
+        "longDesc": "Yup!",
+        "location": {
+          "id": "26",
+          "streetAddress": "1331 17th Street",
+          "city": "Denver",
+          "state": "CO",
+          "zipCode": "80202"
+        }
       }
     }
   }
