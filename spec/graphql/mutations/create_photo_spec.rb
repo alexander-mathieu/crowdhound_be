@@ -7,9 +7,11 @@ RSpec.describe 'createPhoto mutation', type: :request do
 
       file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/dog.jpg')))
 
+      photo = Photo.new(photoable: user, caption: 'my great caption')
+
       params = {
         google_token: user.google_token,
-        query: create_photo_mutation(user),
+        query: create_photo_mutation(photo),
         file: file
       }
 
@@ -20,10 +22,12 @@ RSpec.describe 'createPhoto mutation', type: :request do
       require 'pry'; binding.pry
       
       gql_photo = json[:data][:createPhoto][:photo]
-      expect(gql_photo[:caption]).to eq('an amazing caption')
-      expect(gql_photo[:sourceUrl]).to be_a(String)
+
+      compare_gql_and_db_photos(gql_photo, photo, false)
 
       expect(user.photos.count).to eq(1)
+
+      expect(gql_photo[:sourceUrl]).to be_a(String)
     end
   end
 
@@ -54,13 +58,13 @@ RSpec.describe 'createPhoto mutation', type: :request do
     end
   end
 
-  def create_photo_mutation(photoable)
+  def create_photo_mutation(photo)
     "mutation {
       createPhoto(
         photo: {
-          photoableType: \"#{photoable.class}\"
-          photoableId: #{photoable.id}
-          caption: \"an amazing caption\"
+          photoableType: \"#{photo.photoable_type}\"
+          photoableId: #{photo.photoable_id}
+          caption: \"#{photo.caption}\"
         }
       ) {
         photo {

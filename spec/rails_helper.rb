@@ -164,16 +164,23 @@ def photo_type_attributes
   id
   photoableId
   photoableType
+  caption
   sourceUrl
   '
 end
 
-def compare_gql_and_db_photos(graphql_photo, db_photo)
+def compare_gql_and_db_photos(graphql_photo, db_photo, include_id_and_source_url = true)
+  if include_id_and_source_url
     expect(graphql_photo).to include(
-    id:            db_photo.id.to_s,
+      id:          db_photo.id.to_s,
+      sourceUrl:   db_photo.source_url
+    )
+  end
+
+  expect(graphql_photo).to include(
     photoableId:   db_photo.photoable.id,
     photoableType: db_photo.photoable.class.to_s,
-    sourceUrl:     db_photo.source_url
+    caption:       db_photo.caption
   )
 end
 
