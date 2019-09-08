@@ -256,14 +256,14 @@ Expected response:
 }
 ```
 
-#### addLocation(location: <LocationInputType>)
+#### createLocation(location: <LocationInputType>)
 
-Adds a location for the user with the `google_token` specified in the query parameter. A successful response returns a `message` attribute.
+Adds a location for the user with the `google_token` specified in the query parameter. Requires a LocationInputType argument. A successful response returns a `message` attribute.
 
 Example request:
 ```
 mutation {
-  addLocation(
+  createLocation(
     location: {
       streetAddress: "1331 17th Street",
       city: "Denver",
@@ -271,7 +271,13 @@ mutation {
       zipCode: "80202"
     }
   ) {
-    message
+    location {
+      id
+      streetAddress
+      city
+      state
+      zipCode
+    }
   }
 }
 ```
@@ -280,8 +286,14 @@ Expected response:
 ```
 {
   "data": {
-    "addLocation": {
-      "message": "Location successfully added"
+    "createLocation": {
+      "location": {
+        "id": "10",
+        "streetAddress": "1331 17th Street",
+        "city": "Denver",
+        "state": "CO",
+        "zipCode": "80202"
+      }
     }
   }
 }
