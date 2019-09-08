@@ -10,16 +10,12 @@ module Mutations
       boot_unauthenticated_user
 
       current_user = context[:current_user]
-
       photoable_type = photo[:photoable_type]
       photoable_id = photo[:photoable_id]
 
       photoable = get_photoable(current_user, photoable_type, photoable_id)
 
-      new_photo = Photo.create!(
-        photoable: photoable,
-        caption: photo[:caption]
-      )
+      new_photo = create_photo_resource(photoable, photo[:caption])
 
       { photo: new_photo }
     end
@@ -38,6 +34,13 @@ module Mutations
       end
 
       photoable
+    end
+
+    def create_photo_resource(photoable, caption)
+      Photo.create!(
+        photoable: photoable,
+        caption: caption
+      )
     end
   end
 end
