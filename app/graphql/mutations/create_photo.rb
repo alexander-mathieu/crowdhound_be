@@ -14,6 +14,17 @@ module Mutations
       photoable_type = photo[:photoable_type]
       photoable_id = photo[:photoable_id]
 
+      photoable = get_photoable(current_user, photoable_type, photoable_id)
+
+      new_photo = Photo.create!(
+        photoable: photoable,
+        caption: photo[:caption]
+      )
+
+      { photo: new_photo }
+    end
+
+    def get_photoable(current_user, photoable_type, photoable_id)
       if photoable_type == 'User'
         photoable = User.find(photoable_id)
         # TODO: handle case of no user found with that ID
@@ -26,12 +37,7 @@ module Mutations
         boot_unauthorized_user unless photoable.user.id == current_user.id
       end
 
-      new_photo = Photo.create!(
-        photoable: photoable,
-        caption: photo[:caption]
-      )
-
-      { photo: new_photo }
+      photoable
     end
   end
 end
