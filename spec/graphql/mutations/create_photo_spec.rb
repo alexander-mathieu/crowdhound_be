@@ -59,7 +59,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
       createPhoto(
         photo: {
           photoableType: \"#{photoable.class}\"
-          photoableId: \"#{photoable.id}\"
+          photoableId: #{photoable.id}
           caption: \"an amazing caption\"
         }
       ) {

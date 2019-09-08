@@ -5,5 +5,6 @@ module Types
 
     field :create_location, mutation: Mutations::CreateLocation
     field :create_dog, mutation: Mutations::CreateDog
+    field :create_photo, mutation: Mutations::CreatePhoto
   end
 end
