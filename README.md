@@ -216,16 +216,15 @@ Example of expected response:
 }
 ```
 
-#### logOutUser(googleToken: <String>)
+#### logOutUser
 
-Logs out a user. A successful request returns a `message` attribute. *googleToken: argument is required.*
+Logs out a user based on the specified `google_token` query parameter. A successful request returns a `message` attribute.
 
 Example request:
 ```
 mutation {
-  logOutUser(
-    googleToken: "1asdaa123-55FFaafaf-24SAF"
-  ) {
+  logOutUser
+  {
     message
   }
 }
