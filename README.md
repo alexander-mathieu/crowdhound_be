@@ -261,18 +261,7 @@ Expected response:
 
 #### createDog(dog: <DogInputType>)
 
-Creates a dog in the database for the current user (based on the `google_token` in the params). Returns a DogType object.
-
-Required arguments include:
-* name - String
-* activity level - Integer (0, 1, or 2)
-* weight - Integer (in pounds)
-* breed - String
-* birthdate - String
-
-Optional arguments include:
-* short description - String
-* long description - String
+Creates a dog in the database for the current user (based on the `google_token` in the params). Requires a DogInputType argument. Returns a DogType object.
 
 Example request:
 ```
