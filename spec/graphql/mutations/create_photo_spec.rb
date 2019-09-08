@@ -5,21 +5,22 @@ RSpec.describe 'createPhoto mutation', type: :request do
     it 'creates a photo for the current_user' do
       user = create(:user)
 
-      caption = "my cute dog"
       file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/dog.jpg')))
 
       params = {
         google_token: user.google_token,
-        query: create_photo_mutation(caption),
+        query: create_photo_mutation(user),
         file: file
       }
 
       post '/graphql', params: params
 
       json = JSON.parse(response.body, symbolize_names: true)
+
+      require 'pry'; binding.pry
       
       gql_photo = json[:data][:createPhoto][:photo]
-      expect(gql_photo[:caption]).to eq(caption)
+      expect(gql_photo[:caption]).to eq('an amazing caption')
       expect(gql_photo[:sourceUrl]).to be_a(String)
 
       expect(user.photos.count).to eq(1)
@@ -27,7 +28,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
   end
 
   describe 'as a visitor (not authenticated)' do
-    it 'does not create a photo if the request is not authenticated' do
+    xit 'does not create a photo of the user' do
       user = create(:user)
 
       caption = "my cute dog"
@@ -35,7 +36,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
 
       params = {
         google_token: 'not a real google token',
-        query: create_photo_mutation(caption),
+        query: create_photo_mutation(user),
         file: file
       }
 
@@ -53,11 +54,13 @@ RSpec.describe 'createPhoto mutation', type: :request do
     end
   end
 
-  def create_photo_mutation(caption)
+  def create_photo_mutation(photoable)
     "mutation {
       createPhoto(
         photo: {
-          caption: \"#{caption}\"
+          photoableType: \"#{photoable.class}\"
+          photoableId: \"#{photoable.id}\"
+          caption: \"an amazing caption\"
         }
       ) {
         photo {
