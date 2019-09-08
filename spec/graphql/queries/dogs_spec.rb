@@ -156,7 +156,7 @@ RSpec.describe 'dogs query', type: :request do
     end
   end
 
-  describe 'as a logged-in user' do
+  describe 'as an authenticated user' do
     before :each do
       VCR.use_cassette('authenticated_dogs_query_spec/before_each') do
         mock_time = Time.parse('2019-07-07 11:45:00 -0600')

@@ -95,6 +95,7 @@ def dog_type_attributes
   activityLevel
   shortDesc
   longDesc
+  distance
   '
 end
 
@@ -120,6 +121,7 @@ def user_type_attributes
   firstName
   shortDesc
   longDesc
+  distance
   '
 end
 
