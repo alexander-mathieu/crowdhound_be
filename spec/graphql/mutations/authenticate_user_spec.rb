@@ -2,21 +2,15 @@ require 'rails_helper'
 
 RSpec.describe 'authenticate user mutation', type: :request do
   before :each do
-    @existing_user = create(:user,
-      first_name: 'Bob',
-      last_name: 'Smith III',
-      email: 'bobsmithiii@bs.com',
-      google_token: 'thisisthethirdbesttoken'
-    )
-
+    @existing_user = create(:user)
     @api_key = ENV['EXPRESS_API_KEY']
   end
 
   describe 'with a valid API key and an existing user in the database' do
     it 'finds and returns the user' do
-      query = authenticate_user_query(@existing_user, @api_key)
+      mutation = authenticate_user_mutation(@existing_user, @api_key)
 
-      post '/graphql', params: { query: query }
+      post '/graphql', params: { query: mutation }
 
       json = JSON.parse(response.body, symbolize_names: true)
 
@@ -41,9 +35,9 @@ RSpec.describe 'authenticate user mutation', type: :request do
         google_token: 'thisisthesecondbesttoken',
       )
 
-      query = authenticate_user_query(user, @api_key)
+      mutation = authenticate_user_mutation(user, @api_key)
 
-      post '/graphql', params: { query: query }
+      post '/graphql', params: { query: mutation }
 
       json = JSON.parse(response.body, symbolize_names: true)
 
@@ -63,9 +57,9 @@ RSpec.describe 'authenticate user mutation', type: :request do
     it 'it does not return an authenticated user' do
       invalid_api_key = 'invalidkey'
 
-      query = authenticate_user_query(@existing_user, invalid_api_key)
+      mutation = authenticate_user_mutation(@existing_user, invalid_api_key)
 
-      post '/graphql', params: { query: query }
+      post '/graphql', params: { query: mutation }
 
       json = JSON.parse(response.body, symbolize_names: true)
 
@@ -77,7 +71,7 @@ RSpec.describe 'authenticate user mutation', type: :request do
     end
   end
 
-  def authenticate_user_query(user, api_key)
+  def authenticate_user_mutation(user, api_key)
     "mutation {
       authenticateUser(
         apiKey: \"#{api_key}\",
