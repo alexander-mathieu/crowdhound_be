@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2019_09_09_192849) do
     t.string "source_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "caption"
     t.index ["photoable_id", "photoable_type"], name: "index_photos_on_photoable_id_and_photoable_type"
     t.index ["photoable_type", "photoable_id"], name: "index_photos_on_photoable_type_and_photoable_id"
   end

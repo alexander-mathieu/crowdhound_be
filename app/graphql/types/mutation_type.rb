@@ -8,5 +8,7 @@ module Types
 
     field :create_dog, mutation: Mutations::CreateDog
     field :destroy_dog, mutation: Mutations::DestroyDog
+
+    field :create_photo, mutation: Mutations::CreatePhoto
   end
 end

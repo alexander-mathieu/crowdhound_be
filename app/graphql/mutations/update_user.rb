@@ -19,7 +19,12 @@ module Mutations
 
       if location
         location_info = location.to_hash
-        current_user.location.update(location_info)
+        
+        if current_user.location
+          current_user.location.update(location_info)
+        else
+          current_user.create_location(location_info)
+        end
       end
 
       { current_user: current_user }
