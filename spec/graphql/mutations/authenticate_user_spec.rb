@@ -23,6 +23,8 @@ RSpec.describe 'authenticateUser mutation', type: :request do
       )
 
       expect(data[:new]).to eq(false)
+
+      expect(data[:token]).to eq(@existing_user.reload.token)
     end
   end
 
@@ -50,6 +52,8 @@ RSpec.describe 'authenticateUser mutation', type: :request do
       )
 
       expect(data[:new]).to eq(true)
+
+      expect(data[:token]).to eq(User.last.token)
     end
   end
 
@@ -85,6 +89,7 @@ RSpec.describe 'authenticateUser mutation', type: :request do
           #{current_user_type_attributes}
         }
         new
+        token
       }
     }"
   end
