@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-WebMock.allow_net_connect!
-VCR.turn_off!
 
 RSpec.describe 'createPhoto mutation', type: :request do
   describe 'as an authenticated user' do
