@@ -15,7 +15,17 @@ module Mutations
 
       photoable = get_photoable(current_user, photoable_type, photoable_id)
 
-      new_photo = create_photo_resource(photoable, photo[:caption])
+      file = context[:file]
+      file_ext = file.tempfile.path.split(".")[1]
+      file_name = "#{SecureRandom.hex}.#{file_ext}"
+
+      s3.put_object(
+        bucket: ENV['AWS_BUCKET'],
+        key: file_name,
+        body: file
+      )
+
+      new_photo = create_photo_resource(photoable, photo[:caption], file_name)
 
       { photo: new_photo }
     end
@@ -36,11 +46,16 @@ module Mutations
       photoable
     end
 
-    def create_photo_resource(photoable, caption)
+    def create_photo_resource(photoable, caption, file_name)
       Photo.create!(
         photoable: photoable,
-        caption: caption
+        caption: caption,
+        source_url: "https://#{ENV['AWS_BUCKET']}.s3.#{ENV['AWS_REGION']}.amazonaws.com/#{file_name}"
       )
+    end
+
+    def s3
+      Aws::S3::Client.new(region: ENV['AWS_REGION'])
     end
   end
 end
