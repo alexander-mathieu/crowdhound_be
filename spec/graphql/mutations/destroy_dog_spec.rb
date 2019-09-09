@@ -61,7 +61,7 @@ RSpec.describe 'destroyDog mutation', type: :request do
 
       expect(data).to be_nil
       expect(error_message).to eq('Unauthorized')
-      expect(@user.dogs.count).to eq(2)
+      expect(user.dogs.count).to eq(1)
     end
   end
 
