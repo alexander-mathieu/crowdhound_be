@@ -5,7 +5,7 @@ RSpec.describe 'createLocation mutation', type: :request do
     @existing_user = create(:user)
   end
 
-  describe 'with a valid Google token and valid location' do
+  describe 'with a valid token and valid location' do
     it 'creates a new location' do
       VCR.use_cassette('create_location_mutation_spec/valid_location') do
         mutation = create_valid_location_mutation
@@ -26,7 +26,7 @@ RSpec.describe 'createLocation mutation', type: :request do
     end
   end
 
-  describe 'with a valid Google token and invalid location' do
+  describe 'with a valid token and invalid location' do
     it 'does not create a new location' do
       VCR.use_cassette('create_location_mutation_spec/invalid_location') do
         mutation = create_invalid_location_mutation
@@ -47,7 +47,7 @@ RSpec.describe 'createLocation mutation', type: :request do
     end
   end
 
-  describe 'with an invalid Google token' do
+  describe 'with an invalid token' do
     it 'does not create a new location' do
       mutation = create_valid_location_mutation
 

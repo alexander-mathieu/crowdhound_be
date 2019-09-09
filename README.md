@@ -167,7 +167,7 @@ Returns a single user having the specified ID. *ID argument is required.*
 
 #### currentUser
 
-Returns an authenticated user, based on the specified googleToken. Returns null if no user has the specified googleToken. Has additional information not available in the basic user query, such as lastName, email and location.
+Returns an authenticated user, based on the specified token. Returns null if no user has the specified token. Has additional information not available in the basic user query, such as lastName, email and location.
 
 #### dogs(<filters>)
 
