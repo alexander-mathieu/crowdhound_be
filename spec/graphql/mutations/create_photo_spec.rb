@@ -237,4 +237,3 @@ RSpec.describe 'createPhoto mutation', type: :request do
   end
 end
 
-VCR.turn_on!
