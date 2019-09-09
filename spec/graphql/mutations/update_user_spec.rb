@@ -65,7 +65,29 @@ RSpec.describe 'updateUser mutation', type: :request do
         compare_gql_and_db_locations(updated_location, @existing_location.reload)
       end
     end
-  end
+
+    describe 'if the user has no location'
+      it 'creates a new location associated with the user' do
+        VCR.use_cassette('update_user_mutation_spec/create_user_location') do
+          user = create(:user)
+
+          mutation = update_location_mutation
+
+          post '/graphql', params: {
+                             token: user.token,
+                             query: mutation
+                           }
+
+          json = JSON.parse(response.body, symbolize_names: true)
+
+          gql_user = json[:data][:updateUser][:currentUser]
+          gql_user_location = gql_user[:location]
+
+          compare_gql_and_db_users(gql_user, user)
+          compare_gql_and_db_locations(gql_user_location, user.location)
+        end
+      end
+    end
 
   describe 'unauthenticated requests' do
     it 'does not update anything' do
