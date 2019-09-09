@@ -3,30 +3,54 @@ require 'rails_helper'
 
 RSpec.describe 'createPhoto mutation', type: :request do
   describe 'as an authenticated user' do
+    before(:each) do
+      @user = create(:user)
+  
+      @file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/dog.jpg')))
+    end
+
     it 'creates a photo for the current_user' do
-      user = create(:user)
-
-      file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/dog.jpg')))
-
-      photo = Photo.new(photoable: user, caption: 'my great caption')
+      photo = Photo.new(photoable: @user, caption: 'my great caption')
 
       params = {
-        token: user.token,
+        token: @user.token,
         query: create_photo_mutation(photo),
-        file: file
+        file: @file
       }
 
       post '/graphql', params: params
 
       json = JSON.parse(response.body, symbolize_names: true)
 
-      require 'pry'; binding.pry
-      
       gql_photo = json[:data][:createPhoto][:photo]
 
       compare_gql_and_db_photos(gql_photo, photo, false)
 
-      expect(user.photos.count).to eq(1)
+      expect(@user.photos.count).to eq(1)
+
+      expect(gql_photo[:sourceUrl]).to be_a(String)
+    end
+
+    it "creates a photo for the current_user's dog" do
+      dog = create(:dog, user: @user)
+
+      photo = Photo.new(photoable: dog, caption: 'my great caption')
+
+      params = {
+        token: @user.token,
+        query: create_photo_mutation(photo),
+        file: @file
+      }
+
+      post '/graphql', params: params
+
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      gql_photo = json[:data][:createPhoto][:photo]
+
+      compare_gql_and_db_photos(gql_photo, photo, false)
+
+      expect(dog.photos.count).to eq(1)
 
       expect(gql_photo[:sourceUrl]).to be_a(String)
     end
