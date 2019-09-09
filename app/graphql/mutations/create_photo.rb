@@ -24,6 +24,8 @@ module Mutations
       file_ext = file.tempfile.path.split(".")[1]
       file_name = "#{SecureRandom.hex}.#{file_ext}"
 
+      raise_error_if_not_image_file(file_ext)
+
       s3.put_object(
         bucket: ENV['AWS_BUCKET'],
         key: file_name,
@@ -34,6 +36,8 @@ module Mutations
 
       { photo: new_photo }
     end
+
+    private
 
     def get_photoable(current_user, photoable_type, photoable_id)
       begin
@@ -63,6 +67,16 @@ module Mutations
 
     def s3
       Aws::S3::Client.new(region: ENV['AWS_REGION'])
+    end
+
+    def raise_error_if_not_image_file(file_ext)
+      if !file_ext_whitelist.include?(file_ext)
+        raise GraphQL::ExecutionError, "File must be of one of the following types: #{file_ext_whitelist.join(', ')}"
+      end
+    end
+
+    def file_ext_whitelist
+      ['bmp', 'jpeg', 'jpg', 'tiff', 'png']
     end
   end
 end

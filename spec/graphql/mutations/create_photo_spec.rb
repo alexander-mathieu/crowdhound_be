@@ -34,9 +34,33 @@ RSpec.describe 'createPhoto mutation', type: :request do
     it 'returns an error if no photo is sent in the "file" query param' do
       photo = Photo.new(photoable: @user, caption: 'my great caption')
 
+      audio_file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/audio.mp3')))
+
       params = {
         token: @user.token,
         query: create_photo_mutation(photo),
+        file: audio_file
+      }
+
+      post '/graphql', params: params
+
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      data = json[:data][:createPhoto]
+      error_message = json[:errors][0][:message]
+      
+      expect(data).to be_nil
+      expect(error_message).to eq('File must be of one of the following types: bmp, jpeg, jpg, tiff, png')
+      
+      expect(Photo.count).to eq(0)
+    end
+
+    it 'returns an error if the file sent is not an image' do
+      not_a_photo = Photo.new(photoable: @user, caption: 'my great caption')
+
+      params = {
+        token: @user.token,
+        query: create_photo_mutation(not_a_photo)
       }
 
       post '/graphql', params: params
