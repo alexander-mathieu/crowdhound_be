@@ -53,10 +53,34 @@ RSpec.describe 'createPhoto mutation', type: :request do
 
       expect(Photo.count).to eq(0)
     end
-
+    
     it "creates a photo for the current_user's dog" do
       dog = create(:dog, user: @user)
-
+      
+      photo = Photo.new(photoable: dog, caption: 'my great caption')
+      
+      params = {
+        token: @user.token,
+        query: create_photo_mutation(photo),
+        file: @file
+      }
+      
+      post '/graphql', params: params
+      
+      json = JSON.parse(response.body, symbolize_names: true)
+      
+      gql_photo = json[:data][:createPhoto][:photo]
+      
+      compare_gql_and_db_photos(gql_photo, photo, false)
+      
+      expect(dog.photos.count).to eq(1)
+      
+      expect(gql_photo[:sourceUrl]).to be_a(String)
+    end
+    
+    it "does not create a photo for a different user's dog" do
+      other_user = create(:user)
+      dog = create(:dog, user: other_user)
       photo = Photo.new(photoable: dog, caption: 'my great caption')
 
       params = {
@@ -69,13 +93,13 @@ RSpec.describe 'createPhoto mutation', type: :request do
 
       json = JSON.parse(response.body, symbolize_names: true)
 
-      gql_photo = json[:data][:createPhoto][:photo]
+      data = json[:data][:createPhoto]
+      error_message = json[:errors][0][:message]
 
-      compare_gql_and_db_photos(gql_photo, photo, false)
+      expect(data).to be_nil
+      expect(error_message).to eq('Unauthorized')
 
-      expect(dog.photos.count).to eq(1)
-
-      expect(gql_photo[:sourceUrl]).to be_a(String)
+      expect(Photo.count).to eq(0)
     end
   end
 
