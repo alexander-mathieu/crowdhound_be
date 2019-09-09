@@ -149,15 +149,16 @@ RSpec.describe 'createPhoto mutation', type: :request do
   end
 
   describe 'as a visitor (not authenticated)' do
-    xit 'does not create a photo of the user' do
+    it 'does not create a photo' do
       user = create(:user)
 
+      photo = Photo.new(photoable: user, caption: 'my great caption')
       caption = "my cute dog"
       file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/dog.jpg')))
 
       params = {
         token: 'not a real token',
-        query: create_photo_mutation(user),
+        query: create_photo_mutation(photo),
         file: file
       }
 
