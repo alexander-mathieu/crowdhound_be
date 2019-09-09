@@ -102,6 +102,12 @@ Object types are templates for resources in the database.  Each object type has 
 * shortDesc - String
 * longDesc - String
 
+#### PhotoInputType Attributes
+
+* photoableType - String ("User" or "Dog", required)
+* photoableId - Integer (required)
+* caption - String
+
 ### Queries
 
 #### users
@@ -350,6 +356,48 @@ Example of expected response:
         "id": "36",
         "name": "Lil Fluff",
         "age": 0.0781648985211246
+      }
+    }
+  }
+}
+```
+
+#### createPhoto(photo: <PhotoInputType>)
+
+Uploads the photo from the `file` query param to an AWS S3 bucket and creates a photo resource in the database for the current user or the current user's dog. Whitelisted image file types include: bmp, jpeg, jpg, tiff, png. Requires a PhotoInputType argument. Returns a PhotoType object.
+
+Example request:
+```
+mutation {
+  createPhoto(
+    photo: {
+      photoableType: "Dog",
+      photoableId: 2,
+      caption: "My little buddy"
+    }
+  ) {
+    photo {
+      id
+      photoableId
+      photoableType
+      caption
+      sourceUrl
+    }
+  }
+}
+```
+
+Example of expected response:
+```
+{
+  "data": {
+    "createPhoto": {
+      "photo": {
+        "id": "20",
+        "photoableId": 2,
+        "photoableType": "Dog",
+        "caption": "My little buddy",
+        "sourceUrl": "https://crowdhound-photos.s3.us-east-2.amazonaws.com/28216d6906d1c2deb2bcc84669a7b8a3.jpg"
       }
     }
   }

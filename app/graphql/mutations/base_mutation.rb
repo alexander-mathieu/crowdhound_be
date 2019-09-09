@@ -7,5 +7,9 @@ module Mutations
         raise GraphQL::ExecutionError, 'Unauthorized - a valid token query parameter is required'
       end
     end
+
+    def boot_unauthorized_user
+      raise GraphQL::ExecutionError, 'Unauthorized'
+    end
   end
 end
