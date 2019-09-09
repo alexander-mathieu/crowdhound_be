@@ -30,7 +30,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
       expect(gql_photo[:sourceUrl]).to be_a(String)
     end
 
-    it 'returns an error if no photo is sent in the "file" query param' do
+    it 'returns an error if the file sent is not an image' do
       photo = Photo.new(photoable: @user, caption: 'my great caption')
 
       audio_file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/audio.mp3')))
@@ -54,7 +54,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
       expect(Photo.count).to eq(0)
     end
 
-    it 'returns an error if the file sent is not an image' do
+    it 'returns an error if no photo is sent in the "file" query param' do
       not_a_photo = Photo.new(photoable: @user, caption: 'my great caption')
 
       params = {
