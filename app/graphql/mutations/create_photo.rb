@@ -16,6 +16,11 @@ module Mutations
       photoable = get_photoable(current_user, photoable_type, photoable_id)
 
       file = context[:file]
+
+      if !file
+        raise GraphQL::ExecutionError, 'Image must be provided as a "file" query parameter'
+      end
+      
       file_ext = file.tempfile.path.split(".")[1]
       file_name = "#{SecureRandom.hex}.#{file_ext}"
 

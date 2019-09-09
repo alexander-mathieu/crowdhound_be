@@ -31,6 +31,27 @@ RSpec.describe 'createPhoto mutation', type: :request do
       expect(gql_photo[:sourceUrl]).to be_a(String)
     end
 
+    it 'returns an error if no photo is sent in the "file" query param' do
+      photo = Photo.new(photoable: @user, caption: 'my great caption')
+
+      params = {
+        token: @user.token,
+        query: create_photo_mutation(photo),
+      }
+
+      post '/graphql', params: params
+
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      data = json[:data][:createPhoto]
+      error_message = json[:errors][0][:message]
+
+      expect(data).to be_nil
+      expect(error_message).to eq('Image must be provided as a "file" query parameter')
+
+      expect(Photo.count).to eq(0)
+    end
+
     it 'does not create a photo for a different user' do
       other_user = create(:user)
       photo = Photo.new(photoable: other_user, caption: 'my great caption')
