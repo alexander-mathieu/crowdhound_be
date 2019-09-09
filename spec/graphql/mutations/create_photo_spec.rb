@@ -1,6 +1,5 @@
 require 'rails_helper'
 
-
 RSpec.describe 'createPhoto mutation', type: :request do
   describe 'as an authenticated user' do
     before(:each) do
