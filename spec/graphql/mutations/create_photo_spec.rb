@@ -53,6 +53,28 @@ RSpec.describe 'createPhoto mutation', type: :request do
 
       expect(Photo.count).to eq(0)
     end
+
+    it 'returns an error if no user is found with that id' do
+      photo = Photo.new(photoable_id: @user.id + 1, photoable_type: 'User', caption: 'my great caption')
+
+      params = {
+        token: @user.token,
+        query: create_photo_mutation(photo),
+        file: @file
+      }
+
+      post '/graphql', params: params
+
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      data = json[:data][:createPhoto]
+      error_message = json[:errors][0][:message]
+
+      expect(data).to be_nil
+      expect(error_message).to eq('Unauthorized')
+
+      expect(Photo.count).to eq(0)
+    end
     
     it "creates a photo for the current_user's dog" do
       dog = create(:dog, user: @user)
