@@ -6,7 +6,7 @@ RSpec.describe 'logOutUser mutation', type: :request do
 
     mutation = log_out_user_mutation
 
-    post '/graphql', params: { google_token: user.google_token, query: mutation }
+    post '/graphql', params: { token: user.token, query: mutation }
 
     json = JSON.parse(response.body, symbolize_names: true)
 
@@ -20,12 +20,12 @@ RSpec.describe 'logOutUser mutation', type: :request do
       first_name: 'Bob',
       last_name: 'Smith IV',
       email: 'bobsmithiv@bs.com',
-      google_token: 'notloggedin',
+      token: 'notloggedin',
     )
 
     mutation = log_out_user_mutation
 
-    post '/graphql', params: { google_token: user.google_token, query: mutation }
+    post '/graphql', params: { token: user.token, query: mutation }
 
     json = JSON.parse(response.body, symbolize_names: true)
 
@@ -33,7 +33,7 @@ RSpec.describe 'logOutUser mutation', type: :request do
     error_message = json[:errors][0][:message]
 
     expect(data).to be_nil
-    expect(error_message).to eq('Unauthorized - a valid google_token query parameter is required')
+    expect(error_message).to eq('Unauthorized - a valid token query parameter is required')
   end
 
   def log_out_user_mutation

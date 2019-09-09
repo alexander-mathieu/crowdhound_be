@@ -116,6 +116,6 @@ RSpec.describe 'dog query', type: :request do
   end
 
   def make_authenticated_post_request(query)
-    post '/graphql', params: { google_token: @current_user.google_token, query: query }
+    post '/graphql', params: { token: @current_user.token, query: query }
   end
 end

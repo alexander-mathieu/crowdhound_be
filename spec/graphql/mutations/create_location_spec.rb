@@ -5,13 +5,13 @@ RSpec.describe 'createLocation mutation', type: :request do
     @existing_user = create(:user)
   end
 
-  describe 'with a valid Google token and valid location' do
+  describe 'with a valid token and valid location' do
     it 'creates a new location' do
       VCR.use_cassette('create_location_mutation_spec/valid_location') do
         mutation = create_valid_location_mutation
 
         post '/graphql', params: {
-                           google_token: @existing_user.google_token,
+                           token: @existing_user.token,
                            query: mutation
                          }
 
@@ -26,13 +26,13 @@ RSpec.describe 'createLocation mutation', type: :request do
     end
   end
 
-  describe 'with a valid Google token and invalid location' do
+  describe 'with a valid token and invalid location' do
     it 'does not create a new location' do
       VCR.use_cassette('create_location_mutation_spec/invalid_location') do
         mutation = create_invalid_location_mutation
 
         post '/graphql', params: {
-                           google_token: @existing_user.google_token,
+                           token: @existing_user.token,
                            query: mutation
                          }
         json = JSON.parse(response.body, symbolize_names: true)
@@ -47,12 +47,12 @@ RSpec.describe 'createLocation mutation', type: :request do
     end
   end
 
-  describe 'with an invalid Google token' do
+  describe 'with an invalid token' do
     it 'does not create a new location' do
       mutation = create_valid_location_mutation
 
       post '/graphql', params: {
-                         google_token: 'thisisthesecondbesttoken',
+                         token: 'thisisthesecondbesttoken',
                          query: mutation
                        }
 
@@ -62,7 +62,7 @@ RSpec.describe 'createLocation mutation', type: :request do
       error_message = json[:errors][0][:message]
 
       expect(data).to be_nil
-      expect(error_message).to eq('Unauthorized - a valid google_token query parameter is required')
+      expect(error_message).to eq('Unauthorized - a valid token query parameter is required')
       expect(Location.count).to eq(0)
     end
   end

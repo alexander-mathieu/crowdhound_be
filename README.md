@@ -14,7 +14,7 @@ _CrowdHound_ utilizes [GraphQL](https://graphql.org/). All queries are made to a
 
 ### Authentication
 
-To make queries or mutations as a logged-in user, include that user's Google token as a `google_token` query param.
+To make queries or mutations as a logged-in user, include that user's token as a `token` query param.
 
 ### Object Types
 
@@ -77,7 +77,6 @@ Object types are templates for resources in the database.  Each object type has 
 * firstName - String (required)
 * lastName - String (required)
 * email - String (required)
-* googleToken - String (required)
 
 #### LocationInputType Attributes
 
@@ -168,7 +167,7 @@ Returns a single user having the specified ID. *ID argument is required.*
 
 #### currentUser
 
-Returns an authenticated user, based on the specified googleToken. Returns null if no user has the specified googleToken. Has additional information not available in the basic user query, such as lastName, email and location.
+Returns an authenticated user, based on the specified token. Returns null if no user has the specified token. Has additional information not available in the basic user query, such as lastName, email and location.
 
 #### dogs(<filters>)
 
@@ -210,7 +209,6 @@ mutation {
       firstName: "Bob",
       lastName: "Smith III",
       email: "bobsmithiii@bs.com"
-      token: "googletoken"
     }
   ) {
     currentUser {
@@ -220,6 +218,7 @@ mutation {
       email
     }
     new
+    token
   }
 }
 ```
@@ -236,6 +235,7 @@ Example of expected response:
         "email": "bobsmithiii@bs.com"
       },
       "new": true
+      "token": "6f5f36f48e637a04e428ba12b930f301"
     }
   }
 }
@@ -243,7 +243,7 @@ Example of expected response:
 
 #### logOutUser
 
-Logs out a user based on the specified `google_token` query parameter. A successful request returns a `message` attribute.
+Logs out a user based on the specified `token` query parameter. A successful request returns a `message` attribute.
 
 Example request:
 ```
@@ -268,7 +268,7 @@ Expected response:
 
 #### createLocation(location: <LocationInputType>)
 
-Adds a location for the user with the `google_token` specified in the query parameter. Requires a LocationInputType argument. A successful response returns a LocationType object.
+Adds a location for the user with the `token` specified in the query parameter. Requires a LocationInputType argument. A successful response returns a LocationType object.
 
 Example request:
 ```
@@ -310,7 +310,7 @@ Example of expected response:
 
 #### createDog(dog: <DogInputType>)
 
-Creates a dog in the database for the current user (based on the `google_token` in the params). Requires a DogInputType argument. Returns a DogType object.
+Creates a dog in the database for the current user (based on the `token` in the params). Requires a DogInputType argument. Returns a DogType object.
 
 Example request:
 ```

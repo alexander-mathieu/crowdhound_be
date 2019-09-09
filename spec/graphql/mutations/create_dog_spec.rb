@@ -15,7 +15,7 @@ RSpec.describe 'createDog mutation', type: :request do
     )
 
     params = {
-      google_token: user.google_token,
+      token: user.token,
       query: create_dog_mutation(dog_template)
     }
 
@@ -42,7 +42,7 @@ RSpec.describe 'createDog mutation', type: :request do
     )
 
     params = {
-      google_token: 'not a real google token',
+      token: 'not a real token',
       query: create_dog_mutation(dog_template)
     }
 
@@ -54,7 +54,7 @@ RSpec.describe 'createDog mutation', type: :request do
     error_message = json[:errors][0][:message]
 
     expect(data).to be_nil
-    expect(error_message).to eq('Unauthorized - a valid google_token query parameter is required')
+    expect(error_message).to eq('Unauthorized - a valid token query parameter is required')
 
     expect(Dog.count).to eq(0)
   end
