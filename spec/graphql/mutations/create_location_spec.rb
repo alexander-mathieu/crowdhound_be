@@ -11,7 +11,7 @@ RSpec.describe 'createLocation mutation', type: :request do
         mutation = create_valid_location_mutation
 
         post '/graphql', params: {
-                           google_token: @existing_user.google_token,
+                           token: @existing_user.token,
                            query: mutation
                          }
 
@@ -32,7 +32,7 @@ RSpec.describe 'createLocation mutation', type: :request do
         mutation = create_invalid_location_mutation
 
         post '/graphql', params: {
-                           google_token: @existing_user.google_token,
+                           token: @existing_user.token,
                            query: mutation
                          }
         json = JSON.parse(response.body, symbolize_names: true)
@@ -52,7 +52,7 @@ RSpec.describe 'createLocation mutation', type: :request do
       mutation = create_valid_location_mutation
 
       post '/graphql', params: {
-                         google_token: 'thisisthesecondbesttoken',
+                         token: 'thisisthesecondbesttoken',
                          query: mutation
                        }
 
@@ -62,7 +62,7 @@ RSpec.describe 'createLocation mutation', type: :request do
       error_message = json[:errors][0][:message]
 
       expect(data).to be_nil
-      expect(error_message).to eq('Unauthorized - a valid google_token query parameter is required')
+      expect(error_message).to eq('Unauthorized - a valid token query parameter is required')
       expect(Location.count).to eq(0)
     end
   end

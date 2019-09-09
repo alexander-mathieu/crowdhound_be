@@ -7,7 +7,7 @@ module Mutations
     def resolve
       boot_unauthenticated_user
 
-      context[:current_user].update(google_token: nil)
+      context[:current_user].update(token: nil)
 
       { message: 'User has been logged out' }
     end

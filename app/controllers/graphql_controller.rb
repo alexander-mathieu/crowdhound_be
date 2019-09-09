@@ -16,9 +16,9 @@ class GraphqlController < ApplicationController
   private
 
   def current_user
-    google_token = params[:google_token]
+    token = params[:token]
 
-    User.find_by(google_token: google_token)
+    User.find_by(token: token)
   end
 
   # Handle form data, JSON body, or a blank value

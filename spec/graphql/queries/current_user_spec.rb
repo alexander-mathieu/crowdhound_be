@@ -17,7 +17,7 @@ RSpec.describe 'current_user query', type: :request do
 
       params = { 
         query: query,
-        google_token: user.google_token
+        token: user.token
       }
 
       post '/graphql', params: params

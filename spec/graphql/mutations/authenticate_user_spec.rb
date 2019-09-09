@@ -32,7 +32,7 @@ RSpec.describe 'authenticateUser mutation', type: :request do
         first_name: 'Bob',
         last_name: 'Smith II',
         email: 'bobsmithii@bs.com',
-        google_token: 'thisisthesecondbesttoken',
+        token: 'thisisthesecondbesttoken',
       )
 
       mutation = authenticate_user_mutation(user, @api_key)
@@ -79,7 +79,6 @@ RSpec.describe 'authenticateUser mutation', type: :request do
           firstName: \"#{user.first_name}\"
           lastName: \"#{user.last_name}\"
           email: \"#{user.email}\"
-          googleToken: \"#{user.google_token}\"
         }
       ) {
         currentUser {
