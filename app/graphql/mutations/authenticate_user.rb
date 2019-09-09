@@ -7,6 +7,7 @@ module Mutations
 
     field :current_user, Types::CurrentUserType, null: true
     field :new, Boolean, null: true
+    field :token, String, null: false
 
     def resolve(auth:, api_key:)
       unless api_key == ENV['EXPRESS_API_KEY']
@@ -19,13 +20,15 @@ module Mutations
 
       user.new_record? ? new = true : new = false
 
+      token = SecureRandom.hex
+
       user.first_name = auth[:first_name]
       user.last_name = auth[:last_name]
-      user.google_token = auth[:google_token]
+      user.token = token
 
       user.save
 
-      { current_user: user, new: new }
+      { current_user: user, new: new, token: token }
     end
   end
 end
