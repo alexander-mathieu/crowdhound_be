@@ -24,7 +24,30 @@ RSpec.describe 'destroyDog mutation', type: :request do
     end
 
     it 'displays an error when no dog is found' do
-      dog = create(:dog)
+      dog = double(
+        id: 9999
+      )
+
+      mutation = destroy_dog_mutation(dog)
+
+      post '/graphql', params: {
+                         token: @user.token,
+                         query: mutation
+                       }
+
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      data = json[:data][:destroyDog]
+      error_message = json[:errors][0][:message]
+
+      expect(data).to be_nil
+      expect(error_message).to eq('Unauthorized')
+      expect(@user.dogs.count).to eq(2)
+    end
+
+    it 'displays an error when trying to delete a dog that does not belong to the user' do
+      user = create(:user)
+      dog = create(:dog, user: user)
 
       mutation = destroy_dog_mutation(dog)
 
