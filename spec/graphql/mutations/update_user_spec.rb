@@ -15,12 +15,12 @@ RSpec.describe 'updateUser mutation', type: :request do
     end
   end
 
-  describe 'with a valid Google token' do
+  describe 'authenticated requests' do
     it 'updates the user' do
       mutation = update_user_mutation
 
       post '/graphql', params: {
-                         google_token: @existing_user.google_token,
+                         token: @existing_user.token,
                          query: mutation
                        }
 
@@ -35,14 +35,13 @@ RSpec.describe 'updateUser mutation', type: :request do
         mutation = update_location_mutation
 
         post '/graphql', params: {
-                           google_token: @existing_user.google_token,
+                           token: @existing_user.token,
                            query: mutation
                          }
 
         json = JSON.parse(response.body, symbolize_names: true)
         user = json[:data][:updateUser][:currentUser]
-        updated_location = json[:data][:updateUser][:currentUser][:location]
-
+        updated_location = user[:location]
 
         compare_gql_and_db_users(user, @existing_user.reload)
         compare_gql_and_db_locations(updated_location, @existing_location.reload)
@@ -54,13 +53,13 @@ RSpec.describe 'updateUser mutation', type: :request do
         mutation = update_user_and_location_mutation
 
         post '/graphql', params: {
-                           google_token: @existing_user.google_token,
+                           token: @existing_user.token,
                            query: mutation
                          }
 
         json = JSON.parse(response.body, symbolize_names: true)
         updated_user = json[:data][:updateUser][:currentUser]
-        updated_location = json[:data][:updateUser][:currentUser][:location]
+        updated_location = updated_user[:location]
 
         compare_gql_and_db_users(updated_user, @existing_user.reload)
         compare_gql_and_db_locations(updated_location, @existing_location.reload)
@@ -68,12 +67,12 @@ RSpec.describe 'updateUser mutation', type: :request do
     end
   end
 
-  describe 'with an invalid Google token' do
+  describe 'unauthenticated requests' do
     it 'does not update anything' do
       mutation = update_user_and_location_mutation
 
       post '/graphql', params: {
-                         google_token: 'invalidtoken',
+                         token: 'invalidtoken',
                          query: mutation
                        }
 
@@ -83,7 +82,7 @@ RSpec.describe 'updateUser mutation', type: :request do
       error_message = json[:errors][0][:message]
 
       expect(data).to be_nil
-      expect(error_message).to eq('Unauthorized - a valid google_token query parameter is required')
+      expect(error_message).to eq('Unauthorized - a valid token query parameter is required')
     end
   end
 
