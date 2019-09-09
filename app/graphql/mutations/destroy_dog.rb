@@ -14,7 +14,7 @@ module Mutations
       begin
         dog = current_user.dogs.find(dog_id)
       rescue ActiveRecord::RecordNotFound
-        raise GraphQL::ExecutionError, 'Unauthorized' # TODO: Replace with boot_unauthorized_user
+        boot_unauthorized_user
       end
 
       dog.destroy
