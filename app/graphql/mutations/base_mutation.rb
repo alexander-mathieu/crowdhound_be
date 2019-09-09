@@ -4,7 +4,7 @@ module Mutations
 
     def boot_unauthenticated_user
       unless context[:current_user]
-        raise GraphQL::ExecutionError, 'Unauthorized - a valid google_token query parameter is required'
+        raise GraphQL::ExecutionError, 'Unauthorized - a valid token query parameter is required'
       end
     end
 

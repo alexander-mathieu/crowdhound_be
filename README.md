@@ -14,21 +14,11 @@ _CrowdHound_ utilizes [GraphQL](https://graphql.org/). All queries are made to a
 
 ### Authentication
 
-To make queries or mutations as a logged-in user, include that user's Google token as a `google_token` query param.
+To make queries or mutations as a logged-in user, include that user's token as a `token` query param.
 
 ### Object Types
 
 Object types are templates for resources in the database.  Each object type has a list of attributes that are available to return along with the object.
-
-#### UserType Attributes
-
-* id - ID (Int, required)
-* firstName - String
-* shortDesc - String
-* longDesc - String
-* distance - Float (in miles, null if the current user or queried user does not have a location defined)
-* dogs - [ DogType ]
-* photos - [ PhotoType ]
 
 #### CurrentUserType Attributes
 
@@ -57,11 +47,6 @@ Object types are templates for resources in the database.  Each object type has 
 * user - UserType
 * photos - [ PhotoType ]
 
-#### PhotoType Attributes
-
-* id
-* sourceUrl
-
 #### LocationType Attributes
 
 * id - ID (Int, required)
@@ -72,19 +57,26 @@ Object types are templates for resources in the database.  Each object type has 
 * lat - Float
 * long - Float
 
+#### PhotoType Attributes
+
+* id
+* sourceUrl
+
+#### UserType Attributes
+
+* id - ID (Int, required)
+* firstName - String
+* shortDesc - String
+* longDesc - String
+* distance - Float (in miles, null if the current user or queried user does not have a location defined)
+* dogs - [ DogType ]
+* photos - [ PhotoType ]
+
 #### AuthenticationInputType Attributes
 
 * firstName - String (required)
 * lastName - String (required)
 * email - String (required)
-* googleToken - String (required)
-
-#### LocationInputType Attributes
-
-* streetAddress - String
-* city - String
-* state - String
-* zipCode - String (required)
 
 #### DogInputType Attributes
 
@@ -93,6 +85,20 @@ Object types are templates for resources in the database.  Each object type has 
 * birthdate - String (required)
 * weight - Int (in lb, required)
 * activityLevel - Int (0, 1, or 2, required)
+* shortDesc - String
+* longDesc - String
+
+#### LocationInputType Attributes
+
+* streetAddress - String
+* city - String
+* state - String
+* zipCode - String (required)
+
+#### UserInputType Attributes
+
+* firstName - String
+* lastName - String
 * shortDesc - String
 * longDesc - String
 
@@ -168,7 +174,7 @@ Returns a single user having the specified ID. *ID argument is required.*
 
 #### currentUser
 
-Returns an authenticated user, based on the specified googleToken. Returns null if no user has the specified googleToken. Has additional information not available in the basic user query, such as lastName, email and location.
+Returns an authenticated user, based on the specified token. Returns null if no user has the specified token. Has additional information not available in the basic user query, such as lastName, email and location.
 
 #### dogs(<filters>)
 
@@ -210,7 +216,6 @@ mutation {
       firstName: "Bob",
       lastName: "Smith III",
       email: "bobsmithiii@bs.com"
-      token: "googletoken"
     }
   ) {
     currentUser {
@@ -220,6 +225,7 @@ mutation {
       email
     }
     new
+    token
   }
 }
 ```
@@ -236,6 +242,7 @@ Example of expected response:
         "email": "bobsmithiii@bs.com"
       },
       "new": true
+      "token": "6f5f36f48e637a04e428ba12b930f301"
     }
   }
 }
@@ -243,7 +250,7 @@ Example of expected response:
 
 #### logOutUser
 
-Logs out a user based on the specified `google_token` query parameter. A successful request returns a `message` attribute.
+Logs out a user based on the specified `token` query parameter. A successful request returns a `message` attribute.
 
 Example request:
 ```
@@ -268,7 +275,7 @@ Expected response:
 
 #### createLocation(location: <LocationInputType>)
 
-Adds a location for the user with the `google_token` specified in the query parameter. Requires a LocationInputType argument. A successful response returns a LocationType object.
+Adds a location for the user with the `token` specified in the query parameter. Requires a LocationInputType argument. A successful response returns a LocationType object.
 
 Example request:
 ```
@@ -307,10 +314,11 @@ Example of expected response:
     }
   }
 }
+```
 
 #### createDog(dog: <DogInputType>)
 
-Creates a dog in the database for the current user (based on the `google_token` in the params). Requires a DogInputType argument. Returns a DogType object.
+Creates a dog in the database for the current user (based on the `token` in the params). Requires a DogInputType argument. Returns a DogType object.
 
 Example request:
 ```
@@ -342,6 +350,69 @@ Example of expected response:
         "id": "36",
         "name": "Lil Fluff",
         "age": 0.0781648985211246
+      }
+    }
+  }
+}
+```
+
+#### updateUser(user: <UserInputType>, location: <LocationInputType>)
+
+Updates a user in the database (based on the `token` in the params). Accepts both UserInputType and LocationInputType arguments. Returns a CurrentUserType object.
+
+Example request:
+```
+mutation {
+  updateUser(
+    user: {
+      firstName: "Henry",
+      lastName: "Ford",
+      shortDesc: "I like cars!",
+      longDesc: "Yup!"
+    },
+    location: {
+      streetAddress: "1331 17th Street",
+      city: "Denver",
+      state: "CO",
+      zipCode: "80202"
+    }
+  ) {
+    currentUser {
+      id
+      firstName
+      lastName
+      shortDesc
+      longDesc
+      location {
+        id
+        streetAddress
+        city
+        state
+        zipCode
+      }
+    }
+  }
+}
+```
+
+Example of expected response:
+```
+{
+  "data": {
+    "updateUser": {
+      "currentUser": {
+        "id": "11",
+        "firstName": "Henry",
+        "lastName": "Ford",
+        "shortDesc": "I like cars!",
+        "longDesc": "Yup!",
+        "location": {
+          "id": "26",
+          "streetAddress": "1331 17th Street",
+          "city": "Denver",
+          "state": "CO",
+          "zipCode": "80202"
+        }
       }
     }
   }
