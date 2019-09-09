@@ -18,14 +18,16 @@ module Mutations
         email: auth[:email]
       )
 
-      user.new_record? ? new = true : new = false
+      if user.new_record?
+        user.first_name = auth[:first_name]
+        user.last_name = auth[:last_name]
+        new = true
+      else
+        new = false
+      end
 
       token = SecureRandom.hex
-
-      user.first_name = auth[:first_name]
-      user.last_name = auth[:last_name]
       user.token = token
-
       user.save
 
       { current_user: user, new: new, token: token }
