@@ -24,9 +24,7 @@ RSpec.describe 'destroyDog mutation', type: :request do
     end
 
     it 'displays an error when no dog is found' do
-      dog = double(
-        id: 9999
-      )
+      dog = double(id: 9999)
 
       mutation = destroy_dog_mutation(dog)
 
