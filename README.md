@@ -358,7 +358,7 @@ Example of expected response:
 
 #### updateUser(user: <UserInputType>, location: <LocationInputType>)
 
-Updates a user in the database (based on the `google_token` in the params). Accepts both UserInputType and LocationInputType arguments. Returns a CurrentUserType object.
+Updates a user in the database (based on the `token` in the params). Accepts both UserInputType and LocationInputType arguments. Returns a CurrentUserType object.
 
 Example request:
 ```
