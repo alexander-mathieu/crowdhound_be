@@ -1,0 +1,303 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=8500%20Pe%C3%B1a%20Boulevard,%20Denver,%20CO%2080249&key=<GOOGLE_MAPS_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 10 Sep 2019 04:04:39 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=469
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,43,39"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICAicmVzdWx0cyIgOiBbCiAgICAgIHsKICAgICAgICAgImFkZHJlc3NfY29tcG9uZW50cyIgOiBbCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgImxvbmdfbmFtZSIgOiAiODUwMCIsCiAgICAgICAgICAgICAgICJzaG9ydF9uYW1lIiA6ICI4NTAwIiwKICAgICAgICAgICAgICAgInR5cGVzIiA6IFsgInN0cmVldF9udW1iZXIiIF0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgICAibG9uZ19uYW1lIiA6ICJQZcOxYSBCb3VsZXZhcmQiLAogICAgICAgICAgICAgICAic2hvcnRfbmFtZSIgOiAiUGXDsWEgQmx2ZCIsCiAgICAgICAgICAgICAgICJ0eXBlcyIgOiBbICJyb3V0ZSIgXQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICJsb25nX25hbWUiIDogIkRlbnZlciIsCiAgICAgICAgICAgICAgICJzaG9ydF9uYW1lIiA6ICJEZW52ZXIiLAogICAgICAgICAgICAgICAidHlwZXMiIDogWyAibG9jYWxpdHkiLCAicG9saXRpY2FsIiBdCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgImxvbmdfbmFtZSIgOiAiRGVudmVyIENvdW50eSIsCiAgICAgICAgICAgICAgICJzaG9ydF9uYW1lIiA6ICJEZW52ZXIgQ291bnR5IiwKICAgICAgICAgICAgICAgInR5cGVzIiA6IFsgImFkbWluaXN0cmF0aXZlX2FyZWFfbGV2ZWxfMiIsICJwb2xpdGljYWwiIF0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgICAibG9uZ19uYW1lIiA6ICJDb2xvcmFkbyIsCiAgICAgICAgICAgICAgICJzaG9ydF9uYW1lIiA6ICJDTyIsCiAgICAgICAgICAgICAgICJ0eXBlcyIgOiBbICJhZG1pbmlzdHJhdGl2ZV9hcmVhX2xldmVsXzEiLCAicG9saXRpY2FsIiBdCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgImxvbmdfbmFtZSIgOiAiVW5pdGVkIFN0YXRlcyIsCiAgICAgICAgICAgICAgICJzaG9ydF9uYW1lIiA6ICJVUyIsCiAgICAgICAgICAgICAgICJ0eXBlcyIgOiBbICJjb3VudHJ5IiwgInBvbGl0aWNhbCIgXQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICJsb25nX25hbWUiIDogIjgwMjQ5IiwKICAgICAgICAgICAgICAgInNob3J0X25hbWUiIDogIjgwMjQ5IiwKICAgICAgICAgICAgICAgInR5cGVzIiA6IFsgInBvc3RhbF9jb2RlIiBdCiAgICAgICAgICAgIH0KICAgICAgICAgXSwKICAgICAgICAgImZvcm1hdHRlZF9hZGRyZXNzIiA6ICI4NTAwIFBlw7FhIEJsdmQsIERlbnZlciwgQ08gODAyNDksIFVTQSIsCiAgICAgICAgICJnZW9tZXRyeSIgOiB7CiAgICAgICAgICAgICJsb2NhdGlvbiIgOiB7CiAgICAgICAgICAgICAgICJsYXQiIDogMzkuODQ5NDM4MiwKICAgICAgICAgICAgICAgImxuZyIgOiAtMTA0LjY3MzUxMjgKICAgICAgICAgICAgfSwKICAgICAgICAgICAgImxvY2F0aW9uX3R5cGUiIDogIlJPT0ZUT1AiLAogICAgICAgICAgICAidmlld3BvcnQiIDogewogICAgICAgICAgICAgICAibm9ydGhlYXN0IiA6IHsKICAgICAgICAgICAgICAgICAgImxhdCIgOiAzOS44NTA3ODcxODAyOTE1LAogICAgICAgICAgICAgICAgICAibG5nIiA6IC0xMDQuNjcyMTYzODE5NzA4NQogICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAic291dGh3ZXN0IiA6IHsKICAgICAgICAgICAgICAgICAgImxhdCIgOiAzOS44NDgwODkyMTk3MDg1MSwKICAgICAgICAgICAgICAgICAgImxuZyIgOiAtMTA0LjY3NDg2MTc4MDI5MTUKICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgIH0sCiAgICAgICAgICJwbGFjZV9pZCIgOiAiQ2hJSncwN3huSkpuYkljUi1WTHF3YnZQS2pBIiwKICAgICAgICAgInBsdXNfY29kZSIgOiB7CiAgICAgICAgICAgICJjb21wb3VuZF9jb2RlIiA6ICJSOFhHK1FIIERlbnZlciwgQ29sb3JhZG8sIFVuaXRlZCBTdGF0ZXMiLAogICAgICAgICAgICAiZ2xvYmFsX2NvZGUiIDogIjg1RlFSOFhHK1FIIgogICAgICAgICB9LAogICAgICAgICAidHlwZXMiIDogWyAic3RyZWV0X2FkZHJlc3MiIF0KICAgICAgfSwKICAgICAgewogICAgICAgICAiYWRkcmVzc19jb21wb25lbnRzIiA6IFsKICAgICAgICAgICAgewogICAgICAgICAgICAgICAibG9uZ19uYW1lIiA6ICI4NTAwIiwKICAgICAgICAgICAgICAgInNob3J0X25hbWUiIDogIjg1MDAiLAogICAgICAgICAgICAgICAidHlwZXMiIDogWyAic3RyZWV0X251bWJlciIgXQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICJsb25nX25hbWUiIDogIlBlw7FhIEJvdWxldmFyZCIsCiAgICAgICAgICAgICAgICJzaG9ydF9uYW1lIiA6ICJQZcOxYSBCbHZkIiwKICAgICAgICAgICAgICAgInR5cGVzIiA6IFsgInJvdXRlIiBdCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgImxvbmdfbmFtZSIgOiAiRGVudmVyIiwKICAgICAgICAgICAgICAgInNob3J0X25hbWUiIDogIkRlbnZlciIsCiAgICAgICAgICAgICAgICJ0eXBlcyIgOiBbICJsb2NhbGl0eSIsICJwb2xpdGljYWwiIF0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgICAibG9uZ19uYW1lIiA6ICJEZW52ZXIgQ291bnR5IiwKICAgICAgICAgICAgICAgInNob3J0X25hbWUiIDogIkRlbnZlciBDb3VudHkiLAogICAgICAgICAgICAgICAidHlwZXMiIDogWyAiYWRtaW5pc3RyYXRpdmVfYXJlYV9sZXZlbF8yIiwgInBvbGl0aWNhbCIgXQogICAgICAgICAgICB9LAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICJsb25nX25hbWUiIDogIkNvbG9yYWRvIiwKICAgICAgICAgICAgICAgInNob3J0X25hbWUiIDogIkNPIiwKICAgICAgICAgICAgICAgInR5cGVzIiA6IFsgImFkbWluaXN0cmF0aXZlX2FyZWFfbGV2ZWxfMSIsICJwb2xpdGljYWwiIF0KICAgICAgICAgICAgfSwKICAgICAgICAgICAgewogICAgICAgICAgICAgICAibG9uZ19uYW1lIiA6ICJVbml0ZWQgU3RhdGVzIiwKICAgICAgICAgICAgICAgInNob3J0X25hbWUiIDogIlVTIiwKICAgICAgICAgICAgICAgInR5cGVzIiA6IFsgImNvdW50cnkiLCAicG9saXRpY2FsIiBdCiAgICAgICAgICAgIH0sCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgImxvbmdfbmFtZSIgOiAiODAyNDkiLAogICAgICAgICAgICAgICAic2hvcnRfbmFtZSIgOiAiODAyNDkiLAogICAgICAgICAgICAgICAidHlwZXMiIDogWyAicG9zdGFsX2NvZGUiIF0KICAgICAgICAgICAgfQogICAgICAgICBdLAogICAgICAgICAiZm9ybWF0dGVkX2FkZHJlc3MiIDogIjg1MDAgUGXDsWEgQmx2ZCwgRGVudmVyLCBDTyA4MDI0OSwgVVNBIiwKICAgICAgICAgImdlb21ldHJ5IiA6IHsKICAgICAgICAgICAgImxvY2F0aW9uIiA6IHsKICAgICAgICAgICAgICAgImxhdCIgOiAzOS44NTg3MzQyOTk5OTk5OSwKICAgICAgICAgICAgICAgImxuZyIgOiAtMTA0LjY3Mzc3MDUKICAgICAgICAgICAgfSwKICAgICAgICAgICAgImxvY2F0aW9uX3R5cGUiIDogIlJPT0ZUT1AiLAogICAgICAgICAgICAidmlld3BvcnQiIDogewogICAgICAgICAgICAgICAibm9ydGhlYXN0IiA6IHsKICAgICAgICAgICAgICAgICAgImxhdCIgOiAzOS44NjAwODMyODAyOTE1LAogICAgICAgICAgICAgICAgICAibG5nIiA6IC0xMDQuNjcyNDIxNTE5NzA4NQogICAgICAgICAgICAgICB9LAogICAgICAgICAgICAgICAic291dGh3ZXN0IiA6IHsKICAgICAgICAgICAgICAgICAgImxhdCIgOiAzOS44NTczODUzMTk3MDg1LAogICAgICAgICAgICAgICAgICAibG5nIiA6IC0xMDQuNjc1MTE5NDgwMjkxNQogICAgICAgICAgICAgICB9CiAgICAgICAgICAgIH0KICAgICAgICAgfSwKICAgICAgICAgInBsYWNlX2lkIiA6ICJDaElKV1hOdmgtVm5iSWNSNUFEU2R4YUk4ajgiLAogICAgICAgICAicGx1c19jb2RlIiA6IHsKICAgICAgICAgICAgImNvbXBvdW5kX2NvZGUiIDogIlY4NUcrRkYgRGVudmVyLCBDb2xvcmFkbywgVW5pdGVkIFN0YXRlcyIsCiAgICAgICAgICAgICJnbG9iYWxfY29kZSIgOiAiODVGUVY4NUcrRkYiCiAgICAgICAgIH0sCiAgICAgICAgICJ0eXBlcyIgOiBbICJzdHJlZXRfYWRkcmVzcyIgXQogICAgICB9CiAgIF0sCiAgICJzdGF0dXMiIDogIk9LIgp9Cg==
+    http_version: 
+  recorded_at: Sun, 07 Jul 2019 17:45:00 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=6000%20Victory%20Way,%20Commerce%20City,%20CO%2080022&key=<GOOGLE_MAPS_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 10 Sep 2019 04:04:40 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=349
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,43,39"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "6000",
+                       "short_name" : "6000",
+                       "types" : [ "street_number" ]
+                    },
+                    {
+                       "long_name" : "Victory Way",
+                       "short_name" : "Victory Way",
+                       "types" : [ "route" ]
+                    },
+                    {
+                       "long_name" : "Commerce City",
+                       "short_name" : "Commerce City",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Adams County",
+                       "short_name" : "Adams County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "Colorado",
+                       "short_name" : "CO",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    },
+                    {
+                       "long_name" : "80022",
+                       "short_name" : "80022",
+                       "types" : [ "postal_code" ]
+                    },
+                    {
+                       "long_name" : "4203",
+                       "short_name" : "4203",
+                       "types" : [ "postal_code_suffix" ]
+                    }
+                 ],
+                 "formatted_address" : "6000 Victory Way, Commerce City, CO 80022, USA",
+                 "geometry" : {
+                    "location" : {
+                       "lat" : 39.8056867,
+                       "lng" : -104.8918117
+                    },
+                    "location_type" : "ROOFTOP",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 39.8070356802915,
+                          "lng" : -104.8904627197085
+                       },
+                       "southwest" : {
+                          "lat" : 39.8043377197085,
+                          "lng" : -104.8931606802915
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJjUhM_Pd6bIcRT3m4hIbSvnM",
+                 "plus_code" : {
+                    "compound_code" : "R445+77 Commerce City, Colorado, United States",
+                    "global_code" : "85FQR445+77"
+                 },
+                 "types" : [ "street_address" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Sun, 07 Jul 2019 17:45:00 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=1701%20Bryant%20Street,%20Denver,%20CO%2080204&key=<GOOGLE_MAPS_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.15.4
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 10 Sep 2019 04:04:40 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Server:
+      - mafe
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=408
+      Alt-Svc:
+      - quic=":443"; ma=2592000; v="46,43,39"
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+           "results" : [
+              {
+                 "address_components" : [
+                    {
+                       "long_name" : "1701",
+                       "short_name" : "1701",
+                       "types" : [ "street_number" ]
+                    },
+                    {
+                       "long_name" : "Bryant Street",
+                       "short_name" : "Bryant St",
+                       "types" : [ "route" ]
+                    },
+                    {
+                       "long_name" : "Sun Valley",
+                       "short_name" : "Sun Valley",
+                       "types" : [ "neighborhood", "political" ]
+                    },
+                    {
+                       "long_name" : "Denver",
+                       "short_name" : "Denver",
+                       "types" : [ "locality", "political" ]
+                    },
+                    {
+                       "long_name" : "Denver County",
+                       "short_name" : "Denver County",
+                       "types" : [ "administrative_area_level_2", "political" ]
+                    },
+                    {
+                       "long_name" : "Colorado",
+                       "short_name" : "CO",
+                       "types" : [ "administrative_area_level_1", "political" ]
+                    },
+                    {
+                       "long_name" : "United States",
+                       "short_name" : "US",
+                       "types" : [ "country", "political" ]
+                    },
+                    {
+                       "long_name" : "80204",
+                       "short_name" : "80204",
+                       "types" : [ "postal_code" ]
+                    }
+                 ],
+                 "formatted_address" : "1701 Bryant St, Denver, CO 80204, USA",
+                 "geometry" : {
+                    "bounds" : {
+                       "northeast" : {
+                          "lat" : 39.7451302,
+                          "lng" : -105.0187669
+                       },
+                       "southwest" : {
+                          "lat" : 39.7427638,
+                          "lng" : -105.0217903
+                       }
+                    },
+                    "location" : {
+                       "lat" : 39.7441196,
+                       "lng" : -105.0203951
+                    },
+                    "location_type" : "ROOFTOP",
+                    "viewport" : {
+                       "northeast" : {
+                          "lat" : 39.74529598029149,
+                          "lng" : -105.0187669
+                       },
+                       "southwest" : {
+                          "lat" : 39.7425980197085,
+                          "lng" : -105.0217903
+                       }
+                    }
+                 },
+                 "place_id" : "ChIJqXjDVqV4bIcRaFr2n_Oic8A",
+                 "types" : [ "premise" ]
+              }
+           ],
+           "status" : "OK"
+        }
+    http_version: 
+  recorded_at: Sun, 07 Jul 2019 17:45:00 GMT
+recorded_with: VCR 5.0.0
