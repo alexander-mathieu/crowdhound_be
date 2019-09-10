@@ -10,7 +10,7 @@ User.destroy_all
 
 ##### Create users
 user1, user2, user3, user4, user5, user6, user7, user8, user9, user10 = create_list(:user, 10)
-dogless_user1, dogless_user2, dogless_user3, = create_list(:user, 3)
+dogless_user1, dogless_user2, dogless_user3 = create_list(:user, 3)
 
 ##### Create dogs
 dog11, dog12, dog13 = create_list(:dog, 3, user: user1)
