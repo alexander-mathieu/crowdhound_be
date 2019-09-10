@@ -5,6 +5,7 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     context = {
       current_user: current_user,
+      current_chatkit_user: current_chatkit_user,
       file: params[:file]
     }
     result = CrowdhoundBeSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
@@ -19,7 +20,25 @@ class GraphqlController < ApplicationController
   def current_user
     token = params[:token]
 
-    User.find_by(token: token)
+    @current_user ||= User.find_by(token: token)
+  end
+
+  def current_chatkit_user
+    if current_user
+      begin
+        chatkit.get_user({ id: current_user.id.to_s })
+      rescue => err
+        if err.error_description == 'The requested user does not exist'
+          nil
+        else
+          raise GraphQL::ExecutionError, err.message
+        end
+      end
+    end
+  end
+
+  def chatkit
+    @chatkit ||= ChatkitService.connect
   end
 
   # Handle form data, JSON body, or a blank value
