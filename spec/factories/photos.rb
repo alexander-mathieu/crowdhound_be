@@ -3,6 +3,7 @@ FactoryBot.define do
     photoable_id { nil }
     photoable_type { nil }
     sequence(:source_url) { |n| "https://placedog.net/#{n % 1000}" }
+    caption { Faker::Creature::Dog.meme_phrase }
   end
 
   factory :user_photo, parent: :photo do
