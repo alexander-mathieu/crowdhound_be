@@ -30,35 +30,13 @@ module Mutations
       user.token = token
       user.save
 
-      unless existing_chatkit_user(user)
-        create_chatkit_user(user)
+      user_chatkit_service = ChatkitService.new(user)
+
+      unless user_chatkit_service.existing_chatkit_user
+        user_chatkit_service.create_chatkit_user
       end
 
       { current_user: user, new: new, token: token }
-    end
-
-    private
-
-    def existing_chatkit_user(user)
-      begin
-        chatkit.get_user({ id: user.id.to_s })
-      rescue => err
-        if err.error_description != 'The requested user does not exist'
-          raise GraphQL::ExecutionError, err.message
-        end
-      end
-    end
-
-    def create_chatkit_user(user)
-      response = chatkit.create_user({ id: user.id.to_s, name: user.first_name })
-
-      unless response[:status] == 201
-        raise "Chatkit failed to create user. Response: #{response}"
-      end
-    end
-
-    def chatkit
-      @chatkit ||= ChatkitService.connect
     end
   end
 end
