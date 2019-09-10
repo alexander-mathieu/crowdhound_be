@@ -404,6 +404,28 @@ Example of expected response:
 }
 ```
 
+#### destroyDog(dog_id: <ID>)
+
+Deletes the dog associated with the ID passed in as an argument if the dog belongs to the user with the `token` in the query params. *ID argument is required.*
+
+Example request:
+```
+mutation {
+  destroyDog(dogId: 5) {
+    message
+  }
+}
+```
+
+Example of expected response:
+```
+"data": {
+  "destroyDog": {
+    "message": "Dog successfully deleted"
+  }
+}
+```
+
 #### updateUser(user: <UserInputType>, location: <LocationInputType>)
 
 Updates a user in the database (based on the `token` in the params). Accepts both UserInputType and LocationInputType arguments. Returns a CurrentUserType object. *If a location argument is passed and no location exists for the user, a location will be created.*
