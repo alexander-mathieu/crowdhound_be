@@ -3,10 +3,10 @@ FactoryBot.define do
     user
     name { Faker::Superhero.unique.name }
     breed { Faker::Creature::Dog.breed }
-    birthdate { Time.at(rand * Time.now.to_i).to_date }
-    weight { rand(150) }
-    short_desc { Faker::Movies::BackToTheFuture.quote }
-    long_desc { Faker::Lorem.paragraph(sentence_count: 8) }
-    activity_level { rand(2) }
+    birthdate { (rand(12 * 12).months.ago).to_date }
+    weight { rand(100) }
+    short_desc { Faker::Hipster.sentence(word_count: 12) }
+    long_desc { Faker::Hipster.paragraph(sentence_count: 8) }
+    activity_level { rand(3) }
   end
 end
