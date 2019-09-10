@@ -25,20 +25,10 @@ class GraphqlController < ApplicationController
 
   def current_chatkit_user
     if current_user
-      begin
-        chatkit.get_user({ id: current_user.id.to_s })
-      rescue => err
-        if err.error_description == 'The requested user does not exist'
-          nil
-        else
-          raise GraphQL::ExecutionError, err.message
-        end
-      end
+      ChatkitService(current_user).existing_chatkit_user
+    else
+      nil
     end
-  end
-
-  def chatkit
-    @chatkit ||= ChatkitService.connect
   end
 
   # Handle form data, JSON body, or a blank value

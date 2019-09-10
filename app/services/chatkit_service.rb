@@ -16,7 +16,9 @@ class ChatkitService
     begin
       conn.get_user({ id: @user.id.to_s })
     rescue => err
-      if err.error_description != 'The requested user does not exist'
+      if err.error_description == 'The requested user does not exist'
+        nil
+      else
         raise GraphQL::ExecutionError, err.message
       end
     end
