@@ -193,6 +193,7 @@ Available arguments are:
   * _i.e. ageRange: [2, 4.5]_
 * breed: <Array of comma separated strings, denoting the acceptable breeds>
   * _i.e. breed: ["Rat Terrier", "German Shepherd"]_
+* maxDistance: <Int (in miles)>
 * weightRange: <Array with two integer values, denoting the minimum and maximum acceptable weight in pounds>
  * _i.e. weightRange: [20, 40]_
 

@@ -2,7 +2,7 @@ module Mutations
   class CreateDog < BaseMutation
     null true
 
-    argument :dog, Types::DogInput, required: true
+    argument :dog, Types::Inputs::DogInput, required: true
 
     field :dog, Types::DogType, null: true
 

@@ -36,39 +36,11 @@ module Types
         argument :age_range, [Float], required: false
         argument :breed, [String], required: false
         argument :weight_range, [Int], required: false
+        argument :max_distance, Int, required: false
       end
 
     def dogs(**filters)
-      if filters[:age_range]
-        raise GraphQL::ExecutionError, 'Please provide an array with two integers or floating point numbers for ageRange.' unless filters[:age_range].count == 2
-
-        one_year = 1.year.seconds
-        beginning_date = Time.zone.now - (filters[:age_range].max * one_year) - one_year
-        end_date = Time.zone.now - (filters[:age_range].min * one_year)
-
-        filters[:birthdate] = beginning_date..end_date
-        filters.delete(:age_range)
-      end
-
-      if filters[:activity_level_range]
-        raise GraphQL::ExecutionError, 'Please provide an array with two integers for activityLevelRange.' unless filters[:activity_level_range].count == 2
-        filters[:activity_level] = filters[:activity_level_range].min..filters[:activity_level_range].max
-        filters.delete(:activity_level_range)
-      end
-
-      if filters[:weight_range]
-        raise GraphQL::ExecutionError, 'Please provide an array with two integers for weightRange.' unless filters[:weight_range].count == 2
-        filters[:weight] = filters[:weight_range].min..filters[:weight_range].max
-        filters.delete(:weight_range)
-      end
-
-      dogs = if current_user && current_user.location
-               Dog.sorted_by_distance(current_user)
-             else
-               Dog.order(:id)
-             end
-
-      dogs.where(filters)
+      Helpers::DogsQueryFilterer.new(filters, current_user).results
     end
 
     field :dog, Types::DogType, null: false,
