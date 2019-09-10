@@ -11,7 +11,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 VCR.configure do |config|
-  config.ignore_hosts "#{ENV['AWS_BUCKET']}.s3.#{ENV['AWS_REGION']}.amazonaws.com", "us1.pusherplatform.io"
+  config.ignore_hosts "#{ENV['AWS_BUCKET']}.s3.#{ENV['AWS_REGION']}.amazonaws.com"
   config.ignore_localhost = true
   config.cassette_library_dir = 'spec/cassettes'
   config.hook_into :webmock
