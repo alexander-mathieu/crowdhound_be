@@ -2,8 +2,8 @@ module Mutations
   class UpdateUser < BaseMutation
     null true
 
-    argument :user, Types::UserInput, required: false
-    argument :location, Types::LocationInput, required: false
+    argument :user, Types::Inputs::UserInput, required: false
+    argument :location, Types::Inputs::LocationInput, required: false
 
     field :current_user, Types::CurrentUserType, null: true
 
@@ -19,7 +19,7 @@ module Mutations
 
       if location
         location_info = location.to_hash
-        
+
         if current_user.location
           current_user.location.update(location_info)
         else

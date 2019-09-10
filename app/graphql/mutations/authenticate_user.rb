@@ -2,7 +2,7 @@ module Mutations
   class AuthenticateUser < BaseMutation
     null true
 
-    argument :auth, Types::AuthenticationInput, required: true
+    argument :auth, Types::Inputs::AuthenticationInput, required: true
     argument :api_key, String, required: true
 
     field :current_user, Types::CurrentUserType, null: true
