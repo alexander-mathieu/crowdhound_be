@@ -32,6 +32,14 @@ class ChatkitService
     end
   end
 
+  def get_token
+    auth_data = conn.authenticate({
+      user_id: @user.id.to_s
+    })
+
+    auth_data.body[:access_token] # token_type: bearer
+  end
+
   def conn
     self.class.connect
   end
