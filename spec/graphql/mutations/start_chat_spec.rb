@@ -45,6 +45,25 @@ RSpec.describe 'startChat mutation', type: :request do
   
       expect(gql_room_id_2).to eq(expected_room_id)
     end
+
+    it 'throws an error if there is no user with that id' do
+      user, other_user = create_list(:user, 2)
+
+      params = {
+        token: user.token,
+        query: start_chat_mutation(other_user.id + 1)
+      }
+  
+      post '/graphql', params: params
+  
+      json = JSON.parse(response.body, symbolize_names: true)
+
+      error_message = json[:errors][0][:message]
+      expect(error_message).to eq('Unauthorized')
+      
+      data = json[:data][:startChat]
+      expect(data).to be_nil
+    end
   end
 
   describe 'as a visitor (not authenticated)' do
