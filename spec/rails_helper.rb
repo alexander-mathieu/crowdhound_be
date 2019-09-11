@@ -11,7 +11,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 VCR.configure do |config|
-  config.ignore_hosts "#{ENV['AWS_BUCKET']}.s3.#{ENV['AWS_REGION']}.amazonaws.com"
+  config.ignore_hosts "#{ENV['AWS_BUCKET']}.s3.#{ENV['AWS_REGION']}.amazonaws.com", "us1.pusherplatform.io"
   config.ignore_localhost = true
   config.cassette_library_dir = 'spec/cassettes'
   config.hook_into :webmock
@@ -19,6 +19,8 @@ VCR.configure do |config|
   config.filter_sensitive_data('<GOOGLE_MAPS_API_KEY>') { ENV['GOOGLE_MAPS_API_KEY'] }
   config.filter_sensitive_data('<AWS_ACCESS_KEY_ID>') { ENV['AWS_ACCESS_KEY_ID'] }
   config.filter_sensitive_data('<AWS_SECRET_ACCESS_KEY>') { ENV['AWS_SECRET_ACCESS_KEY'] }
+  config.filter_sensitive_data('<CHATKIT_INSTANCE_LOCATOR>') { ENV['CHATKIT_INSTANCE_LOCATOR'] }
+  config.filter_sensitive_data('<CHATKIT_SECRET_KEY>') { ENV['CHATKIT_SECRET_KEY'] }
   config.default_cassette_options = { record: :new_episodes }
 end
 
