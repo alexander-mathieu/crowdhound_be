@@ -496,6 +496,31 @@ Example of expected response:
 }
 ```
 
+#### startChat(userId: <id of user to start chat with>)
+
+Finds or creates a chatkit room (chat) between the current user (based on the specified `token` query parameter) and the user specified by id in the mutation's argument. A successful request returns a `roomId` attribute.
+
+Example request (for user 73):
+```
+mutation {
+  startChat(userId: 56)
+  {
+    roomId
+  }
+}
+```
+
+Expected response:
+```
+{
+  "data": {
+    "startChat": {
+      "roomId": "56-73"
+    }
+  }
+}
+```
+
 ## Local Installation
 
 ### Requirements
