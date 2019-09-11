@@ -1,8 +1,10 @@
+require 'base64'
+
 module Mutations
   class CreatePhoto < BaseMutation
     null true
 
-    argument :photo, Types::PhotoInput, required: true
+    argument :photo, Types::Inputs::PhotoInput, required: true
 
     field :photo, Types::PhotoType, null: true
 
@@ -15,21 +17,26 @@ module Mutations
 
       photoable = get_photoable(current_user, photoable_type, photoable_id)
 
-      file = context[:file]
+      raw_file = context[:file]
 
-      if !file
+      if !raw_file
         raise GraphQL::ExecutionError, 'Image must be provided as a "file" query parameter'
       end
       
-      file_ext = file.tempfile.path.split(".")[1]
+      meta, encoded_file = raw_file.split(',')
+      
+      before_semicolon = meta.split(';')[0]
+      file_ext = before_semicolon.split('/')[1]
       file_name = "#{SecureRandom.hex}.#{file_ext}"
+
+      decoded_file = Base64.decode64(encoded_file)
 
       raise_error_if_not_image_file(file_ext)
 
       s3.put_object(
         bucket: ENV['AWS_BUCKET'],
         key: file_name,
-        body: file
+        body: decoded_file
       )
 
       new_photo = create_photo_resource(photoable, photo[:caption], file_name)
@@ -43,7 +50,7 @@ module Mutations
       begin
         if photoable_type == 'User'
           photoable = User.find(photoable_id)
-          
+
           boot_unauthorized_user unless photoable.id == current_user.id
         elsif photoable_type == 'Dog'
           photoable = Dog.find(photoable_id)

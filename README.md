@@ -1,12 +1,18 @@
 # CrowdHound
 
+Welcome! This is an API that serves as the back-end for _CrowdHound_, built by [Alexandra Chakeres](https://github.com/chakeresa/) and [Alexander Mathieu](https://github.com/alexander-mathieu/). The _CrowdHound_ front-end is viewable on GitHub [here](https://github.com/evanmarkowitz/crowdhound/), and as a deployed site [here](https://crowdhound.herokuapp.com/).
+
 ## About
 
-Welcome to _CrowdHound_!
+Some people just want to chill with a dog for an afternoon or a few days, without the responsibility of having them 24/7/365. On the other side of the coin, many busy dog owners have to bug their friends and family, or pay expensive boarding fees when they leave town or can’t come home right after work. _CrowdHound_ lets dog owners and enthusiasts find each other. You can see photos of the dogs and users, read each other's profiles, and filter by preferences (like dog age, weight and distance to you). When you find a profile you like, you can send them a message to connect.
 
-The deployed site's endpoints can be consumed at:
+The deployed API's endpoints can be consumed at:
 
 https://crowdhound-be.herokuapp.com/
+
+## Schema
+
+![CrowdHound Schema](/public/images/schema.png)
 
 ## Endpoints
 
@@ -193,6 +199,7 @@ Available arguments are:
   * _i.e. ageRange: [2, 4.5]_
 * breed: <Array of comma separated strings, denoting the acceptable breeds>
   * _i.e. breed: ["Rat Terrier", "German Shepherd"]_
+* maxDistance: <Int (in miles)>
 * weightRange: <Array with two integer values, denoting the minimum and maximum acceptable weight in pounds>
  * _i.e. weightRange: [20, 40]_
 
@@ -364,7 +371,7 @@ Example of expected response:
 
 #### createPhoto(photo: <PhotoInputType>)
 
-Uploads the photo from the `file` query param to an AWS S3 bucket and creates a photo resource in the database for the current user or the current user's dog. Whitelisted image file types include: bmp, jpeg, jpg, tiff, png. Requires a PhotoInputType argument. Returns a PhotoType object.
+Decrypts and uploads a base-64 encoded photo from the `file` query param to an AWS S3 bucket and creates a photo resource in the database for the current user or the current user's dog. Whitelisted image file types include: bmp, jpeg, jpg, tiff, png. Requires a PhotoInputType argument. Returns a PhotoType object.
 
 Example request:
 ```
@@ -505,7 +512,18 @@ $ bundle install
 $ bundle exec figaro install
 ```
 
-### AWS Configuration
+### Required Environment Variables
+
+```
+AWS_ACCESS_KEY_ID
+AWS_BUCKET
+AWS_REGION
+AWS_SECRET_ACCESS_KEY
+CHATKIT_INSTANCE_LOCATOR
+CHATKIT_SECRET_KEY
+EXPRESS_API_KEY
+GOOGLE_MAPS_API_KEY
+```
 
 ### Database Setup
 
@@ -513,3 +531,7 @@ The database is setup using Postgres. In order to complete the setup:
 
 * Install [Postgres](https://www.postgresql.org/download/)
 * Run the command `$ rails db:{create,migrate,seed}`
+
+### Testing
+
+The full test suite can be run with `$ bundle exec rspec`.

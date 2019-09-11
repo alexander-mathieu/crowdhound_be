@@ -2,7 +2,7 @@ module Mutations
   class CreateLocation < BaseMutation
     null true
 
-    argument :location, Types::LocationInput, required: true
+    argument :location, Types::Inputs::LocationInput, required: true
 
     field :location, Types::LocationType, null: true
 
