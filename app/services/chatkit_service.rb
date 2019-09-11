@@ -44,6 +44,31 @@ class ChatkitService
     auth_data.body[:access_token] # token_type: bearer
   end
 
+  def find_or_create_room(other_user_id)
+    participant_ids = [@user.id, other_user_id]
+
+    room_id = "#{participant_ids.min}-#{participant_ids.max}"
+
+    begin
+      ChatkitService.connect.get_room({
+        id: room_id
+      })
+      require 'pry'; binding.pry
+    rescue => err
+      if err.error_description == 'The requested room does not exist'
+        ChatkitService.connect.create_room({
+          id: room_id,
+          creator_id: @user.id.to_s,
+          name: room_id,
+          user_ids: participant_ids.map(&:to_s),
+          private: true
+        })
+      else
+        raise GraphQL::ExecutionError, err.message
+      end
+    end
+  end
+
   private
 
   def conn
