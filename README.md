@@ -365,7 +365,7 @@ Example of expected response:
 
 #### createPhoto(photo: <PhotoInputType>)
 
-Uploads the photo from the `file` query param to an AWS S3 bucket and creates a photo resource in the database for the current user or the current user's dog. Whitelisted image file types include: bmp, jpeg, jpg, tiff, png. Requires a PhotoInputType argument. Returns a PhotoType object.
+Decrypts and uploads a base-64 encoded photo from the `file` query param to an AWS S3 bucket and creates a photo resource in the database for the current user or the current user's dog. Whitelisted image file types include: bmp, jpeg, jpg, tiff, png. Requires a PhotoInputType argument. Returns a PhotoType object.
 
 Example request:
 ```
