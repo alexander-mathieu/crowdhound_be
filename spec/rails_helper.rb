@@ -212,3 +212,12 @@ def compare_gql_and_db_locations(graphql_location, db_location)
   expect(graphql_location[:lat]).to be_within(0.001).of(db_location.lat)
   expect(graphql_location[:long]).to be_within(0.001).of(db_location.long)
 end
+
+## ChatType
+def chat_type_attributes
+  '
+  id
+  unreadCount
+  lastMessageAt
+  '
+end
