@@ -26,11 +26,13 @@ module Mutations
         new = false
       end
 
-      token = SecureRandom.hex
-      user.token = token
       user.save
 
       user_chatkit_service = ChatkitService.new(user)
+
+      token = user_chatkit_service.get_token
+
+      user.update(token: token)
 
       unless user_chatkit_service.existing_chatkit_user
         user_chatkit_service.create_chatkit_user
