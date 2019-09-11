@@ -1,12 +1,12 @@
 # CrowdHound
 
-## About
+Welcome! This is an API that serves as the back-end for _CrowdHound_, built by [Alexandra Chakeras](https://github.com/chakeresa/) and [Alexander Mathieu](https://github.com/alexander-mathieu/). The _CrowdHound_ front-end is viewable on GitHub [here](https://github.com/evanmarkowitz/crowdhound/), and as a deployed site [here](https://crowdhound.herokuapp.com/).
 
-Welcome to _CrowdHound_! This is an API meant to serve data to the _CrowdHound_ front-end, viewable [here](https://github.com/evanmarkowitz/crowdhound/).
+## About
 
 Some people just want to chill with a dog for an afternoon or a few days, without the responsibility of having them 24/7/365. On the other side of the coin, many busy dog owners have to bug their friends and family, or pay expensive boarding fees when they leave town or can’t come home right after work. _CrowdHound_ lets dog owners and enthusiasts find each other. You can see photos of the dogs and users, read each other's profiles, and filter by preferences (like dog age, weight and distance to you). When you find a profile you like, you can send them a message to connect.
 
-The deployed site's endpoints can be consumed at:
+The deployed API's endpoints can be consumed at:
 
 https://crowdhound-be.herokuapp.com/
 
