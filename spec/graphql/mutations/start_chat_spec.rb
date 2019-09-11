@@ -22,33 +22,23 @@ RSpec.describe 'startChat mutation', type: :request do
   end
 
   describe 'as a visitor (not authenticated)' do
-    xit 'does not create a dog' do
-      dog_template = Dog.new(
-        name: 'Fluffy',
-        activity_level: 1,
-        weight: 10,
-        breed: 'Miniature Poodle',
-        birthdate: '2018/08/01',
-        short_desc: 'Playful little pup',
-        long_desc: 'What else could you possibly want to know?'
-      )
-  
+    it 'does not create a new chat' do
+      user, other_user = create_list(:user, 2)
+
       params = {
         token: 'not a real token',
-        query: start_chat_mutation(dog_template)
+        query: start_chat_mutation(other_user.id)
       }
   
       post '/graphql', params: params
   
       json = JSON.parse(response.body, symbolize_names: true)
   
-      data = json[:data][:createDog]
       error_message = json[:errors][0][:message]
-  
-      expect(data).to be_nil
       expect(error_message).to eq('Unauthorized - a valid token query parameter is required')
-  
-      expect(Dog.count).to eq(0)
+      
+      data = json[:data][:startChat]
+      expect(data).to be_nil
     end
   end
 
