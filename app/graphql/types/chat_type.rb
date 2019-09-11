@@ -5,20 +5,6 @@ module Types
     field :last_message_at, String, null: true
     field :user, Types::UserType, null: true
 
-    # [
-    #   {
-    #     "id": "1",
-    #     "created_by_id": "user2",
-    #     "name": "mycoolroom",
-    #     "private": false,
-    #     "created_at": "2017-03-23T11:36:42Z",
-    #     "updated_at": "2017-03-23T11:36:42Z",
-    #     "member_user_ids":["user3", "user4"],
-    #     "unread_count": 1,
-    #     "last_message_at": "2017-03-23T11:36:42Z"
-    #   }
-    # ]
-    
     def user
       current_user = context[:current_user]
       
