@@ -53,7 +53,6 @@ class ChatkitService
       ChatkitService.connect.get_room({
         id: room_id
       })
-      require 'pry'; binding.pry
     rescue => err
       if err.error_description == 'The requested room does not exist'
         ChatkitService.connect.create_room({
