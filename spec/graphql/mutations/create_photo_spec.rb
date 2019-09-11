@@ -8,7 +8,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
 
       file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/dog.jpg')))
 
-      @encoded_file = 'data:image/png;base64,' + Base64.encode64( file.tempfile.read)
+      @encoded_file = 'data:image/png;base64,' + Base64.encode64(file.tempfile.read)
     end
 
     it 'creates a photo for the current_user' do
