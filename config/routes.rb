@@ -5,4 +5,5 @@ Rails.application.routes.draw do
 
   post "/graphql", to: "graphql#execute"
   post '/chatkit_auth', to: 'chatkit_auth#create'
+  get '/chatkit_auth', to: 'chatkit_auth#show'
 end
