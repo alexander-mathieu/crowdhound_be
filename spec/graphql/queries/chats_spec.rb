@@ -42,6 +42,22 @@ RSpec.describe 'chats query', type: :request do
     end
   end
 
+  describe 'as a visitor (without a valid api key)' do
+    it 'returns null' do
+      params = {
+        token: 'not a real token',
+        query: query
+      }
+
+      post '/graphql', params: params
+  
+      json = JSON.parse(response.body, symbolize_names: true)
+      
+      data = json[:data][:chats]
+      expect(data).to be_nil
+    end
+  end
+
   def query
     <<~GQL
       query {

@@ -58,14 +58,14 @@ module Types
 
     # Chat Queries
 
-    field :chats, [Types::ChatType], null: false,
+    field :chats, [Types::ChatType], null: true,
       description: 'List all chats for the current user'
 
     def chats
       return unless context[:current_user]
 
       chats = chatkit_service.list_chats
-      
+
       chats[:body]
     end
 
