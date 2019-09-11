@@ -50,12 +50,12 @@ class ChatkitService
     room_id = "#{participant_ids.min}-#{participant_ids.max}"
 
     begin
-      ChatkitService.connect.get_room({
+      conn.get_room({
         id: room_id
       })
     rescue => err
       if err.error_description == 'The requested room does not exist'
-        ChatkitService.connect.create_room({
+        conn.create_room({
           id: room_id,
           creator_id: @user.id.to_s,
           name: room_id,
@@ -71,6 +71,6 @@ class ChatkitService
   private
 
   def conn
-    self.class.connect
+    @conn ||= self.class.connect
   end
 end
