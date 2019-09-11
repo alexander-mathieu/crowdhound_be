@@ -12,9 +12,9 @@ class ChatkitService
     })
   end
 
-  def existing_chatkit_user
+  def existing_chatkit_user(user = @user)
     begin
-      conn.get_user({ id: @user.id.to_s })
+      conn.get_user({ id: user.id.to_s })
     rescue => err
       if err.error_description == 'The requested user does not exist'
         nil
@@ -24,12 +24,16 @@ class ChatkitService
     end
   end
 
-  def create_chatkit_user
-    response = conn.create_user({ id: @user.id.to_s, name: @user.first_name })
+  def create_chatkit_user(user = @user)
+    response = conn.create_user({ id: user.id.to_s, name: user.first_name })
 
     unless response[:status] == 201
       raise "Chatkit failed to create user. Response: #{response}"
     end
+  end
+
+  def find_or_create_chatkit_user(user = @user)
+    existing_chatkit_user(user) || create_chatkit_user(user)
   end
 
   def get_token
@@ -39,6 +43,8 @@ class ChatkitService
 
     auth_data.body[:access_token] # token_type: bearer
   end
+
+  private
 
   def conn
     self.class.connect
