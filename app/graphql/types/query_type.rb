@@ -65,7 +65,8 @@ module Types
       return unless context[:current_user]
 
       chats = chatkit_service.list_chats
-      require 'pry'; binding.pry
+      
+      chats[:body]
     end
 
     private

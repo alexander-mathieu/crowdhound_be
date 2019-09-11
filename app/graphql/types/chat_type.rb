@@ -23,7 +23,7 @@ module Types
       current_user = context[:current_user]
       
       if current_user
-        chat_member_ids = object[:member_user_ids].map(&.to_i)
+        chat_member_ids = object[:member_user_ids].map(&:to_i)
 
         other_member_id = chat_member_ids.find do |member_id|
           current_user.id != member_id
