@@ -1,11 +1,14 @@
 require 'rails_helper'
+require 'base64'
 
 RSpec.describe 'createPhoto mutation', type: :request do
   describe 'as an authenticated user' do
     before(:each) do
       @user = create(:user)
-  
-      @file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/dog.jpg')))
+
+      file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/dog.jpg')))
+
+      @encoded_file = 'data:image/png;base64,' + Base64.encode64( file.tempfile.read)
     end
 
     it 'creates a photo for the current_user' do
@@ -14,7 +17,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
       params = {
         token: @user.token,
         query: create_photo_mutation(photo),
-        file: @file
+        file: @encoded_file
       }
 
       post '/graphql', params: params
@@ -35,10 +38,12 @@ RSpec.describe 'createPhoto mutation', type: :request do
 
       audio_file = Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/images/audio.mp3')))
 
+      encoded_audio_file = 'data:audio/mp3;base64,' + Base64.encode64( audio_file.tempfile.read)
+
       params = {
         token: @user.token,
         query: create_photo_mutation(photo),
-        file: audio_file
+        file: encoded_audio_file
       }
 
       post '/graphql', params: params
@@ -82,7 +87,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
       params = {
         token: @user.token,
         query: create_photo_mutation(photo),
-        file: @file
+        file: @encoded_file
       }
 
       post '/graphql', params: params
@@ -104,7 +109,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
       params = {
         token: @user.token,
         query: create_photo_mutation(photo),
-        file: @file
+        file: @encoded_file
       }
 
       post '/graphql', params: params
@@ -128,7 +133,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
       params = {
         token: @user.token,
         query: create_photo_mutation(photo),
-        file: @file
+        file: @encoded_file
       }
       
       post '/graphql', params: params
@@ -152,7 +157,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
       params = {
         token: @user.token,
         query: create_photo_mutation(photo),
-        file: @file
+        file: @encoded_file
       }
 
       post '/graphql', params: params
@@ -175,7 +180,7 @@ RSpec.describe 'createPhoto mutation', type: :request do
       params = {
         token: @user.token,
         query: create_photo_mutation(photo),
-        file: @file
+        file: @encoded_file
       }
 
       post '/graphql', params: params
