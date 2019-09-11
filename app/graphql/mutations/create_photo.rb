@@ -19,17 +19,24 @@ module Mutations
 
       raw_file = context[:file]
 
+      Rails.logger.debug "********************************** raw file = " + raw_file
+      
       if !raw_file
         raise GraphQL::ExecutionError, 'Image must be provided as a "file" query parameter'
       end
-
+      
       meta, encoded_file = raw_file.split(',')
-
+      Rails.logger.debug "********************************** meta = " + meta
+      Rails.logger.debug "********************************** encoded file = " + encoded_file
+      
       before_semicolon = meta.split(';')[0]
       file_ext = before_semicolon.split('/')[1]
       file_name = "#{SecureRandom.hex}.#{file_ext}"
+      Rails.logger.debug "********************************** file name = " + file_name
 
       decoded_file = Base64.decode64(encoded_file)
+
+      Rails.logger.debug "********************************** decoded file = " + decoded_file
 
       raise_error_if_not_image_file(file_ext)
 
