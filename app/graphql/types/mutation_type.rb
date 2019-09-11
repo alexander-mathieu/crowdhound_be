@@ -10,5 +10,7 @@ module Types
     field :destroy_dog, mutation: Mutations::DestroyDog
 
     field :create_photo, mutation: Mutations::CreatePhoto
+
+    field :start_chat, mutation: Mutations::StartChat
   end
 end

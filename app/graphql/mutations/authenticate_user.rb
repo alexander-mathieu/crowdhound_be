@@ -34,9 +34,7 @@ module Mutations
 
       user.update(token: token)
 
-      unless user_chatkit_service.existing_chatkit_user
-        user_chatkit_service.create_chatkit_user
-      end
+      user_chatkit_service.find_or_create_chatkit_user
 
       { current_user: user, new: new, token: token }
     end
