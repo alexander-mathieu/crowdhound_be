@@ -1,5 +1,7 @@
 # CrowdHound
 
+![CrowdHound Screenshot](/public/images/crowdhound_screenshot.png)
+
 Welcome! This is an API that serves as the back-end for _CrowdHound_, built by [Alexandra Chakeres](https://github.com/chakeresa/) and [Alexander Mathieu](https://github.com/alexander-mathieu/). The _CrowdHound_ front-end is viewable on GitHub [here](https://github.com/evanmarkowitz/crowdhound/), and as a deployed site [here](https://crowdhound.herokuapp.com/).
 
 ## About
