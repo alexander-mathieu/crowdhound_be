@@ -20,6 +20,16 @@ https://crowdhound-be.herokuapp.com/
 
 ![CrowdHound Schema](/public/images/schema.png)
 
+## Tech Stack
+
+ - Ruby on Rails
+ - PostgreSQL database
+ - GraphQL API
+ - AWS S3 (photo storage)
+ - CircleCI CI/CD
+ - RSpec testing
+ - Pusher Chatkit
+
 ## GraphQL Endpoints
 
 _CrowdHound_ utilizes [GraphQL](https://graphql.org/). All queries are made to a single endpoint, `POST /graphql`. This endpoint will always return 200 (OK), even if there is an error. If there is an error, it will be present in an `errors` attribute of the response, and the `data` attribute will be `null`.
