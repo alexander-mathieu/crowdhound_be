@@ -129,7 +129,7 @@ Object types are templates for resources in the database.  Each object type has 
 
 ### Queries
 
-#### users
+#### `users`
 
 Returns an array of all UserType objects with requested attributes.
 
@@ -193,15 +193,15 @@ Example of expected output:
 }
 ```
 
-#### user(id: <ID>)
+#### `user(id: <ID>)`
 
 Returns a single UserType object having the specified ID. *ID argument is required.*
 
-#### currentUser
+#### `currentUser`
 
 Returns an authenticated user (CurrentUserType object), based on the specified token. Returns null if no user has the specified token. Has additional information not available in the basic user query, such as lastName, email and location.
 
-#### dogs(<filters>)
+#### `dogs(<filters>)`
 
 Returns an array of DogType objects, with the option to filter by comma separated arguments. If the request is authenticated, the dogs are sorted by distance to the authenticated user.
 
@@ -219,11 +219,11 @@ Available arguments are:
 Filters may be used in any combination. For fields where only a single value is desired, enter the same value twice.
 * _i.e. ageRange: [2, 2]_
 
-#### dog(id: <ID>)
+#### `dog(id: <ID>)`
 
 Returns a single DogType object having the specified ID. *id: argument is required.*
 
-#### chats
+#### `chats`
 
 If the request is authenticated (with a valid `token` query parameter), the request returns an array of ChatType objects that the current user is a part of. If the request is not authenticated, the request returns null.
 
@@ -231,7 +231,7 @@ If the request is authenticated (with a valid `token` query parameter), the requ
 
 Mutations are requests to modify resources in the database.
 
-#### authenticateUser(auth: <AuthenticationInputType>, apiKey: <String>)
+#### `authenticateUser(auth: <AuthenticationInputType>, apiKey: <String>)`
 
 Finds or creates a user in the database. Returns a CurrentUserType object, as well as a boolean attribute `new`, based on whether or not the user was found or created. Required arguments include:
 * apiKey - String (used to ensure that requests only come from the Express app -- not random HTTP requests)
@@ -278,7 +278,7 @@ Example of expected response:
 }
 ```
 
-#### logOutUser
+#### `logOutUser`
 
 Logs out a user based on the specified `token` query parameter. A successful request returns a `message` attribute.
 
@@ -303,7 +303,7 @@ Expected response:
 }
 ```
 
-#### createLocation(location: <LocationInputType>)
+#### `createLocation(location: <LocationInputType>)`
 
 Adds a location for the user with the `token` specified in the query parameter. Requires a LocationInputType argument. A successful response returns a LocationType object.
 
@@ -346,7 +346,7 @@ Example of expected response:
 }
 ```
 
-#### createDog(dog: <DogInputType>)
+#### `createDog(dog: <DogInputType>)`
 
 Creates a dog in the database for the current user (based on the `token` in the params). Requires a DogInputType argument. Returns a DogType object.
 
@@ -386,7 +386,7 @@ Example of expected response:
 }
 ```
 
-#### createPhoto(photo: <PhotoInputType>)
+#### `createPhoto(photo: <PhotoInputType>)`
 
 Decrypts and uploads a base-64 encoded photo from the `file` query param to an AWS S3 bucket and creates a photo resource in the database for the current user or the current user's dog. Whitelisted image file types include: bmp, jpeg, jpg, tiff, png. Requires a PhotoInputType argument. Returns a PhotoType object.
 
@@ -428,7 +428,7 @@ Example of expected response:
 }
 ```
 
-#### destroyDog(dog_id: <ID>)
+#### `destroyDog(dog_id: <ID>)`
 
 Deletes the dog associated with the ID passed in as an argument if the dog belongs to the user with the `token` in the query params. *ID argument is required.*
 
@@ -450,7 +450,7 @@ Example of expected response:
 }
 ```
 
-#### updateUser(user: <UserInputType>, location: <LocationInputType>)
+#### `updateUser(user: <UserInputType>, location: <LocationInputType>)`
 
 Updates a user in the database (based on the `token` in the params). Accepts both UserInputType and LocationInputType arguments. Returns a CurrentUserType object. *If a location argument is passed and no location exists for the user, a location will be created.*
 
@@ -513,7 +513,7 @@ Example of expected response:
 }
 ```
 
-#### startChat(userId: <id of user to start chat with>)
+#### `startChat(userId: <id of user to start chat with>)`
 
 Finds or creates a chatkit room (chat) between the current user (based on the specified `token` query parameter) and the user specified by id in the mutation's argument. A successful request returns a `roomId` attribute.
 
@@ -540,7 +540,7 @@ Expected response:
 
 ### Lonely REST Endpoint
 
-#### POST /chatkit_auth?token=<token>
+#### `POST /chatkit_auth?token=<token>`
 
 Provides the information required to authenticate a user through Pusher. *Requires valid user token passed as a parameter.* Returns 401 unauthorized if an invalid token is passed.
 
@@ -576,10 +576,15 @@ AWS_ACCESS_KEY_ID
 AWS_BUCKET
 AWS_REGION
 AWS_SECRET_ACCESS_KEY
+BACKEND_DOMAIN
 CHATKIT_INSTANCE_LOCATOR
 CHATKIT_SECRET_KEY
+CHATKIT_TEST_TOKEN_ENDPOINT
+EXAMPLE_USER_ID
+EXAMPLE_USER_TOKEN
 EXPRESS_API_KEY
 GOOGLE_MAPS_API_KEY
+HEROKU_API_KEY
 ```
 
 ### Database Setup
