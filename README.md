@@ -2,7 +2,11 @@
 
 ![CrowdHound Screenshot](/public/images/crowdhound_screenshot.png)
 
-Welcome! This is an API that serves as the back-end for _CrowdHound_, built by [Alexandra Chakeres](https://github.com/chakeresa/) and [Alexander Mathieu](https://github.com/alexander-mathieu/). The _CrowdHound_ front-end is viewable on GitHub [here](https://github.com/evanmarkowitz/crowdhound/), and as a deployed site [here](https://crowdhound.herokuapp.com/).
+[View deployed site](https://crowdhound.herokuapp.com/)
+
+Welcome! This is an API that serves as the backend for _CrowdHound_, built by [Alexandra Chakeres](https://github.com/chakeresa/) and [Alexander Mathieu](https://github.com/alexander-mathieu/). The _CrowdHound_ frontend is viewable on GitHub [here](https://github.com/evanmarkowitz/crowdhound/).
+
+The project board used to organize our user stories can be viewed [here](https://github.com/alexander-mathieu/crowdhound_be/projects/2/), while the backend-specific board can be viewed [here](https://github.com/alexander-mathieu/crowdhound_be/projects/3/).
 
 ## About
 
