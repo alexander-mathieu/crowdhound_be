@@ -1,6 +1,12 @@
 # CrowdHound
 
-Welcome! This is an API that serves as the back-end for _CrowdHound_, built by [Alexandra Chakeres](https://github.com/chakeresa/) and [Alexander Mathieu](https://github.com/alexander-mathieu/). The _CrowdHound_ front-end is viewable on GitHub [here](https://github.com/evanmarkowitz/crowdhound/), and as a deployed site [here](https://crowdhound.herokuapp.com/).
+![CrowdHound Screenshot](/public/images/crowdhound_screenshot.png)
+
+[View deployed site](https://crowdhound.herokuapp.com/)
+
+Welcome! This is an API that serves as the backend for _CrowdHound_, built by [Alexandra Chakeres](https://github.com/chakeresa/) and [Alexander Mathieu](https://github.com/alexander-mathieu/). The _CrowdHound_ frontend is viewable on GitHub [here](https://github.com/evanmarkowitz/crowdhound/).
+
+The project board used to organize our user stories can be viewed [here](https://github.com/alexander-mathieu/crowdhound_be/projects/2/), while the backend-specific board can be viewed [here](https://github.com/alexander-mathieu/crowdhound_be/projects/3/).
 
 ## About
 
@@ -14,7 +20,7 @@ https://crowdhound-be.herokuapp.com/
 
 ![CrowdHound Schema](/public/images/schema.png)
 
-## Endpoints
+## GraphQL Endpoints
 
 _CrowdHound_ utilizes [GraphQL](https://graphql.org/). All queries are made to a single endpoint, `POST /graphql`. This endpoint will always return 200 (OK), even if there is an error. If there is an error, it will be present in an `errors` attribute of the response, and the `data` attribute will be `null`.
 
@@ -518,6 +524,21 @@ Expected response:
       "roomId": "56-73"
     }
   }
+}
+```
+
+### Lonely REST Endpoint
+
+#### POST /chatkit_auth?token=<token>
+
+Provides the information required to authenticate a user through Pusher. *Requires valid user token passed as a parameter.* Returns 401 unauthorized if an invalid token is passed.
+
+Example of expected response:
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiJ9.eyJpbnN0YW5jZSI6ImU5ZDQzY2U1LTIxNTktNGQ3NS04MDMwLTYxNzg2NzUyOGIwYiIsImlzcyI6ImFwaV9rZXlzL2Y4YThhNjdjLTk1MGQtNGY5OC04YWE5LWE0ZTkxNzEzMzQ2MSIsImlhdCI6MTU2ODI0MjI5NSwiZXhwIjoxNTY4MzI4Njk1LCJzdWIiOiI1OCJ9.VNhCUpsudrcVBPhQchX2J3HP9cGWc99hoqnpCQpDEwo",
+  "token_type": "bearer",
+  "expires_in": 86400
 }
 ```
 
