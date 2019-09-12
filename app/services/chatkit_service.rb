@@ -44,6 +44,24 @@ class ChatkitService
     auth_data.body[:access_token] # token_type: bearer
   end
 
+  def list_chats
+    conn.get_user_rooms({ id: @user.id.to_s })
+
+    # [
+    #   {
+    #     "id": "1",
+    #     "created_by_id": "user2",
+    #     "name": "mycoolroom",
+    #     "private": false,
+    #     "created_at": "2017-03-23T11:36:42Z",
+    #     "updated_at": "2017-03-23T11:36:42Z",
+    #     "member_user_ids":["user3", "user4"],
+    #     "unread_count": 1,
+    #     "last_message_at": "2017-03-23T11:36:42Z"
+    #   }
+    # ]
+  end
+
   def find_or_create_room(other_user_id)
     participant_ids = [@user.id, other_user_id]
 

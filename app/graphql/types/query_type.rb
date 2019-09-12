@@ -55,5 +55,24 @@ module Types
         raise GraphQL::ExecutionError, e.message
       end
     end
+
+    # Chat Queries
+
+    field :chats, [Types::ChatType], null: true,
+      description: 'List all chats for the current user'
+
+    def chats
+      return unless context[:current_user]
+
+      chats = chatkit_service.list_chats
+
+      chats[:body]
+    end
+
+    private
+
+    def chatkit_service
+      @chatkit_service ||= ChatkitService.new(context[:current_user])
+    end
   end
 end
