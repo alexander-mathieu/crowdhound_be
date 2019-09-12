@@ -15,9 +15,9 @@
     <script>
       const tokenProvider = new Chatkit.TokenProvider({
       <% if Rails.env.test? %>
-          url: <% ENV['CHATKIT_TEST_TOKEN_ENDPOINT'] %>
+        url: <% ENV['CHATKIT_TEST_TOKEN_ENDPOINT'] %>
       <% else %>
-          url:  "<%= ENV['BACKEND_DOMAIN'] %>/chatkit_auth?token=<%= ENV['EXAMPLE_USER_TOKEN'] %>"
+        url:  "<%= ENV['BACKEND_DOMAIN'] %>/chatkit_auth?token=<%= ENV['EXAMPLE_USER_TOKEN'] %>"
       <% end %>
       })
 
