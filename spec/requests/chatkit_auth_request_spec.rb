@@ -18,7 +18,7 @@ RSpec.describe 'chatkit_auth request endpoint' do
   end
 
   describe 'with an invalid user token' do
-    it 'returns an invalid token error' do
+    it 'returns 401 unauthorized' do
       post '/chatkit_auth', params: { token: 'invalid token' }
 
       data = JSON.parse(response.body, symbolize_names: true)
