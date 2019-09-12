@@ -5,7 +5,6 @@ class GraphqlController < ApplicationController
     operation_name = params[:operationName]
     context = {
       current_user: current_user,
-      # current_chatkit_user: current_chatkit_user,
       file: params[:file]
     }
     result = CrowdhoundBeSchema.execute(query, variables: variables, context: context, operation_name: operation_name)
@@ -22,16 +21,6 @@ class GraphqlController < ApplicationController
 
     @current_user ||= User.find_by(token: token)
   end
-
-  # don't want to make external calls to chatkit in tests
-  
-  # def current_chatkit_user
-  #   if current_user
-  #     ChatkitService.new(current_user).existing_chatkit_user
-  #   else
-  #     nil
-  #   end
-  # end
 
   # Handle form data, JSON body, or a blank value
   def ensure_hash(ambiguous_param)
