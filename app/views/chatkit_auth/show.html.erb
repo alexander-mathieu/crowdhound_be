@@ -13,18 +13,17 @@
     <script src='https://unpkg.com/@pusher/chatkit-client@1/dist/web/chatkit.js'></script>
 
     <script>
-    <% if Rails.env.test? %>
       const tokenProvider = new Chatkit.TokenProvider({
-        url: <% ENV['CHATKIT_TEST_TOKEN_ENDPOINT'] %>
+      <% if Rails.env.test? %>
+          url: <% ENV['CHATKIT_TEST_TOKEN_ENDPOINT'] %>
+      <% else %>
+          url:  "<%= ENV['BACKEND_DOMAIN'] %>/chatkit_auth?token=<%= ENV['EXAMPLE_USER_TOKEN'] %>"
+      <% end %>
       })
-    <% else %>
-      const tokenProvider = new Chatkit.TokenProvider({
-        url:  "<%= ENV['BACKEND_DOMAIN'] %>/chatkit_auth?token=<%= ENV['EXAMPLE_USER_TOKEN'] %>"
-      })
-    <% end %>
+
       const chatManager = new Chatkit.ChatManager({
         instanceLocator: "<%= ENV['CHATKIT_INSTANCE_LOCATOR'] %>",
-        userId: '58',
+        userId: "<%= ENV['EXAMPLE_USER_ID'] %>",
         tokenProvider: tokenProvider
       })
 
