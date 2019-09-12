@@ -129,7 +129,7 @@ Object types are templates for resources in the database.  Each object type has 
 
 ### Queries
 
-#### users
+#### `users`
 
 Returns an array of all UserType objects with requested attributes.
 
@@ -201,7 +201,7 @@ Returns a single UserType object having the specified ID. *ID argument is requir
 
 Returns an authenticated user (CurrentUserType object), based on the specified token. Returns null if no user has the specified token. Has additional information not available in the basic user query, such as lastName, email and location.
 
-#### `dogs(<filters>)``
+#### `dogs(<filters>)`
 
 Returns an array of DogType objects, with the option to filter by comma separated arguments. If the request is authenticated, the dogs are sorted by distance to the authenticated user.
 
