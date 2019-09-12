@@ -26,6 +26,13 @@ To make queries or mutations as a logged-in user, include that user's token as a
 
 Object types are templates for resources in the database.  Each object type has a list of attributes that are available to return along with the object.
 
+#### ChatType Attributes
+
+* id - String (required)
+* unreadCount - Int
+* lastMessageAt - String
+* user - UserType
+
 #### CurrentUserType Attributes
 
 * id - ID (Int, required)
@@ -118,7 +125,7 @@ Object types are templates for resources in the database.  Each object type has 
 
 #### users
 
-Returns an array of all users with requested attributes.
+Returns an array of all UserType objects with requested attributes.
 
 Example request body:
 ```
@@ -182,15 +189,15 @@ Example of expected output:
 
 #### user(id: <ID>)
 
-Returns a single user having the specified ID. *ID argument is required.*
+Returns a single UserType object having the specified ID. *ID argument is required.*
 
 #### currentUser
 
-Returns an authenticated user, based on the specified token. Returns null if no user has the specified token. Has additional information not available in the basic user query, such as lastName, email and location.
+Returns an authenticated user (CurrentUserType object), based on the specified token. Returns null if no user has the specified token. Has additional information not available in the basic user query, such as lastName, email and location.
 
 #### dogs(<filters>)
 
-Returns a collection of dogs, with the option to filter by comma separated arguments. If the request is authenticated, the dogs are sorted by distance to the authenticated user.
+Returns an array of DogType objects, with the option to filter by comma separated arguments. If the request is authenticated, the dogs are sorted by distance to the authenticated user.
 
 Available arguments are:
 * activityLevelRange: <Array with two integer values, denoting the minimum and maximum acceptable activity level>
@@ -208,7 +215,11 @@ Filters may be used in any combination. For fields where only a single value is 
 
 #### dog(id: <ID>)
 
-Returns a single dog having the specified ID. *id: argument is required.*
+Returns a single DogType object having the specified ID. *id: argument is required.*
+
+#### chats
+
+If the request is authenticated (with a valid `token` query parameter), the request returns an array of ChatType objects that the current user is a part of. If the request is not authenticated, the request returns null.
 
 ### Mutations
 
