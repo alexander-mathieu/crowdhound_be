@@ -13,17 +13,20 @@
     <script src='https://unpkg.com/@pusher/chatkit-client@1/dist/web/chatkit.js'></script>
 
     <script>
-      // const tokenProvider = new Chatkit.TokenProvider({
-      //   url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/e9d43ce5-2159-4d75-8030-617867528b0b/token'
-      // });
+    <% if Rails.env.test? %>
       const tokenProvider = new Chatkit.TokenProvider({
-        url: 'http://localhost:3000/chatkit_auth?token=tjph8bc8rd'
-      });
+        url: <% ENV['CHATKIT_TEST_TOKEN_ENDPOINT'] %>
+      })
+    <% else %>
+      const tokenProvider = new Chatkit.TokenProvider({
+        url:  "<%= ENV['BACKEND_DOMAIN'] %>/chatkit_auth?token=<%= ENV['EXAMPLE_USER_TOKEN'] %>"
+      })
+    <% end %>
       const chatManager = new Chatkit.ChatManager({
-        instanceLocator: 'v1:us1:e9d43ce5-2159-4d75-8030-617867528b0b',
+        instanceLocator: "<%= ENV['CHATKIT_INSTANCE_LOCATOR'] %>",
         userId: '58',
         tokenProvider: tokenProvider
-      });
+      })
 
       chatManager
         .connect()
