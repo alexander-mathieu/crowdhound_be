@@ -130,7 +130,7 @@ GEM
     pusher-platform (0.11.2)
       excon (~> 0.62.0)
       jwt (~> 2.1)
-    rack (2.0.7)
+    rack (2.0.8)
     rack-cors (1.0.3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
